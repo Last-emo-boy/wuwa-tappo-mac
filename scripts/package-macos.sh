@@ -101,7 +101,10 @@ phase '生成 DMG'
 mkdir "$STAGE/dmg"
 mv "$STAGE/Wuwa Tappo CN Mac.app" "$STAGE/dmg/"
 ln -s /Applications "$STAGE/dmg/Applications"
-hdiutil create -volname 'Wuwa Tappo CN Mac' -srcfolder "$STAGE/dmg" -format UDZO "$STAGE/$NAME.dmg"
+IMAGE_SIZE_MIB=$(node "$ROOT/scripts/dmg-size.mjs" "$STAGE/dmg")
+printf 'DMG 文件系统：HFS+；容量：%s MiB；主机可用空间：\n' "$IMAGE_SIZE_MIB"
+df -h "$STAGE" "$OUTPUT"
+hdiutil create -fs HFS+ -size "${IMAGE_SIZE_MIB}m" -volname 'Wuwa Tappo CN Mac' -srcfolder "$STAGE/dmg" -format UDZO "$STAGE/$NAME.dmg"
 phase '校验 DMG'
 hdiutil verify "$STAGE/$NAME.dmg"
 phase '交付安装包'

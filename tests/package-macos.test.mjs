@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, truncateSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { measureImage } from '../scripts/dmg-size.mjs';
 
 const script = path.resolve(import.meta.dirname, '../scripts/package-macos.sh');
+const MIB = 1024 * 1024;
 
 test('packaging exposes explicit application and output paths', () => {
   const result = spawnSync('bash', [script, '--help'], { encoding: 'utf8' });
@@ -36,6 +38,50 @@ test('packaging reports the failing stage and preserves the tool exit status', (
     } else {
       assert.match(result.stderr, /需要在 Mac/);
     }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('DMG capacity uses sparse-file logical size rather than allocated disk blocks', async () => {
+  const directory = mkdtempSync(path.join(tmpdir(), 'wuwa-dmg-sparse-'));
+  try {
+    const filename = path.join(directory, 'payload');
+    writeFileSync(filename, '');
+    truncateSync(filename, 512 * MIB);
+    assert.deepEqual(await measureImage(directory), { logicalBytes: 512 * MIB, sizeMiB: 640 });
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('DMG capacity reserves filesystem space for small payloads', async () => {
+  const directory = mkdtempSync(path.join(tmpdir(), 'wuwa-dmg-small-'));
+  try {
+    assert.deepEqual(await measureImage(directory), { logicalBytes: 0, sizeMiB: 64 });
+    const filename = path.join(directory, 'payload');
+    writeFileSync(filename, '');
+    truncateSync(filename, 64 * MIB);
+    assert.deepEqual(await measureImage(directory), { logicalBytes: 64 * MIB, sizeMiB: 96 });
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('DMG sizing counts symlinks without traversing outside the packaging directory', async () => {
+  const directory = mkdtempSync(path.join(tmpdir(), 'wuwa-dmg-link-'));
+  try {
+    const content = path.join(directory, 'content');
+    const external = path.join(directory, 'external');
+    mkdirSync(content);
+    mkdirSync(external);
+    writeFileSync(path.join(external, 'large-file'), '');
+    truncateSync(path.join(external, 'large-file'), 512 * MIB);
+    symlinkSync(external, path.join(content, 'Applications'));
+    symlinkSync(content, path.join(content, 'cycle'));
+    const result = await measureImage(content);
+    assert.equal(result.logicalBytes, Buffer.byteLength(external) + Buffer.byteLength(content));
+    assert.equal(result.sizeMiB, 64);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
