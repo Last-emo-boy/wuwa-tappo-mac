@@ -1,0 +1,64 @@
+name: Build macOS
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: Git revision to build
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      MACOSX_DEPLOYMENT_TARGET: '13.0'
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install build tools
+        run: |
+          test "$(uname -m)" = arm64
+          rustup toolchain install 1.97.1 --profile minimal
+          rustup default 1.97.1
+          brew install sevenzip
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: macos-arm64-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
+      - run: npm ci
+      - name: Restore verified official CN resources
+        run: node scripts/sync-upstream.mjs
+      - name: Prepare native build inputs
+        run: npm run icons && npm run prepare:frontend
+      - name: Test frontend contracts and native backend
+        run: |
+          npm test
+          cargo test --locked --manifest-path src-tauri/Cargo.toml
+      - name: Build complete application
+        run: npm run build -- -- --locked
+      - name: Verify and package ZIP and DMG
+        run: bash scripts/package-macos.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WuwaTappo-CN-Mac-arm64
+          path: |
+            dist/*.zip
+            dist/*.dmg
+          if-no-files-found: error
+          retention-days: 14

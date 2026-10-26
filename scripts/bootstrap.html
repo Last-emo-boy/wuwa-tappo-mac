@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wuwa Tappo CN Mac</title>
+<style>
+  :root{font-family:-apple-system,BlinkMacSystemFont,sans-serif;color-scheme:light dark}
+  body{margin:0;padding:36px;background:Canvas;color:CanvasText}
+  h1{margin:0 0 12px;font-size:22px;font-weight:650}
+  p{font-size:14px;line-height:1.6;color:GrayText;white-space:pre-wrap}
+  footer{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}
+  button{font:inherit;padding:7px 18px;border-radius:7px;border:1px solid GrayText;background:ButtonFace;color:ButtonText;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  #memory{background:AccentColor;color:AccentColorText;border-color:AccentColor}
+</style>
+<h1>Wuwa Tappo · 国服</h1>
+<p id="status">仅本次会话：登录信息只保存在内存，退出后清除。
+记住登录：使用 macOS 钥匙串，需要系统授权。</p>
+<footer><button id="quit">退出</button><button id="keychain">记住登录</button><button id="memory">仅本次会话</button></footer>
+<script>
+  const api=window.__TAURI__;
+  const status=document.getElementById('status'),memory=document.getElementById('memory'),keychain=document.getElementById('keychain');
+  const update=event=>{status.textContent=event.payload.message;memory.disabled=keychain.disabled=event.payload.loading;};
+  api.event.listen('mac-startup-status',update).then(()=>api.core.invoke('get_startup_status')).then(payload=>update({payload})).catch(error=>{status.textContent=String(error)});
+  const start=async mode=>{memory.disabled=keychain.disabled=true;try{await api.core.invoke('start_session',{mode})}catch(error){status.textContent=String(error);memory.disabled=keychain.disabled=false}};
+  memory.onclick=()=>start('memory');
+  keychain.onclick=()=>start('keychain');
+  document.getElementById('quit').onclick=()=>api.core.invoke('exit_app');
+</script>
+</html>

@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag, for example v1.0.0-mac.1
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      ref: ${{ github.event.inputs.tag || github.ref }}
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: WuwaTappo-CN-Mac-arm64
+          path: dist
+      - name: Publish complete CN Mac packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-mac\.[0-9]+$ ]]
+          cat > /tmp/release-notes.md <<'NOTES'
+          ## Wuwa Tappo 国服 · macOS 非官方重建版
+
+          下载 DMG 后将应用拖入“应用程序”，或解压 ZIP 后移动应用。安装包已包含国服界面、图像及运行资源，不需要 Windows、Wine 或手动提取 EXE。登录和联机仍需要连接官方服务。
+
+          - 支持 Apple Silicon，macOS 13 及以上。
+          - 首次启动请按提示授权“输入监控”，用于按键和点击计数。
+          - 当前使用临时签名，未进行 Apple 公证。系统可能要求在“隐私与安全性”中确认打开。
+          - 包内不包含任何人的账号、登录凭据、点击记录或系统缓存。
+          - 本项目由社区维护，不是库洛官方 Mac 客户端。随包的官方资源归原权利人所有；官方规则、账号和资产仍由官方服务决定。
+
+          ZIP 与 DMG 内容相同。此版本通过自动化测试和原生构建；真人登录、系统权限及双人联机不由 CI 代替验证。
+          NOTES
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/*.zip dist/*.dmg --clobber
+          else
+            gh release create "$TAG" dist/*.zip dist/*.dmg --verify-tag --title "Wuwa Tappo 国服 Mac $TAG" --notes-file /tmp/release-notes.md --latest
+          fi

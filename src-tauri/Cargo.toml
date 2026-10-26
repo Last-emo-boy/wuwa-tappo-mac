@@ -1,0 +1,38 @@
+[package]
+name = "wuwatappo-mac"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.85"
+
+[lib]
+name = "wuwatappo_mac"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[build-dependencies]
+tauri-build = { version = "=2.7.1", features = [] }
+
+[dependencies]
+tauri = { version = "=2.12.1", features = ["tray-icon", "macos-private-api", "image-png", "devtools"] }
+tauri-plugin-autostart = "2"
+tauri-plugin-deep-link = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-process = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "=0.12.28", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+objc2 = "0.6.5"
+objc2-app-kit = "0.3.2"
+objc2-foundation = "0.3.2"
+security-framework = "3.7"
+futures-util = { version = "0.3", features = ["sink"] }
+tokio = { version = "1", features = ["macros", "net", "sync", "time"] }
+tokio-tungstenite = { version = "=0.26.2", default-features = false, features = ["connect", "rustls-tls-webpki-roots"] }
+
+[profile.release]
+strip = true
+lto = "thin"
+codegen-units = 1
+
+[profile.release.build-override]
+strip = "none"

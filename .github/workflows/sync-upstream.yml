@@ -1,0 +1,112 @@
+name: Sync official CN
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-official-cn
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: macos-15
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      MACOSX_DEPLOYMENT_TARGET: '13.0'
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Check official CN version
+        id: upstream
+        run: |
+          mkdir -p .work
+          node scripts/sync-upstream.mjs --check > .work/upstream-check.json
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const result = JSON.parse(readFileSync('.work/upstream-check.json', 'utf8'));
+          if (typeof result.changed !== 'boolean' || !/^\d+\.\d+\.\d+$/.test(result.latestVersion)) throw new Error('Invalid official version response');
+          const title = `同步国服官方资源 ${result.latestVersion}`;
+          const open = JSON.parse(execFileSync('gh', ['pr', 'list', '--state', 'open', '--search', `${title} in:title`, '--json', 'title'], { encoding: 'utf8' }));
+          const pending = open.some(pr => pr.title === title);
+          appendFileSync(process.env.GITHUB_OUTPUT, `changed=${result.changed && !pending}\nversion=${result.latestVersion}\n`);
+          NODE
+      - name: Install build tools
+        if: steps.upstream.outputs.changed == 'true'
+        run: |
+          test "$(uname -m)" = arm64
+          rustup toolchain install 1.97.1 --profile minimal
+          rustup default 1.97.1
+          brew install sevenzip
+      - uses: actions/cache@v4
+        if: steps.upstream.outputs.changed == 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: macos-arm64-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
+      - name: Validate updated official resources
+        id: validate
+        if: steps.upstream.outputs.changed == 'true'
+        run: |
+          npm ci
+          node scripts/sync-upstream.mjs --update-lock
+          npm run icons
+          npm run prepare:frontend
+          npm test
+          cargo test --locked --manifest-path src-tauri/Cargo.toml
+          npm run build -- -- --locked
+          bash scripts/package-macos.sh
+      - name: Keep validated packages for review
+        if: steps.validate.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-cn-candidate
+          path: |
+            dist/*.zip
+            dist/*.dmg
+          if-no-files-found: error
+          retention-days: 14
+      - name: Open official-resource update pull request
+        if: steps.validate.outcome == 'success'
+        env:
+          VERSION: ${{ steps.upstream.outputs.version }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- upstream-cn.json; then exit 0; fi
+          BRANCH="codex/official-cn-${VERSION}-${GITHUB_RUN_ID}"
+          git switch -c "$BRANCH"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add upstream-cn.json
+          git commit -m "chore: sync official CN resources ${VERSION}"
+          git push origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" --title "同步国服官方资源 ${VERSION}" --body "官方资源锁定已更新。此工作流已通过资源完整性校验、契约测试、Rust 测试、原生构建及 ZIP/DMG 打包。请完成真人登录、输入权限和联机检查后合并，并打新的 Mac 版本标签发布。候选安装包见 Actions 的 official-cn-candidate。"
+      - name: Report incompatible or unavailable upstream
+        if: failure()
+        run: |
+          set -euo pipefail
+          TITLE='国服官方同步需要处理'
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
+          BODY="官方同步或兼容性验证失败，未发布新版本。请查看运行日志：https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi

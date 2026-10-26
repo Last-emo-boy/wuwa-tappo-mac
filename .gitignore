@@ -1,0 +1,17 @@
+/node_modules/
+/frontend/
+/build/
+/dist/
+/src-tauri/target/
+/src-tauri/icons/
+/src-tauri/gen/
+/.work/
+/.cargo-check.log
+/.work-build.log
+/.workflow/
+.env
+.env.*
+!.env.example
+*.p12
+*.p8
+.DS_Store
