@@ -1,5 +1,17 @@
 #!/bin/bash
-set -euo pipefail
+set -Eeuo pipefail
+
+PHASE='启动'
+failed() {
+  local status=$?
+  printf '打包失败：%s（第 %s 行，退出状态 %s）。\n' "$PHASE" "$1" "$status" >&2
+  exit "$status"
+}
+trap 'failed "$LINENO"' ERR
+phase() {
+  PHASE="$1"
+  printf '打包阶段：%s\n' "$PHASE"
+}
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 APP="$ROOT/src-tauri/target/release/bundle/macos/Wuwa Tappo CN Mac.app"
@@ -30,6 +42,7 @@ if [ ! -d "$APP/Contents" ] || [ ! -f "$APP/Contents/Info.plist" ]; then
   exit 1
 fi
 
+phase '读取应用信息'
 PLIST="$APP/Contents/Info.plist"
 IDENTIFIER=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$PLIST")
 EXECUTABLE=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$PLIST")
@@ -44,6 +57,7 @@ case "$EXECUTABLE" in
   ''|*/*|.|..) printf '%s\n' '应用主程序名称无效。' >&2; exit 1 ;;
 esac
 BINARY="$APP/Contents/MacOS/$EXECUTABLE"
+phase '检查架构与签名'
 if [ ! -f "$BINARY" ] || [ "$(/usr/bin/lipo -archs "$BINARY")" != arm64 ]; then
   printf '%s\n' '安装包必须包含 Apple Silicon 原生主程序。' >&2
   exit 1
@@ -51,6 +65,7 @@ fi
 /usr/bin/codesign --verify --deep --strict "$APP"
 
 # Tauri 将前端编译进主程序；检查打包输入及嵌入路径，而不是复制用户数据。
+phase '检查国服内置资源'
 node --input-type=module -e '
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
@@ -71,18 +86,24 @@ for (const name of ["Library", "Logs", "Caches", "Application Support"]) {
 }
 ' "$ROOT" "$BINARY"
 
+phase '创建临时打包目录'
 mkdir -p "$OUTPUT"
 OUTPUT="$(cd "$OUTPUT" && pwd)"
 STAGE=$(mktemp -d "${TMPDIR:-/tmp}/wuwatappo-package.XXXXXX")
 trap 'rm -rf "$STAGE"' EXIT
 NAME="WuwaTappo-CN-Mac-$VERSION-arm64"
+phase '复制应用并复查签名'
 ditto --norsrc --noextattr --noqtn --noacl "$APP" "$STAGE/Wuwa Tappo CN Mac.app"
 /usr/bin/codesign --verify --deep --strict "$STAGE/Wuwa Tappo CN Mac.app"
+phase '生成 ZIP'
 ditto -c -k --norsrc --noextattr --noqtn --noacl --keepParent "$STAGE/Wuwa Tappo CN Mac.app" "$STAGE/$NAME.zip"
+phase '生成 DMG'
 mkdir "$STAGE/dmg"
 mv "$STAGE/Wuwa Tappo CN Mac.app" "$STAGE/dmg/"
 ln -s /Applications "$STAGE/dmg/Applications"
-hdiutil create -quiet -volname 'Wuwa Tappo CN Mac' -srcfolder "$STAGE/dmg" -format UDZO "$STAGE/$NAME.dmg"
-hdiutil verify -quiet "$STAGE/$NAME.dmg"
+hdiutil create -volname 'Wuwa Tappo CN Mac' -srcfolder "$STAGE/dmg" -format UDZO "$STAGE/$NAME.dmg"
+phase '校验 DMG'
+hdiutil verify "$STAGE/$NAME.dmg"
+phase '交付安装包'
 mv "$STAGE/$NAME.zip" "$STAGE/$NAME.dmg" "$OUTPUT/"
 printf '完整国服安装包：\n%s\n%s\n' "$OUTPUT/$NAME.zip" "$OUTPUT/$NAME.dmg"

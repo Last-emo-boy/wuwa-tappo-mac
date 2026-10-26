@@ -53,7 +53,8 @@ jobs:
           rustup toolchain install 1.97.1 --profile minimal
           rustup default 1.97.1
           brew install sevenzip
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
+        id: cargo-cache
         if: steps.upstream.outputs.changed == 'true'
         with:
           path: |
@@ -62,7 +63,6 @@ jobs:
             src-tauri/target
           key: macos-arm64-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
       - name: Validate updated official resources
-        id: validate
         if: steps.upstream.outputs.changed == 'true'
         run: |
           npm ci
@@ -70,9 +70,19 @@ jobs:
           npm run icons
           npm run prepare:frontend
           npm test
-          cargo test --locked --manifest-path src-tauri/Cargo.toml
-          npm run build -- -- --locked
-          bash scripts/package-macos.sh
+      - name: Test native backend
+        id: native-tests
+        if: steps.upstream.outputs.changed == 'true'
+        run: cargo test --locked --manifest-path src-tauri/Cargo.toml
+      - name: Build native application
+        if: steps.upstream.outputs.changed == 'true'
+        run: npm run build -- -- --locked
+      - name: Package candidate
+        id: validate
+        if: steps.upstream.outputs.changed == 'true'
+        run: |
+          set -o pipefail
+          bash scripts/package-macos.sh 2>&1 | tee .work/package-macos.log
       - name: Keep validated packages for review
         if: steps.validate.outcome == 'success'
         uses: actions/upload-artifact@v4
@@ -83,6 +93,15 @@ jobs:
             dist/*.dmg
           if-no-files-found: error
           retention-days: 14
+      - name: Save compiled Cargo dependencies
+        if: always() && steps.native-tests.outcome == 'success' && steps.cargo-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ steps.cargo-cache.outputs.cache-primary-key }}
       - name: Open official-resource update pull request
         if: steps.validate.outcome == 'success'
         env:

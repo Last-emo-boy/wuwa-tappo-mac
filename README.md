@@ -34,11 +34,12 @@
 
 ## 从源码构建
 
-需要 macOS、Xcode Command Line Tools、Node.js 24、Rust（版本由 `rust-toolchain.toml` 固定）和 7-Zip。
+需要 macOS、Xcode Command Line Tools、Node.js 24、[rustup](https://rustup.rs/)（Rust 版本由 `rust-toolchain.toml` 固定）和 7-Zip。
 
 ```bash
 xcode-select --install
 brew install node@24 sevenzip
+export PATH="$(brew --prefix node@24)/bin:$PATH"
 git clone https://github.com/Last-emo-boy/wuwa-tappo-mac.git
 cd wuwa-tappo-mac
 npm ci
