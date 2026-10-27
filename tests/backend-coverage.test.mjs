@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
 import { patchSessionBarriers, patchLoginReady, patchDomesticSdkUrls, patchMacUpdateFeedback, patchMacAbout } from '../scripts/patch-frontend.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -57,4 +58,16 @@ test('About separates the Mac build target from official Windows requirements', 
   assert.ok(patched.includes('Windows 原版系统配置'));
   assert.ok(patched.includes('html.replace("系统配置","Windows 原版系统配置")'));
   assert.throws(() => patchMacAbout(''), /About system section changed/);
+});
+
+test('traditional Chinese remote About requirements remain identified as Windows', () => {
+  const source = 'let t=f(()=>k("about_content")?String(v("about_content")).trim():"");<h2 data-v-160f56ac>系统配置</h2>';
+  const patched = patchMacAbout(source, 'GLOBAL');
+  const result = vm.runInNewContext(patched.slice(0, patched.indexOf(';<h2')) + ';t', {
+    f: callback => callback(), k: () => true,
+    v: () => '<h2>系統配備</h2><p>Windows 10 / Windows 11 64位元</p>',
+  });
+  assert.ok(result.includes('Wuwa Tappo Global Mac'));
+  assert.ok(result.includes('<h2>Windows 原版系統配備</h2>'));
+  assert.ok(result.includes('Windows 10 / Windows 11 64位元'));
 });

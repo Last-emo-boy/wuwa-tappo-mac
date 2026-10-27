@@ -5,7 +5,7 @@ import test from 'node:test';
 import vm from 'node:vm';
 import { parse } from 'acorn';
 import { profile, root, findSource } from './frontend-context.mjs';
-import { patchGlobalAuthListener } from '../scripts/patch-frontend.mjs';
+import { patchGlobalAuthListener, patchMacLayoutBarriers } from '../scripts/patch-frontend.mjs';
 
 const originalBridge = 'async function onOpenUrl(e){return await listen("deep-link://new-url",t=>{e(t.payload)})}';
 const current = 'try{const t=await getCurrent();t?.length&&handleRawUrls(t)}catch(t){console.warn("[overseas-auth] getCurrent failed:",t)}';
@@ -85,4 +85,44 @@ test('official OAuth state filtering accepts queued B even when old callback A a
   assert.deepEqual(accepted, ['B']);
   assert.equal(rejected.length, 1);
   assert.equal(storage.get('overseas-oauth-done-B'), '1');
+});
+
+test('occluded macOS windows use real layout measurements without requiring an animation frame', async () => {
+  const view = findSource(source => source.includes('[main] window layout during open failed'));
+  const prepared = await readFile(path.join(root, profile.preparedDir, 'assets', view.name), 'utf8');
+  const tree = parse(prepared, { sourceType: 'module', ecmaVersion: 'latest' });
+  const helper = tree.body.find(node => node.type === 'FunctionDeclaration' && node.id.name === '__wuwatappoMacLayoutBarrier');
+  assert.ok(helper);
+  const reads = [];
+  let nativeSize = { width: 6400, height: 3600 }, scale = 2, frames = 0;
+  const documentRoot = { getBoundingClientRect() { reads.push('root-layout'); return { left: 0, top: 0, width: 3200, height: 0 }; } };
+  const env = vm.createContext({
+    window: { innerWidth: 3200, innerHeight: 1800, __TAURI__: { window: { getCurrentWindow: () => ({
+      innerSize: async () => { reads.push('native-size'); return nativeSize; },
+      scaleFactor: async () => { reads.push('native-scale'); return scale; },
+    }) } } },
+    document: { documentElement: documentRoot, querySelector: selector => {
+      assert.equal(selector, '.pet-dock');
+      return { getBoundingClientRect() { reads.push('hidden-dock-layout'); return { left: 0, top: 0, width: 0, height: 0 }; } };
+    } },
+    getComputedStyle: element => {
+      assert.equal(element, documentRoot);
+      reads.push('computed-style');
+      return { getPropertyValue: key => { assert.equal(key, '--pet-scale'); return '1'; } };
+    },
+    requestAnimationFrame: () => { frames += 1; },
+  });
+  vm.runInContext(prepared.slice(helper.start, helper.end), env);
+  assert.equal(await env.__wuwatappoMacLayoutBarrier(), undefined);
+  assert.deepEqual(reads, ['native-size', 'native-scale', 'computed-style', 'root-layout', 'hidden-dock-layout']);
+  assert.equal(frames, 0);
+  scale = 1.5; nativeSize = { width: 1441, height: 900 };
+  env.window.innerWidth = 960; env.window.innerHeight = 600;
+  assert.equal(await env.__wuwatappoMacLayoutBarrier(), undefined);
+  assert.equal(env.window.innerWidth, 960);
+  env.window.innerWidth = 0;
+  await assert.rejects(env.__wuwatappoMacLayoutBarrier(), /viewport does not match/);
+  assert.equal(frames, 0);
+  assert.equal((view.source.match(/requestAnimationFrame/g) ?? []).length - (prepared.match(/requestAnimationFrame/g) ?? []).length, 2);
+  assert.throws(() => patchMacLayoutBarriers(''), /Original desktop layout barriers changed/);
 });

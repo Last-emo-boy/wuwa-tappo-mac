@@ -82,7 +82,7 @@ export function patchMacAbout(source, region = 'CN') {
   const banner = `<section class="about-section" ${scope}>${info}</section>`;
   return source
     .replace(original, `${info}<h3 ${scope}>Windows 原版系统配置</h3>`)
-    .replace(remote, `t=${computed}(()=>{const html=k("about_content")?String(v("about_content")).trim():"";return html?${JSON.stringify(banner)}+html.replace("系统配置","Windows 原版系统配置"):""})`);
+    .replace(remote, `t=${computed}(()=>{const html=k("about_content")?String(v("about_content")).trim():"";return html?${JSON.stringify(banner)}+html.replace("系统配置","Windows 原版系统配置").replace("系統配備","Windows 原版系統配備"):""})`);
 }
 
 export function patchGlobalAuthListener(source) {
@@ -93,3 +93,49 @@ export function patchGlobalAuthListener(source) {
   if (source.split(bridge).length !== 2 || source.split(current + listener).length !== 2) throw new Error('Original GLOBAL OAuth callback binding changed; reconcile cold and warm callback delivery before building.');
   return source.replace(bridge, wake).replace(current + listener, listener + current);
 }
+
+export function patchMacLayoutBarriers(source) {
+  const tree = parse(source, { sourceType: 'module', ecmaVersion: 'latest' });
+  const targets = [];
+  function visit(node, callback) {
+    if (!node || typeof node !== 'object') return;
+    callback(node);
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach(child => visit(child, callback));
+      else if (value && typeof value === 'object') visit(value, callback);
+    }
+  }
+  visit(tree, node => {
+    if (node.type !== 'FunctionDeclaration') return;
+    const content = source.slice(node.start, node.end);
+    if (content.includes('[taskbar-insets] desktop state refresh failed')
+      || (content.includes('[main-window-bounds] sync failed') && content.includes('syncMainWindowContentBoundsNow'))) targets.push(node);
+  });
+  if (targets.length !== 2) throw new Error('Original desktop layout barriers changed; reconcile macOS layout before building.');
+  const frames = [];
+  for (const target of targets) {
+    const matches = [];
+    visit(target.body, node => {
+      if (node.type === 'AwaitExpression' && node.argument.type === 'NewExpression'
+        && node.argument.callee.type === 'Identifier' && node.argument.callee.name === 'Promise'
+        && source.slice(node.argument.start, node.argument.end).includes('requestAnimationFrame')) matches.push(node);
+    });
+    if (matches.length !== 1) throw new Error('Original desktop layout frame changed; reconcile macOS layout before building.');
+    frames.push(matches[0]);
+  }
+  for (const frame of frames.sort((a, b) => b.start - a.start)) source = source.slice(0, frame.start) + 'await __wuwatappoMacLayoutBarrier()' + source.slice(frame.end);
+  const helper = `async function __wuwatappoMacLayoutBarrier(){
+  const nativeWindow=window.__TAURI__.window.getCurrentWindow();
+  const [size,scale]=await Promise.all([nativeWindow.innerSize(),nativeWindow.scaleFactor()]);
+  const root=document.documentElement;
+  if(!root)throw new Error("macOS DOM layout root is unavailable");
+  getComputedStyle(root).getPropertyValue("--pet-scale");
+  const rootRect=root.getBoundingClientRect();
+  const dockRect=document.querySelector(".pet-dock")?.getBoundingClientRect();
+  const width=window.innerWidth,height=window.innerHeight;
+  if(!Number.isFinite(scale)||scale<=0||!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0||!Number.isFinite(size.width)||!Number.isFinite(size.height)||Math.abs(width-size.width/scale)>2||Math.abs(height-size.height/scale)>2)throw new Error("macOS layout viewport does not match native window");
+  for(const rect of[rootRect,dockRect])if(rect&&![rect.left,rect.top,rect.width,rect.height].every(Number.isFinite))throw new Error("macOS DOM layout geometry is invalid");
+}`;
+  return helper + source;
+}
+import { parse } from 'acorn';
