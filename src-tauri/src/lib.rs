@@ -1,6 +1,8 @@
+mod auth;
 mod geometry;
 mod input;
 mod menu;
+mod profile;
 mod session;
 mod socket;
 mod startup;
@@ -238,7 +240,15 @@ fn handle(invoke: Invoke) -> bool {
 }
 
 pub fn run() {
-    let app = tauri::Builder::default()
+    let context = tauri::generate_context!();
+    let region = match profile::Region::from_identifier(&context.config().identifier) {
+        Ok(region) => region,
+        Err(error) => {
+            eprintln!("Could not select Wuwa Tappo region: {error}");
+            return;
+        }
+    };
+    let mut builder = tauri::Builder::default()
         .plugin(
             tauri_plugin_autostart::Builder::new()
                 .macos_launcher(tauri_plugin_autostart::MacosLauncher::LaunchAgent)
@@ -251,7 +261,12 @@ pub fn run() {
         .manage(StartupState::default())
         .manage(input::InputMonitor::new())
         .manage(socket::SocketState::default())
-        .invoke_handler(handle)
+        .manage(region)
+        .invoke_handler(handle);
+    if region == profile::Region::Global {
+        builder = builder.plugin(auth::plugin());
+    }
+    let app = builder
         .setup(|app| {
             let handle = app.handle().clone();
             app.manage(storage::CounterStore::new(
@@ -264,7 +279,7 @@ pub fn run() {
                 "bootstrap",
                 tauri::WebviewUrl::App("bootstrap.html".into()),
             )
-            .title("Wuwa Tappo CN Mac")
+            .title(profile::Region::from_app(&handle).name())
             .inner_size(520., 260.)
             .resizable(false)
             .center()
@@ -301,7 +316,7 @@ pub fn run() {
             }
             Ok(())
         })
-        .build(tauri::generate_context!());
+        .build(context);
     let app = match app {
         Ok(app) => app,
         Err(error) => {

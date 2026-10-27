@@ -5485,7 +5485,7 @@ dependencies = [
 
 [[package]]
 name = "wuwatappo-mac"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "futures-util",
  "objc2",

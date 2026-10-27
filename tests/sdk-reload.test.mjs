@@ -3,8 +3,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import { patchDomesticLoginReload } from '../scripts/patch-frontend.mjs';
+import { profile, findSource } from './frontend-context.mjs';
 
-const original = await readFile(new URL('../frontend/assets/useLogin-xp7tYXSp.js', import.meta.url), 'utf8');
+const original = profile.region === 'CN'
+  ? findSource(source => source.includes('async function we(e=!1)')).source
+  : await readFile(new URL('./fixtures/domestic-sdk-loader.js', import.meta.url), 'utf8');
 const renderer = await readFile(new URL('./fixtures/kuro-sdk-preact.js', import.meta.url), 'utf8');
 const patched = patchDomesticLoginReload(original);
 const loader = patched.slice(patched.indexOf('async function we(e=!1)'), patched.indexOf('async function me()'));
@@ -26,7 +29,7 @@ function setup({ loaded = true, root = { childNodes: [], firstChild: null } } = 
   const context = vm.createContext({
     document, console,
     window: { setTimeout() { return 1; }, clearTimeout() {} },
-    E: null, S: null, b: null, x: 0, u: 'ready', te: null, W: 0, We: 8000,
+    E: null, S: null, b: null, P: null, x: 0, u: 'ready', te: null, W: 0, We: 8000,
     $: () => loaded, re: () => actions.push('existing-sdk-initialized'),
     tn: () => oldScript.src, l() {}, c() {},
   });

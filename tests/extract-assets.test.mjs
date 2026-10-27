@@ -3,6 +3,7 @@ import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import { profile } from './frontend-context.mjs';
 import { brotliCompressSync } from 'node:zlib';
 import { extractAssets, findAssetEntries, findEmbeddedNsis, inspectStaticReferences, readPe, safeAssetPath } from '../scripts/extract-assets.mjs';
 
@@ -103,7 +104,7 @@ test('finds embedded NSIS by PE section end and bounded NSIS header', () => {
 });
 
 test('all static references in the recovered production frontend exist', async () => {
-  const root = path.resolve(import.meta.dirname, '../frontend');
+  const root = path.resolve(import.meta.dirname, '..', profile.frontendDir);
   const entries = [];
   async function visit(directory) {
     for (const item of await readdir(directory, { withFileTypes: true })) {

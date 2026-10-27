@@ -1,0 +1,27 @@
+{
+  "productName": "Wuwa Tappo Global Mac",
+  "version": "1.0.1",
+  "identifier": "dev.w33d.wuwatappo.global.mac",
+  "build": {
+    "frontendDist": "../build/frontend-global"
+  },
+  "app": {
+    "security": {
+      "capabilities": [
+        "desktop",
+        {
+          "identifier": "global-oauth",
+          "description": "Global official browser login callbacks",
+          "windows": ["main"],
+          "permissions": ["deep-link:allow-get-current"]
+        }
+      ]
+    }
+  },
+  "bundle": {
+    "icon": ["icons-global/icon.icns", "icons-global/32x32.png", "icons-global/128x128.png", "icons-global/128x128@2x.png"],
+    "macOS": {
+      "infoPlist": "Info.global.plist"
+    }
+  }
+}

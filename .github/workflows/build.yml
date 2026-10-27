@@ -14,9 +14,19 @@ permissions:
 
 jobs:
   build:
+    name: ${{ matrix.region }}
     runs-on: macos-15
     timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - region: cn
+            artifact: CN
+          - region: global
+            artifact: Global
     env:
+      WUWA_REGION: ${{ matrix.region }}
       MACOSX_DEPLOYMENT_TARGET: '13.0'
       CARGO_INCREMENTAL: '0'
     steps:
@@ -41,34 +51,32 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             src-tauri/target
-          key: macos-arm64-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
+          key: macos-arm64-${{ matrix.region }}-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
       - run: npm ci
-      - name: Restore verified official CN resources
-        run: node scripts/sync-upstream.mjs
-      - name: Prepare native build inputs
-        run: npm run icons && npm run prepare:frontend
+      - name: Prepare verified regional resources and native build inputs
+        run: npm run setup
       - name: Test frontend contracts and native backend
         id: native-tests
         run: |
           npm test
-          cargo test --locked --manifest-path src-tauri/Cargo.toml
+          npm run test:rust
       - name: Build complete application
         run: npm run build -- -- --locked
       - name: Verify and package ZIP and DMG
         run: |
           set -o pipefail
-          bash scripts/package-macos.sh 2>&1 | tee .work/package-macos.log
+          npm run package 2>&1 | tee .work/package-macos.log
       - name: Keep packaging diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: macos-package-diagnostics
+          name: macos-package-diagnostics-${{ matrix.region }}
           path: .work/package-macos.log
           if-no-files-found: ignore
           retention-days: 14
       - uses: actions/upload-artifact@v4
         with:
-          name: WuwaTappo-CN-Mac-arm64
+          name: WuwaTappo-${{ matrix.artifact }}-Mac-arm64
           path: |
             dist/*.zip
             dist/*.dmg

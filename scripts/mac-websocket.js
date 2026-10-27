@@ -2,7 +2,7 @@
   'use strict';
   const BrowserWebSocket = window.WebSocket;
   if (!BrowserWebSocket || window.__WUWATAPPO_WEBSOCKET__) return;
-  const host = 'api-mc-wuwatappo.kurogames-global.com';
+  const host = window.__WUWATAPPO_PROFILE__?.socketHost ?? 'api-mc-wuwatappo.kurogames-global.com';
   const viewId = Math.random().toString(36).slice(2);
   let nextId = 0;
   const active = new Set();

@@ -1,0 +1,2 @@
+// OAuth state-filter fixture from official Global 1.0.1; original resources retain their own rights.
+async function handleRawUrls(e){for(const t of e){const n=parseOverseasAuthCallback(t);if(!n)continue;const s=`overseas-oauth-done-${n.state}`;try{if(localStorage.getItem(s))continue;if(!assertPendingStateMatches(n.state)){errorHandler?.(new Error("海外登录回调 state 无效或已过期"));continue}localStorage.setItem(s,"1"),clearPendingState()}catch{if(!assertPendingStateMatches(n.state))continue;clearPendingState()}try{await successHandler?.(n)}catch(o){errorHandler?.(o)}}}

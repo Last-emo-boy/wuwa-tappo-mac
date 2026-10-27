@@ -5,19 +5,19 @@ import path from 'node:path';
 import test from 'node:test';
 import { inventoryAssets } from '../scripts/inventory-contract.mjs';
 
-const contract = JSON.parse(fs.readFileSync(new URL('./contracts.json', import.meta.url), 'utf8'));
+import { contract, profile, root, assetDirectory } from './frontend-context.mjs';
 const runtimeCommands = contract.commands.filter(item => item.kind === 'application' && item.scopes.includes('application-runtime'));
 
-test('CN runtime and Windows installer have separate exhaustive inventories', () => {
+test('selected region runtime and Windows installer have separate exhaustive inventories', () => {
   assert.equal(runtimeCommands.length, 50);
-  assert.equal(contract.commands.filter(item => item.kind === 'application' && item.scopes.includes('windows-installer')).length, 9);
-  assert.equal(contract.commands.filter(item => item.kind === 'plugin').length, 119);
-  assert.equal(contract.events.length, 58);
-  assert.equal(contract.sourceApplication.region, 'CN');
-  assert.equal(contract.sourceApplication.entryModule, 'index-BPErPBFh.js');
-  assert.ok(!Object.hasOwn(contract.runtimeConstants, 'authCallbackScheme'));
-  assert.ok(!contract.commands.some(item => item.name === 'plugin:deep-link|get_current'));
-  assert.ok(!contract.events.some(item => item.name === 'deep-link://new-url'));
+  assert.equal(contract.commands.filter(item => item.kind === 'application' && item.scopes.includes('windows-installer')).length, profile.id === 'cn' ? 9 : 11);
+  assert.equal(contract.commands.filter(item => item.kind === 'plugin').length, profile.id === 'cn' ? 119 : 120);
+  assert.equal(contract.events.length, profile.id === 'cn' ? 59 : 60);
+  assert.equal(contract.sourceApplication.region, profile.region);
+  assert.equal(contract.sourceApplication.version, JSON.parse(fs.readFileSync(path.join(root, profile.upstreamLock), 'utf8')).version);
+  assert.equal(Object.hasOwn(contract.runtimeConstants, 'authCallbackScheme'), profile.id === 'global');
+  assert.equal(contract.commands.some(item => item.name === 'plugin:deep-link|get_current'), profile.id === 'global');
+  assert.equal(contract.events.some(item => item.name === 'deep-link://new-url'), profile.id === 'global');
   assert.equal(new Set(contract.commands.map(item => item.name)).size, contract.commands.length);
   for (const item of runtimeCommands) {
     assert.ok(item.response, `${item.name} requires a consumer response contract`);
@@ -27,6 +27,11 @@ test('CN runtime and Windows installer have separate exhaustive inventories', ()
   assert.ok(contract.commands.find(item => item.name === 'start_silent_nsis_install').scopes.every(scope => scope === 'windows-installer'));
 });
 
+test('committed inventory matches every call site in the selected upstream version', () => {
+  const lock = JSON.parse(fs.readFileSync(path.join(root, profile.upstreamLock), 'utf8'));
+  assert.deepEqual(inventoryAssets(assetDirectory, { version: lock.version }), contract);
+});
+
 test('all command and event evidence preserves JavaScript and UTF-8 byte ranges', () => {
   for (const entry of [...contract.commands, ...contract.events]) for (const site of entry.callSites) {
     assert.equal(site.charRange[1] - site.charRange[0], site.source.length, `${entry.name}: char range`);
@@ -34,7 +39,7 @@ test('all command and event evidence preserves JavaScript and UTF-8 byte ranges'
     assert.ok(site.file.endsWith('.js'));
     assert.ok(site.context.includes(site.source));
   }
-  assert.ok(contract.commands.find(item => item.name === 'get_boot_diagnostics').callSites.some(site => site.callee === 'kt'));
+  assert.ok(contract.commands.find(item => item.name === 'get_boot_diagnostics').callSites.some(site => site.callee !== 'invoke'));
   assert.ok(contract.commands.find(item => item.name === 'open_panel_window').callSites.some(site => site.callee === '_'));
 });
 
@@ -62,11 +67,11 @@ test('keyboard and mouse payloads cannot accidentally share a count stream', () 
 
 test('storage retains account/environment identity and intentional zero counts', () => {
   const find = name => contract.commands.find(item => item.name === name);
-  assert.equal(contract.runtimeConstants.clickCacheEnvironment, 'cn-cn-prod');
+  assert.equal(contract.runtimeConstants.clickCacheEnvironment, profile.id === 'cn' ? 'cn-cn-prod' : 'global-global-prod');
   assert.equal(find('load_key_press_count').response.maximum, Number.MAX_SAFE_INTEGER);
   assert.equal(find('save_key_press_count').request.properties.count.minimum, 0);
   assert.deepEqual(Object.keys(find('load_cumulative_click_count').response.properties).sort(), ['count', 'cuid', 'environment']);
-  assert.equal(find('save_cumulative_click_count').request.properties.environment.value, 'cn-cn-prod');
+  assert.equal(find('save_cumulative_click_count').request.properties.environment.value, contract.runtimeConstants.clickCacheEnvironment);
 });
 
 test('settings and monitor events preserve their object payload envelopes', () => {

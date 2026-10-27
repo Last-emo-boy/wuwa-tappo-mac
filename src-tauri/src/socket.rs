@@ -1,4 +1,5 @@
 use futures_util::{future::AbortHandle, future::Abortable, SinkExt, StreamExt};
+use crate::profile::Region;
 use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -19,7 +20,6 @@ use tokio_tungstenite::{
     },
 };
 
-const HOST: &str = "api-mc-wuwatappo.kurogames-global.com";
 const MAX_MESSAGE_BYTES: usize = 8 * 1024 * 1024;
 const CONNECT_TIMEOUT: Duration = Duration::from_secs(10);
 const CLOSE_TIMEOUT: Duration = Duration::from_secs(5);
@@ -72,17 +72,17 @@ pub enum SocketData {
     Binary(Vec<u8>),
 }
 
-fn validate_destination(value: &str) -> Result<Url, String> {
+fn validate_destination(region: Region, value: &str) -> Result<Url, String> {
     let url = Url::parse(value).map_err(|_| "Invalid WebSocket URL")?;
     if url.scheme() != "wss"
-        || url.host_str() != Some(HOST)
+        || url.host_str() != Some(region.api_host())
         || url.port_or_known_default() != Some(443)
         || url.path() != "/socket.io/"
         || !url.username().is_empty()
         || url.password().is_some()
         || url.fragment().is_some()
     {
-        return Err("Only the official CN WebSocket endpoint is allowed".into());
+        return Err("Only the current region's official WebSocket endpoint is allowed".into());
     }
     Ok(url)
 }
@@ -280,7 +280,8 @@ pub fn native_ws_connect(
     events: Channel<SocketEvent>,
 ) -> Result<(), String> {
     let key = caller_key(&window, &id)?;
-    let request = request_for(&validate_destination(&url)?, &protocols)?;
+    let region = Region::from_app(window.app_handle());
+    let request = request_for(&validate_destination(region, &url)?, &protocols)?;
     let (sender, receiver) = mpsc::channel(32);
     let (abort, registration) = AbortHandle::new_pair();
     let generation = Arc::new(());
@@ -418,10 +419,11 @@ pub fn shutdown(app: &AppHandle) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    const HOST: &str = "api-mc-wuwatappo.kurogames-global.com";
 
     #[test]
     fn endpoint_is_exact_and_never_adds_origin_or_cookie() {
-        let url = validate_destination(&format!(
+        let url = validate_destination(Region::Cn, &format!(
             "wss://{HOST}/socket.io/?EIO=3&transport=websocket&token=synthetic"
         ))
         .unwrap();
@@ -436,8 +438,18 @@ mod tests {
             format!("wss://user@{HOST}/socket.io/"),
             format!("wss://{HOST}/socket.io/#fragment"),
         ] {
-            assert!(validate_destination(&value).is_err());
+            assert!(validate_destination(Region::Cn, &value).is_err());
         }
+    }
+
+    #[test]
+    fn each_application_rejects_the_other_regions_socket_endpoint() {
+        let cn = format!("wss://{}/socket.io/", Region::Cn.api_host());
+        let global = format!("wss://{}/socket.io/", Region::Global.api_host());
+        assert!(validate_destination(Region::Cn, &cn).is_ok());
+        assert!(validate_destination(Region::Global, &global).is_ok());
+        assert!(validate_destination(Region::Cn, &global).is_err());
+        assert!(validate_destination(Region::Global, &cn).is_err());
     }
 
     #[test]
@@ -460,7 +472,7 @@ mod tests {
 
     #[test]
     fn subprotocol_and_close_inputs_follow_websocket_rules() {
-        let url = validate_destination(&format!("wss://{HOST}/socket.io/")).unwrap();
+        let url = validate_destination(Region::Cn, &format!("wss://{HOST}/socket.io/")).unwrap();
         assert_eq!(
             request_for(&url, &["sample.v1".into()]).unwrap().headers()
                 [header::SEC_WEBSOCKET_PROTOCOL],

@@ -7,7 +7,7 @@ const script = await readFile(new URL('../scripts/mac-websocket.js', import.meta
 const url = 'wss://api-mc-wuwatappo.kurogames-global.com/socket.io/?EIO=3&transport=websocket&token=synthetic';
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
-function environment({ early = false, failConnect = false, failSend = false } = {}) {
+function environment({ early = false, failConnect = false, failSend = false, profile } = {}) {
   const calls = [];
   const channels = [];
   const warnings = [];
@@ -31,6 +31,7 @@ function environment({ early = false, failConnect = false, failSend = false } = 
     },
   };
   window.WebSocket = BrowserWebSocket;
+  if (profile) window.__WUWATAPPO_PROFILE__ = profile;
   if (!early) window.__TAURI__ = { core };
   class CloseEvent extends Event {
     constructor(type, init) { super(type); Object.assign(this, init); }
@@ -210,4 +211,14 @@ test('pagehide requests cleanup of live native sockets', async () => {
   assert.notEqual(env.calls[0].args.id, env.calls[1].args.id);
   assert.equal(first.readyState, first.CLOSING);
   assert.equal(second.readyState, second.CLOSING);
+});
+
+test('GLOBAL profile sends only its regional Socket.IO endpoint through the native bridge', async () => {
+  const globalUrl = url.replace('api-mc-', 'api-wutheringwaves-');
+  const env = environment({ profile: { region: 'GLOBAL', socketHost: 'api-wutheringwaves-wuwatappo.kurogames-global.com' } });
+  assert.ok(new env.window.WebSocket(url) instanceof env.BrowserWebSocket);
+  new env.window.WebSocket(globalUrl);
+  await tick();
+  assert.equal(env.calls.length, 1);
+  assert.equal(env.calls[0].args.url, globalUrl);
 });

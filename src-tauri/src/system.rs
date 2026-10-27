@@ -1,3 +1,4 @@
+use crate::profile::Region;
 use serde_json::{json, Value};
 use std::{
     ffi::c_void,
@@ -18,7 +19,7 @@ const MAX_MESSAGE_CHARS: usize = 32 * 1024;
 const MAX_MANIFEST_BYTES: u64 = 2 * 1024 * 1024;
 static LOG_WRITE_LOCK: OnceLock<Mutex<()>> = OnceLock::new();
 
-// These describe the recovered global-prod frontend, not Rust's compilation profile.
+// These describe the recovered production frontends, not Rust's compilation profile.
 const INTERNAL_TESTING_BUILD: bool = false;
 const DEVTOOLS_HOTKEYS_BUILD: bool = false;
 
@@ -521,22 +522,20 @@ pub fn open_log_dir(app: &AppHandle) -> Result<(), String> {
         .map_err(|e| e.to_string())
 }
 
-fn validate_manifest_endpoint(endpoint: &str) -> Result<reqwest::Url, String> {
+fn validate_manifest_endpoint(region: Region, endpoint: &str) -> Result<reqwest::Url, String> {
     let url = reqwest::Url::parse(endpoint).map_err(|_| "invalid update manifest URL")?;
     let host = url.host_str().ok_or("update manifest URL has no host")?;
     if url.scheme() != "https" || !url.username().is_empty() || url.password().is_some() {
         return Err("update manifest must use HTTPS without credentials".into());
     }
-    if !(host.ends_with(".kurogames-global.com")
-        || host.ends_with(".kurogames.com")
-        || host.ends_with(".kurogame.com"))
+    if host != region.asset_host() || url.port_or_known_default() != Some(443) || url.fragment().is_some()
     {
-        return Err("update manifest is outside the official Kuro distribution hosts".into());
+        return Err("update manifest is outside the current region official distribution host".into());
     }
     Ok(url)
 }
 
-fn mac_update_status(manifest: &Value, target: &str) -> Result<Value, String> {
+fn mac_update_status(manifest: &Value, target: &str, region: Region) -> Result<Value, String> {
     let platforms = manifest
         .get("platforms")
         .and_then(Value::as_object)
@@ -548,7 +547,7 @@ fn mac_update_status(manifest: &Value, target: &str) -> Result<Value, String> {
         .get("url")
         .and_then(Value::as_str)
         .ok_or("macOS 更新清单缺少下载地址")?;
-    let url = validate_manifest_endpoint(url)?;
+    let url = validate_manifest_endpoint(region, url)?;
     if url.path().to_ascii_lowercase().ends_with(".exe")
         || url.path().to_ascii_lowercase().ends_with(".msi")
     {
@@ -564,8 +563,8 @@ fn mac_update_status(manifest: &Value, target: &str) -> Result<Value, String> {
     Err("检测到 macOS 更新，但此重建版尚未配置可信更新签名；请手动更新 Mac 应用。".into())
 }
 
-fn check_app_update(endpoint: &str) -> Result<Value, String> {
-    let url = validate_manifest_endpoint(endpoint)?;
+fn check_app_update(region: Region, endpoint: &str) -> Result<Value, String> {
+    let url = validate_manifest_endpoint(region, endpoint)?;
     let client = reqwest::blocking::Client::builder()
         .timeout(Duration::from_secs(20))
         .redirect(reqwest::redirect::Policy::none())
@@ -596,7 +595,7 @@ fn check_app_update(endpoint: &str) -> Result<Value, String> {
         "x86_64" => "darwin-x86_64",
         _ => return Err("此 Mac 架构没有更新通道".into()),
     };
-    mac_update_status(&manifest, target)
+    mac_update_status(&manifest, target, region)
 }
 
 pub fn dispatch(app: &AppHandle, command: &str, args: &Value) -> Option<Result<Value, String>> {
@@ -616,7 +615,7 @@ pub fn dispatch(app: &AppHandle, command: &str, args: &Value) -> Option<Result<V
             }
         }
         "check_app_update" => match args.get("endpoint").and_then(Value::as_str) {
-            Some(endpoint) => check_app_update(endpoint),
+            Some(endpoint) => check_app_update(Region::from_app(app), endpoint),
             None => Err("check_app_update requires a manifest endpoint".into()),
         },
         "is_devtools_hotkeys_build" => Ok(json!(DEVTOOLS_HOTKEYS_BUILD)),
@@ -749,40 +748,51 @@ mod tests {
     #[test]
     fn windows_update_never_becomes_a_mac_update() {
         let manifest = json!({ "version": "1.0.0", "platforms": { "windows-x86_64": { "url": "https://wutheringwaves-wuwatappo.kurogames-global.com/setup.exe", "signature": "signature" } } });
-        let error = mac_update_status(&manifest, "darwin-aarch64").unwrap_err();
+        let error = mac_update_status(&manifest, "darwin-aarch64", Region::Global).unwrap_err();
         assert!(error.contains("没有适用于此 Mac"));
         let disguised = json!({ "platforms": { "darwin-aarch64": { "url": "https://wutheringwaves-wuwatappo.kurogames-global.com/setup.exe", "signature": "signature" } } });
-        assert!(mac_update_status(&disguised, "darwin-aarch64")
+        assert!(mac_update_status(&disguised, "darwin-aarch64", Region::Global)
             .unwrap_err()
             .contains("Windows 安装包"));
     }
 
     #[test]
     fn malformed_and_unsigned_manifests_fail_explicitly() {
-        assert!(mac_update_status(&json!({}), "darwin-aarch64").is_err());
+        assert!(mac_update_status(&json!({}), "darwin-aarch64", Region::Global).is_err());
         let unsigned = json!({ "platforms": { "darwin-aarch64": { "url": "https://wutheringwaves-wuwatappo.kurogames-global.com/mac.tar.gz" } } });
-        assert!(mac_update_status(&unsigned, "darwin-aarch64")
+        assert!(mac_update_status(&unsigned, "darwin-aarch64", Region::Global)
             .unwrap_err()
             .contains("缺少签名"));
     }
 
     #[test]
     fn manifest_endpoints_require_official_https_hosts() {
-        assert!(validate_manifest_endpoint(
+        assert!(validate_manifest_endpoint(Region::Global,
             "https://wutheringwaves-wuwatappo.kurogames-global.com/app/latest.json"
         )
         .is_ok());
-        assert!(validate_manifest_endpoint(
+        assert!(validate_manifest_endpoint(Region::Global,
             "https://kurogames-global.com.evil.example/latest.json"
         )
         .is_err());
-        assert!(validate_manifest_endpoint(
+        assert!(validate_manifest_endpoint(Region::Global,
             "http://wutheringwaves-wuwatappo.kurogames-global.com/latest.json"
         )
         .is_err());
-        assert!(validate_manifest_endpoint(
+        assert!(validate_manifest_endpoint(Region::Global,
             "https://user:pass@wutheringwaves-wuwatappo.kurogames-global.com/latest.json"
         )
         .is_err());
+    }
+
+    #[test]
+    fn manifests_are_bound_to_the_current_application_region() {
+        let cn = format!("https://{}/app/version-json/latest.json", Region::Cn.asset_host());
+        let global = format!("https://{}/app/version-json/latest-global.json", Region::Global.asset_host());
+        assert!(validate_manifest_endpoint(Region::Cn, &cn).is_ok());
+        assert!(validate_manifest_endpoint(Region::Global, &global).is_ok());
+        assert!(validate_manifest_endpoint(Region::Cn, &global).is_err());
+        assert!(validate_manifest_endpoint(Region::Global, &cn).is_err());
+        assert!(validate_manifest_endpoint(Region::Global, &format!("https://{}:444/latest.json", Region::Global.asset_host())).is_err());
     }
 }

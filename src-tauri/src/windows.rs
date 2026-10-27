@@ -45,6 +45,7 @@ pub const COMMANDS: &[&str] = &[
     "resize_login_window_to_content",
     "set_main_force_cursor_ignore",
     "set_main_hit_region",
+    "set_main_skip_taskbar",
     "set_main_swallow_mouse",
     "set_main_window_content_bounds",
     "set_main_window_fullscreen_shell",
@@ -112,7 +113,8 @@ fn main_window(app: &AppHandle) -> Result<WebviewWindow, String> {
 fn initialize(app: &AppHandle, label: &str) -> Result<String, String> {
     let script = app.state::<SessionStore>().initialization_script()?;
     let mut initialization = format!(
-        "{script}\n{}\n{}",
+        "{}\n{script}\n{}\n{}",
+        crate::profile::Region::from_app(app).initialization_script(),
         include_str!("../../scripts/mac-websocket.js"),
         include_str!("../../scripts/mac-platform.js")
     );
@@ -165,11 +167,7 @@ fn build_window(
         label,
         WebviewUrl::App(format!("index.html#{route}").into()),
     )
-    .title(if label == "main" {
-        "Wuwa Tappo CN Mac"
-    } else {
-        "Wuwa Tappo"
-    })
+    .title(crate::profile::Region::from_app(app).name())
     .initialization_script(initialize(app, label)?)
     .on_page_load(|window, payload| {
         if matches!(payload.event(), tauri::webview::PageLoadEvent::Started) {
@@ -637,6 +635,11 @@ pub fn dispatch(
         "ensure_main_taskbar_icon" => {
             app.set_dock_visibility(true).map_err(err)?;
             main_window(app)?.set_skip_taskbar(false).map_err(err)?;
+        }
+        "set_main_skip_taskbar" => {
+            let skip = args.get("skip").and_then(Value::as_bool).ok_or("Missing skip state")?;
+            app.set_dock_visibility(!skip).map_err(err)?;
+            main_window(app)?.set_skip_taskbar(skip).map_err(err)?;
         }
         "show_toast_overlay" => {
             let w = if let Some(w) = app.get_webview_window("toast") {

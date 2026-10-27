@@ -1,9 +1,11 @@
 /node_modules/
 /frontend/
+/frontend-global/
 /build/
 /dist/
 /src-tauri/target/
 /src-tauri/icons/
+/src-tauri/icons-global/
 /src-tauri/gen/
 /.work/
 /.cargo-check.log

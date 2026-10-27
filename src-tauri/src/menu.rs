@@ -214,7 +214,7 @@ fn context_menu(
 }
 
 fn application_menu(app: &AppHandle, options: &MenuOptions) -> tauri::Result<Menu<tauri::Wry>> {
-    let application = Submenu::new(app, "Wuwa Tappo", true)?;
+    let application = Submenu::new(app, crate::profile::Region::from_app(app).name(), true)?;
     application.append(&MenuItem::with_id(
         app,
         "open-about",
@@ -321,11 +321,10 @@ pub fn setup(app: &AppHandle) -> Result<(), String> {
     let options = MenuOptions::default();
     let tray_menu = context_menu(app, &options, true).map_err(|e| e.to_string())?;
     let context = context_menu(app, &options, false).map_err(|e| e.to_string())?;
-    let icon = tauri::image::Image::from_bytes(include_bytes!("../../frontend/app-icon.png"))
-        .map_err(|e| e.to_string())?;
+    let icon = app.default_window_icon().cloned().ok_or("Application icon is unavailable")?;
     let tray = TrayIconBuilder::with_id(TRAY_ID)
         .icon(icon)
-        .tooltip("Wuwa Tappo")
+        .tooltip(crate::profile::Region::from_app(app).name())
         .menu(&tray_menu)
         .show_menu_on_left_click(true)
         .build(app)

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "region": "GLOBAL",
+  "version": "1.0.1",
+  "manifestUrl": "https://wutheringwaves-wuwatappo.kurogames-global.com/app/version-json/latest-global.json?t=1793027526",
+  "installer": {
+    "url": "https://wutheringwaves-wuwatappo.kurogames-global.com/app/1b6fa8d8-f1d5-435f-a30f-06a02ff2fc76/WuwaTappo-global_1.0.1_x64-setup.exe",
+    "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSSnV4aU5ob1MxTGJ1YmJ3NG11dWdUMTYrdWUza21RRTVXTnhtUEhNbmxHZm5NNUw5Wmk2ZCswMmtSTEQyTjJoNU1OSHhZNjh1bW1VTjBEMjRTY3lBMTZVWWR1dDFSRndJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMDI3MDA3CWZpbGU6V3V3YVRhcHBvLWdsb2JhbF8xLjAuMV94NjQtc2V0dXAuZXhlCkJrRU54TlhhbFVQQ1NYRHcrTHE5R1pKOWd2REdiV0lpTGtPV2xpOE9ac0VVWTRVTlI1R2liRkdBSDVlamxZTmxMVDJTMGtjb2ZFOE5FR2pzenh0bERnPT0K",
+    "sha256": "31105cc880269afeca9e2a5fe6b671d95c80080daaa67cf9015419d732e3da12",
+    "size": 201640672
+  }
+}

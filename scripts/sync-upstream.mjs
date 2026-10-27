@@ -3,53 +3,58 @@ import { createHash } from 'node:crypto';
 import { access, mkdir, mkdtemp, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getRegionProfile } from './regions.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-export const configUrl = 'https://api-mc-wuwatappo.kurogames-global.com/api/common/activity-config';
-export const assetsOrigin = 'https://mc-wuwatappo.kurogames-global.com';
+const cn = getRegionProfile('cn');
+export const configUrl = cn.configUrl;
+export const assetsOrigin = cn.assetsOrigin;
 
-export function officialAssetUrl(value) {
+export function officialAssetUrl(value, profile = cn) {
   const url = new URL(value);
-  if (url.origin !== assetsOrigin || url.username || url.password || url.hash) {
-    throw new Error('资源地址必须来自国服官方 HTTPS 域名。');
+  if (url.origin !== profile.assetsOrigin || url.username || url.password || url.hash) {
+    throw new Error(`资源地址必须来自${profile.region === 'CN' ? '国服' : '国际服'}官方 HTTPS 域名。`);
   }
   return url.href;
 }
 
-export function parseManifest(manifest, manifestUrl) {
-  officialAssetUrl(manifestUrl);
+export function parseManifest(manifest, manifestUrl, profile = cn) {
+  officialAssetUrl(manifestUrl, profile);
   const version = manifest?.version;
   if (typeof version !== 'string' || !/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(version)) {
     throw new Error('官方版本号无效。');
   }
-  const url = officialAssetUrl(manifest?.platforms?.['windows-x86_64']?.url);
-  if (new URL(url).pathname.split('/').at(-1) !== `WuwaTappo-cn_${version}_x64-setup.exe`) {
-    throw new Error('官方清单必须提供与版本一致的国服安装包。');
+  const url = officialAssetUrl(manifest?.platforms?.['windows-x86_64']?.url, profile);
+  if (new URL(url).pathname.split('/').at(-1) !== `WuwaTappo-${profile.id}_${version}_x64-setup.exe`) {
+    throw new Error(`官方清单必须提供与版本一致的${profile.region === 'CN' ? '国服' : '国际服'}安装包。`);
   }
   const signature = manifest.platforms['windows-x86_64'].signature;
   if (typeof signature !== 'string' || !signature.trim()) throw new Error('官方清单缺少安装包签名。');
-  return { schemaVersion: 1, region: 'CN', version, manifestUrl, installer: { url, signature } };
+  return { schemaVersion: 1, region: profile.region, version, manifestUrl, installer: { url, signature } };
 }
 
-export function validateLock(lock) {
-  if (lock?.schemaVersion !== 1 || lock.region !== 'CN') throw new Error('资源锁必须是 schemaVersion 1 的国服配置。');
-  parseManifest({ version: lock.version, platforms: { 'windows-x86_64': lock.installer } }, lock.manifestUrl);
+export function validateLock(lock, profile = cn) {
+  if (lock?.schemaVersion !== 1 || lock.region !== profile.region) throw new Error(`资源锁必须是 schemaVersion 1 的 ${profile.region} 配置。`);
+  parseManifest({ version: lock.version, platforms: { 'windows-x86_64': lock.installer } }, lock.manifestUrl, profile);
   if (!/^[a-f0-9]{64}$/.test(lock.installer.sha256) || !Number.isSafeInteger(lock.installer.size) || lock.installer.size <= 0) {
     throw new Error('资源锁缺少有效的 SHA-256 或文件大小。');
   }
   return lock;
 }
 
-export function verifyInstaller(bytes, lock) {
-  validateLock(lock);
-  if (bytes.length !== lock.installer.size) throw new Error('国服安装包大小不匹配，请重新下载锁定版本。');
+export function verifyInstaller(bytes, lock, profile = cn) {
+  validateLock(lock, profile);
+  if (bytes.length !== lock.installer.size) throw new Error(`${profile.region} 安装包大小不匹配，请重新下载锁定版本。`);
   const sha256 = createHash('sha256').update(bytes).digest('hex');
-  if (sha256 !== lock.installer.sha256) throw new Error('国服安装包 SHA-256 不匹配，已停止构建。');
+  if (sha256 !== lock.installer.sha256) throw new Error(`${profile.region} 安装包 SHA-256 不匹配，已停止构建。`);
   return { sha256, size: bytes.length };
 }
 
 export function compareUpstream(current, latest) {
+  if (current.region !== latest.region) throw new Error('不能比较不同服务器的资源锁。');
   return {
+    region: latest.region,
+    regionId: latest.region.toLowerCase(),
     changed: current.version !== latest.version || current.installer.url !== latest.installer.url || current.installer.signature !== latest.installer.signature,
     currentVersion: current.version,
     latestVersion: latest.version,
@@ -63,14 +68,14 @@ async function fetchJson(url, fetcher) {
   return response.json();
 }
 
-export async function discoverUpstream(fetcher = fetch) {
-  const config = await fetchJson(configUrl, fetcher);
-  if (config.code !== 0 || typeof config.data?.assets_host !== 'string') throw new Error('国服活动配置无效。');
-  const host = officialAssetUrl(config.data.assets_host);
-  if (new URL(host).pathname !== '/') throw new Error('国服资源根地址无效。');
-  const pointer = await fetchJson(new URL('/app/json-host/latest_host.json', host).href, fetcher);
-  const manifestUrl = officialAssetUrl(pointer.url);
-  return parseManifest(await fetchJson(manifestUrl, fetcher), manifestUrl);
+export async function discoverUpstream(fetcher = fetch, profile = cn) {
+  const config = await fetchJson(profile.configUrl, fetcher);
+  if (config.code !== 0 || typeof config.data?.assets_host !== 'string') throw new Error(`${profile.region} 活动配置无效。`);
+  const host = officialAssetUrl(config.data.assets_host, profile);
+  if (new URL(host).pathname !== '/') throw new Error(`${profile.region} 资源根地址无效。`);
+  const pointer = await fetchJson(new URL(`/app/json-host/${profile.updaterHostFile}`, host).href, fetcher);
+  const manifestUrl = officialAssetUrl(pointer.url, profile);
+  return parseManifest(await fetchJson(manifestUrl, fetcher), manifestUrl, profile);
 }
 
 async function exists(filename) {
@@ -87,15 +92,15 @@ export function findSevenZip(explicit, environment = process.env) {
   throw new Error('未找到 7-Zip。请先安装 7zip，或通过 --sevenzip /路径/7zz 指定。');
 }
 
-async function installerBytes(lock, options, work) {
+async function installerBytes(lock, options, work, profile) {
   if (options.installer) return { filename: path.resolve(options.installer), bytes: await readFile(options.installer) };
   const parts = new URL(lock.installer.url).pathname.split('/').filter(Boolean).map(encodeURIComponent);
   const filename = path.join(work, 'installers', ...parts);
   if (!options.updateLock && await exists(filename)) return { filename, bytes: await readFile(filename) };
   const response = await fetch(lock.installer.url, { redirect: 'error', signal: AbortSignal.timeout(300_000) });
-  if (!response.ok) throw new Error(`下载国服安装包失败：HTTP ${response.status}`);
+  if (!response.ok) throw new Error(`下载 ${profile.region} 安装包失败：HTTP ${response.status}`);
   const bytes = Buffer.from(await response.arrayBuffer());
-  if (lock.installer.sha256) verifyInstaller(bytes, lock);
+  if (lock.installer.sha256) verifyInstaller(bytes, lock, profile);
   await mkdir(path.dirname(filename), { recursive: true });
   await writeFile(`${filename}.download`, bytes);
   await rename(`${filename}.download`, filename);
@@ -103,38 +108,39 @@ async function installerBytes(lock, options, work) {
 }
 
 export async function syncUpstream(options = {}, projectRoot = root) {
-  const lockPath = path.join(projectRoot, 'upstream-cn.json');
-  const current = validateLock(JSON.parse(await readFile(lockPath, 'utf8')));
-  const latest = options.check || options.updateLock ? await discoverUpstream() : current;
+  const profile = getRegionProfile();
+  const lockPath = path.join(projectRoot, profile.upstreamLock);
+  const current = validateLock(JSON.parse(await readFile(lockPath, 'utf8')), profile);
+  const latest = options.check || options.updateLock ? await discoverUpstream(fetch, profile) : current;
   const comparison = compareUpstream(current, latest);
   if (options.check) return comparison;
   const target = options.updateLock ? latest : current;
   const sevenzip = findSevenZip(options.sevenzip);
   const work = path.join(projectRoot, '.work');
   await mkdir(work, { recursive: true });
-  const { filename, bytes } = await installerBytes(target, options, work);
+  const { filename, bytes } = await installerBytes(target, options, work, profile);
   if (options.updateLock) {
     target.installer = { ...target.installer, sha256: createHash('sha256').update(bytes).digest('hex'), size: bytes.length };
     // A same-version download must not silently replace a previously pinned artifact.
-    if (!comparison.changed) verifyInstaller(bytes, current);
+    if (!comparison.changed) verifyInstaller(bytes, current, profile);
   }
-  verifyInstaller(bytes, target);
-  const staging = await mkdtemp(path.join(work, 'upstream-'));
+  verifyInstaller(bytes, target, profile);
+  const staging = await mkdtemp(path.join(work, `upstream-${profile.id}-`));
   const output = path.join(staging, 'frontend');
-  const frontend = path.join(projectRoot, 'frontend');
+  const frontend = path.join(projectRoot, profile.frontendDir);
   const backup = path.join(staging, 'previous-frontend');
   try {
     const result = spawnSync(process.execPath, [path.join(projectRoot, 'scripts/extract-assets.mjs'),
       '--installer', filename, '--sevenzip', sevenzip, '--output', output], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
     if (result.error) throw result.error;
-    if (result.status !== 0) throw new Error(`国服资源提取失败：${result.stderr.trim() || result.stdout.trim()}`);
+    if (result.status !== 0) throw new Error(`${profile.region} 资源提取失败：${result.stderr.trim() || result.stdout.trim()}`);
     const extracted = JSON.parse(result.stdout);
     const hadFrontend = await exists(frontend);
     if (hadFrontend) await rename(frontend, backup);
     try { await rename(output, frontend); }
     catch (error) { if (hadFrontend) await rename(backup, frontend); throw error; }
     if (options.updateLock) await writeFile(lockPath, `${JSON.stringify(target, null, 2)}\n`);
-    await writeFile(path.join(work, 'upstream-extraction.json'), result.stdout);
+    await writeFile(path.join(work, profile.id === 'cn' ? 'upstream-extraction.json' : `upstream-${profile.id}-extraction.json`), result.stdout);
     return { ...comparison, version: target.version, region: target.region, files: extracted.count, staticReferences: extracted.staticReferences };
   } finally { await rm(staging, { recursive: true, force: true }); }
 }

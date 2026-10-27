@@ -60,6 +60,7 @@
   });
 
   const state = { nativeInput: false };
+  const productName = window.__WUWATAPPO_PROFILE__?.productName ?? 'Wuwa Tappo CN Mac';
   const isMainWindow = window.__TAURI_INTERNALS__?.metadata?.currentWindow?.label === 'main';
   if (isMainWindow) {
     for (const type of ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'dblclick', 'contextmenu']) {
@@ -94,7 +95,7 @@
         warning.textContent = status?.error === 'input_status_unavailable'
           ? '无法读取键鼠监听状态。请从菜单“启用键鼠监听”重试。'
           : !status?.granted
-            ? '键鼠计数已暂停：请在系统设置 → 输入监控中重新允许 Wuwa Tappo CN Mac。'
+            ? `键鼠计数已暂停：请在系统设置 → 输入监控中重新允许 ${productName}。`
             : '已获得输入监控权限，但监听尚未启动。请从菜单“启用键鼠监听”重试，必要时重启应用。';
       }
       const signature = JSON.stringify([status?.granted ?? null, status?.running ?? null, status?.error ?? null]);

@@ -1,22 +1,26 @@
 {
   "name": "wuwatappo-mac",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "scripts": {
     "extract": "node scripts/extract-assets.mjs",
     "inventory": "node scripts/inventory-contract.mjs",
-    "icons": "tauri icon frontend/app-icon.png --output src-tauri/icons",
+    "icons": "node scripts/app.mjs icons",
     "prepare:frontend": "node scripts/prepare-frontend.mjs",
-    "dev": "npm run prepare:frontend && tauri dev",
-    "build": "npm run icons && npm run prepare:frontend && tauri build --bundles app",
+    "dev": "node scripts/app.mjs dev",
+    "build": "node scripts/app.mjs build",
     "test": "node --test tests/*.test.mjs",
-    "test:rust": "cargo test --locked --manifest-path src-tauri/Cargo.toml",
+    "test:rust": "node scripts/app.mjs test:rust",
     "assets:sync": "node scripts/sync-upstream.mjs",
     "upstream:check": "node scripts/sync-upstream.mjs --check",
     "upstream:update": "node scripts/sync-upstream.mjs --update-lock",
     "setup": "npm run assets:sync && npm run icons && npm run prepare:frontend",
-    "package": "bash scripts/package-macos.sh"
+    "package": "bash scripts/package-macos.sh",
+    "setup:global": "WUWA_REGION=global npm run setup",
+    "dev:global": "WUWA_REGION=global npm run dev",
+    "build:global": "WUWA_REGION=global npm run build",
+    "package:global": "WUWA_REGION=global npm run package"
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.12.4",

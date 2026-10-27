@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const script = await readFile(new URL('../scripts/mac-platform.js', import.meta.url), 'utf8');
 const drain = () => new Promise(resolve => setImmediate(resolve));
 
-function webview({ readyState = 'loading', label = 'main', rejectLog = false, throwLog = false, inputStatus = false, pendingInput = false, resumeStatus, rejectStatus = false } = {}) {
+function webview({ profile, readyState = 'loading', label = 'main', rejectLog = false, throwLog = false, inputStatus = false, pendingInput = false, resumeStatus, rejectStatus = false } = {}) {
   const events = new Map();
   const documentEvents = new Map();
   const calls = [];
@@ -29,6 +29,7 @@ function webview({ readyState = 'loading', label = 'main', rejectLog = false, th
     addEventListener(type, callback) { events.set(type, callback); },
     setInterval(callback, milliseconds) { assert.equal(milliseconds, 2000); interval = callback; return 1; },
     clearInterval(id) { assert.equal(id, 1); interval = undefined; },
+    __WUWATAPPO_PROFILE__: profile,
     __TAURI_INTERNALS__: { metadata: { currentWindow: { label } }, invoke },
     __TAURI__: {
       core: { invoke },
@@ -196,4 +197,11 @@ test('unreadable input status is not reported as granted or running', async () =
   await drain();
   assert.match(view.warning(), /无法读取/);
   assert.equal(view.calls.filter(call => call.command === 'resume_input_monitor').length, 0);
+});
+
+test('input permission guidance names the current GLOBAL application', async () => {
+  const view = webview({ readyState: 'complete', profile: { productName: 'Wuwa Tappo Global Mac' } });
+  await drain();
+  assert.match(view.warning(), /Wuwa Tappo Global Mac/);
+  assert.doesNotMatch(view.warning(), /CN Mac/);
 });

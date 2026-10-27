@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
+import { getRegionProfile } from './regions.mjs';
 
 const require = createRequire(import.meta.url);
 const { parse } = require(process.env.WUWA_ACORN_PATH || 'acorn');
@@ -340,7 +341,7 @@ function payloadReads(callback, module) {
   return [...reads].sort();
 }
 
-export function inventoryAssets(assetDirectory) {
+export function inventoryAssets(assetDirectory, { version = '1.0.0' } = {}) {
   const modules = new Map();
   for (const file of fs.readdirSync(assetDirectory).filter(file => file.endsWith('.js')).sort()) {
     const source = fs.readFileSync(path.join(assetDirectory, file), 'utf8');
@@ -406,7 +407,7 @@ export function inventoryAssets(assetDirectory) {
   const mainModule = metadata.routes.find(route => route.path === '/')?.imports[0];
   return {
     schemaVersion: 1,
-    sourceApplication: { name: metadata.displayName, region: metadata.appRegion, entryModule: metadata.entry.file, version: '1.0.0', frontend: 'Vue / Tauri 2.10.3' },
+    sourceApplication: { name: metadata.displayName, region: metadata.appRegion, entryModule: metadata.entry.file, version, frontend: 'Vue / Tauri 2.10.3' },
     runtimeConstants: {
       clickCacheEnvironment: metadata.clickCacheEnvironment,
       maxSafeClickCount: Number.MAX_SAFE_INTEGER,
@@ -430,9 +431,11 @@ export function inventoryAssets(assetDirectory) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const directory = process.argv[2] || new URL('../frontend/assets/', import.meta.url).pathname;
-  const destination = process.argv[3] || new URL('../tests/contracts.json', import.meta.url).pathname;
-  const inventory = inventoryAssets(directory);
+  const profile = getRegionProfile();
+  const directory = process.argv[2] || new URL(`../${profile.frontendDir}/assets/`, import.meta.url).pathname;
+  const destination = process.argv[3] || new URL(profile.id === 'cn' ? '../tests/contracts.json' : '../tests/contracts-global.json', import.meta.url).pathname;
+  const { version } = JSON.parse(fs.readFileSync(new URL(`../${profile.upstreamLock}`, import.meta.url), 'utf8'));
+  const inventory = inventoryAssets(directory, { version });
   fs.writeFileSync(destination, JSON.stringify(inventory, null, 2) + '\n');
   console.log(`${inventory.commands.length} commands, ${inventory.events.length} named events, ${inventory.dynamicCalls.length} dynamic call sites -> ${destination}`);
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSInputMonitoringUsageDescription</key>
+  <string>Wuwa Tappo animates your desktop companion when you type or click. Typed text is not recorded.</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>13.0</string>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLName</key>
+      <string>dev.w33d.wuwatappo.global.mac.oauth</string>
+      <key>CFBundleURLSchemes</key>
+      <array><string>wuwa-buddy</string></array>
+    </dict>
+  </array>
+</dict>
+</plist>

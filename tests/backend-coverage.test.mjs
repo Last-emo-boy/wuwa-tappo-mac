@@ -4,9 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { patchSessionBarriers, patchLoginReady, patchDomesticSdkUrls, patchMacUpdateFeedback, patchMacAbout } from '../scripts/patch-frontend.mjs';
 
 const root = new URL('../', import.meta.url);
+import { contract } from './frontend-context.mjs';
 
 test('every application runtime command has a macOS handler', async () => {
-  const contract = JSON.parse(await readFile(new URL('tests/contracts.json', root), 'utf8'));
   const modules = ['lib', 'windows', 'storage', 'input', 'system'];
   const implementation = (await Promise.all(modules.map(name => readFile(new URL(`src-tauri/src/${name}.rs`, root), 'utf8')))).join('\n');
   const missing = contract.commands.filter(c => c.kind === 'application' && c.scopes.includes('application-runtime'))
@@ -47,7 +47,7 @@ test('CN SDK script and stylesheet use HTTPS from the local Tauri origin', () =>
 });
 
 test('Mac update feedback preserves the native platform explanation', () => {
-  assert.equal(patchMacUpdateFeedback('re.value=n("setting_version_check_failed")'), 're.value=b.message||n("setting_version_check_failed")');
+  assert.equal(patchMacUpdateFeedback('if(h.kind==="error"){ht("check_failed"),ge.value=n("setting_version_check_failed");return}'), 'if(h.kind==="error"){ht("check_failed"),ge.value=h.message||n("setting_version_check_failed");return}');
   assert.throws(() => patchMacUpdateFeedback(''), /update feedback changed/);
 });
 
