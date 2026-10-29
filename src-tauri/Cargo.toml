@@ -1,6 +1,6 @@
 [package]
 name = "wuwatappo-mac"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
 rust-version = "1.85"
 
@@ -24,6 +24,8 @@ reqwest = { version = "=0.12.28", default-features = false, features = ["blockin
 objc2 = "0.6.5"
 objc2-app-kit = "0.3.2"
 objc2-foundation = "0.3.2"
+objc2-game-controller = { version = "0.3.2", default-features = false, features = ["std", "GCController", "GCControllerButtonInput", "GCControllerDirectionPad", "GCControllerElement", "GCDevice", "GCExtendedGamepad", "GCPhysicalInputProfile", "block2"] }
+block2 = "0.6.2"
 security-framework = "3.7"
 futures-util = { version = "0.3", features = ["sink"] }
 tokio = { version = "1", features = ["macros", "net", "sync", "time"] }

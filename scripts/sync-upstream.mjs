@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { access, mkdir, mkdtemp, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { setTimeout as delay } from 'node:timers/promises';
 import { getRegionProfile } from './regions.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -62,20 +63,47 @@ export function compareUpstream(current, latest) {
   };
 }
 
-async function fetchJson(url, fetcher) {
-  const response = await fetcher(url, { redirect: 'error', signal: AbortSignal.timeout(30_000) });
-  if (!response.ok) throw new Error(`读取官方配置失败：HTTP ${response.status}`);
-  return response.json();
+const retryableStatuses = new Set([408, 429, 500, 502, 503, 504]);
+const retryableCodes = new Set(['ECONNRESET', 'ETIMEDOUT', 'EAI_AGAIN', 'ECONNREFUSED', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_HEADERS_TIMEOUT', 'UND_ERR_BODY_TIMEOUT', 'UND_ERR_SOCKET']);
+
+function errorDetails(error) {
+  const details = [];
+  for (let cause = error; cause instanceof Error && !details.includes(cause); cause = cause.cause) details.push(cause);
+  return details;
+}
+
+export async function fetchOfficial(url, { fetcher = fetch, read = response => response.json(), stage, timeout = 30_000, sleep = delay } = {}) {
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const response = await fetcher(url, { redirect: 'error', signal: AbortSignal.timeout(timeout) });
+      if (!response.ok) {
+        const error = new Error(`HTTP ${response.status}`);
+        error.status = response.status;
+        await response.body?.cancel();
+        throw error;
+      }
+      return await read(response);
+    } catch (error) {
+      const causes = errorDetails(error);
+      const transient = retryableStatuses.has(error.status) || causes.some(cause => retryableCodes.has(cause.code) || cause.name === 'TimeoutError');
+      if (transient && attempt < 3) {
+        await sleep(250 * 2 ** (attempt - 1));
+        continue;
+      }
+      const reason = causes.map(cause => `${cause.message}${cause.code ? ` (${cause.code})` : ''}`).join(' → ') || String(error);
+      throw new Error(`${stage || '读取官方资源'}失败：${url}；第 ${attempt} 次请求：${reason}`, { cause: error });
+    }
+  }
 }
 
 export async function discoverUpstream(fetcher = fetch, profile = cn) {
-  const config = await fetchJson(profile.configUrl, fetcher);
+  const config = await fetchOfficial(profile.configUrl, { fetcher, stage: `${profile.region} 活动配置` });
   if (config.code !== 0 || typeof config.data?.assets_host !== 'string') throw new Error(`${profile.region} 活动配置无效。`);
   const host = officialAssetUrl(config.data.assets_host, profile);
   if (new URL(host).pathname !== '/') throw new Error(`${profile.region} 资源根地址无效。`);
-  const pointer = await fetchJson(new URL(`/app/json-host/${profile.updaterHostFile}`, host).href, fetcher);
+  const pointer = await fetchOfficial(new URL(`/app/json-host/${profile.updaterHostFile}`, host).href, { fetcher, stage: `${profile.region} 版本指针` });
   const manifestUrl = officialAssetUrl(pointer.url, profile);
-  return parseManifest(await fetchJson(manifestUrl, fetcher), manifestUrl, profile);
+  return parseManifest(await fetchOfficial(manifestUrl, { fetcher, stage: `${profile.region} 版本清单` }), manifestUrl, profile);
 }
 
 async function exists(filename) {
@@ -97,9 +125,10 @@ async function installerBytes(lock, options, work, profile) {
   const parts = new URL(lock.installer.url).pathname.split('/').filter(Boolean).map(encodeURIComponent);
   const filename = path.join(work, 'installers', ...parts);
   if (!options.updateLock && await exists(filename)) return { filename, bytes: await readFile(filename) };
-  const response = await fetch(lock.installer.url, { redirect: 'error', signal: AbortSignal.timeout(300_000) });
-  if (!response.ok) throw new Error(`下载 ${profile.region} 安装包失败：HTTP ${response.status}`);
-  const bytes = Buffer.from(await response.arrayBuffer());
+  const bytes = await fetchOfficial(lock.installer.url, {
+    stage: `${profile.region} 安装包下载`, timeout: 300_000,
+    read: async response => Buffer.from(await response.arrayBuffer()),
+  });
   if (lock.installer.sha256) verifyInstaller(bytes, lock, profile);
   await mkdir(path.dirname(filename), { recursive: true });
   await writeFile(`${filename}.download`, bytes);

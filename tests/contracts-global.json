@@ -3,8 +3,8 @@
   "sourceApplication": {
     "name": "Wuwa Tappo",
     "region": "GLOBAL",
-    "entryModule": "index-ULLd3gpz.js",
-    "version": "1.0.1",
+    "entryModule": "index-CG0a5NfR.js",
+    "version": "1.0.2",
     "frontend": "Vue / Tauri 2.10.3"
   },
   "runtimeConstants": {
@@ -32,7 +32,7 @@
     }
   },
   "bootContract": {
-    "entry": "index.html -> index-ULLd3gpz.js router / -> index-CHhF-M4P.js onMounted",
+    "entry": "index.html -> index-CG0a5NfR.js router / -> index-BkT3Q3xR.js onMounted",
     "routes": {
       "main": "/",
       "panel": "/panel",
@@ -64,133 +64,134 @@
       "mouse-button",
       "global-clap-mouse",
       "key-press",
-      "key-release"
+      "key-release",
+      "gamepad-button-press"
     ],
     "auth": "Frontend preserves official HTTP/Socket.IO account, inventory, rewards, and room protocols. Native backend owns window/event transport, not account emulation."
   },
   "nativeAliases": [
     {
-      "file": "appAutostart-tz4NyWPy.js",
+      "file": "appAutostart-mbqf5OBJ.js",
       "name": "y",
       "role": "listen"
     },
     {
-      "file": "appAutostart-tz4NyWPy.js",
+      "file": "appAutostart-mbqf5OBJ.js",
       "name": "p",
       "role": "emit"
     },
     {
-      "file": "appAutostart-tz4NyWPy.js",
+      "file": "appAutostart-mbqf5OBJ.js",
       "name": "_",
       "role": "invoke"
     },
     {
-      "file": "index-B8v13rah.js",
+      "file": "index-BQSxcG_d.js",
       "name": "on",
       "role": "invoke"
     },
     {
-      "file": "index-B8v13rah.js",
+      "file": "index-BQSxcG_d.js",
       "name": "Wn",
       "role": "listen"
     },
     {
-      "file": "index-CHhF-M4P.js",
-      "name": "kt",
+      "file": "index-BkT3Q3xR.js",
+      "name": "Ct",
       "role": "invoke"
     },
     {
-      "file": "index-CHhF-M4P.js",
-      "name": "mt",
+      "file": "index-BkT3Q3xR.js",
+      "name": "ht",
       "role": "listen"
     },
     {
-      "file": "index-DHKoZfmS.js",
-      "name": "i",
-      "role": "invoke"
-    },
-    {
-      "file": "index-Dd5xVlaL.js",
-      "name": "q",
-      "role": "invoke"
-    },
-    {
-      "file": "index-DgPUp_8E.js",
-      "name": "B",
-      "role": "listen"
-    },
-    {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "invoke$1",
       "role": "invoke"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "listen$1",
       "role": "listen"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "once",
       "role": "once"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "emit",
       "role": "emit"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "emitTo",
       "role": "emitTo"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "invoke",
       "role": "invoke"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "name": "listen",
       "role": "listen"
     },
     {
-      "file": "index-e1e-VINk.js",
+      "file": "index-CbaIng_9.js",
+      "name": "i",
+      "role": "invoke"
+    },
+    {
+      "file": "index-CsOHvZV0.js",
+      "name": "B",
+      "role": "listen"
+    },
+    {
+      "file": "index-Cv-ZpTqg.js",
       "name": "M",
       "role": "listen"
     },
     {
-      "file": "modalBridge-BpS-RTWY.js",
+      "file": "index-DprPimoz.js",
+      "name": "q",
+      "role": "invoke"
+    },
+    {
+      "file": "modalBridge-It6UBs3W.js",
       "name": "a",
       "role": "emit"
     },
     {
-      "file": "modalBridge-BpS-RTWY.js",
+      "file": "modalBridge-It6UBs3W.js",
       "name": "o",
       "role": "listen"
     },
     {
-      "file": "modalWindows-DrYpW72Z.js",
+      "file": "modalWindows-DnVMMWPJ.js",
       "name": "n",
       "role": "invoke"
     },
     {
-      "file": "quitApp-0If0fC9o.js",
+      "file": "quitApp-DmyEK1Xy.js",
       "name": "r",
       "role": "invoke"
     },
     {
-      "file": "switchDisplayMonitor-2jwec8t8.js",
+      "file": "switchDisplayMonitor-BWIbPONB.js",
       "name": "f",
       "role": "invoke"
     },
     {
-      "file": "switchDisplayMonitor-2jwec8t8.js",
+      "file": "switchDisplayMonitor-BWIbPONB.js",
       "name": "g",
       "role": "emit"
     },
     {
-      "file": "switchDisplayMonitor-2jwec8t8.js",
+      "file": "switchDisplayMonitor-BWIbPONB.js",
       "name": "F",
       "role": "listen"
     }
@@ -204,7 +205,7 @@
       ],
       "callSites": [
         {
-          "file": "index-B8v13rah.js",
+          "file": "index-BQSxcG_d.js",
           "charRange": [
             11101,
             11193
@@ -215,8 +216,8 @@
           ],
           "line": 2,
           "function": "Bt",
-          "source": "on(\"apply_main_window_position\",{payload:{alwaysOnTop:an,position:f.value,applyPosition:h}})",
-          "context": "alue)}catch{He(n(\"setting_autostart_fail\")),B.value=await Xt()}finally{k.value=!1}}}async function Bt(h){Ve();try{await on(\"apply_main_window_position\",{payload:{alwaysOnTop:an,position:f.value,applyPosition:h}}),h&&go(\"corner-applied\")}catch(o){console.error(\"应用设置失败:\",o)}}async function Ms(){if(!(!le||ce.value)){ln(),ce.value=!0,ge.value=n(\"setting_version_checking\");try{const h=await rn({interactive:!0});if(h.kind===\"none\"){Vt(),ge.valu",
+          "source": "on(\"apply_main_window_position\",{payload:{alwaysOnTop:an,position:g.value,applyPosition:w}})",
+          "context": "alue)}catch{He(n(\"setting_autostart_fail\")),N.value=await Xt()}finally{k.value=!1}}}async function Bt(w){Ve();try{await on(\"apply_main_window_position\",{payload:{alwaysOnTop:an,position:g.value,applyPosition:w}}),w&&go(\"corner-applied\")}catch(o){console.error(\"应用设置失败:\",o)}}async function Ms(){if(!(!le||ce.value)){ln(),ce.value=!0,ge.value=n(\"setting_version_checking\");try{const w=await rn({interactive:!0});if(w.kind===\"none\"){Vt(),ge.valu",
           "callee": "on",
           "role": "invoke",
           "arguments": {
@@ -231,11 +232,11 @@
                   },
                   "position": {
                     "type": "expression",
-                    "source": "f.value"
+                    "source": "g.value"
                   },
                   "applyPosition": {
                     "type": "expression",
-                    "source": "h"
+                    "source": "w"
                   }
                 }
               }
@@ -243,7 +244,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             2631,
             2717
@@ -320,7 +321,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             547086,
             547127
@@ -396,7 +397,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             578,
             601
@@ -429,7 +430,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             170,
             193
@@ -462,7 +463,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             476,
             504
@@ -495,7 +496,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5553,
             5576
@@ -528,7 +529,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             373,
             397
@@ -561,7 +562,7 @@
       ],
       "callSites": [
         {
-          "file": "quitApp-0If0fC9o.js",
+          "file": "quitApp-DmyEK1Xy.js",
           "charRange": [
             113,
             126
@@ -573,7 +574,7 @@
           "line": 1,
           "function": "o",
           "source": "r(\"exit_app\")",
-          "context": "import{dP as a,dQ as e,p as r,dR as i}from\"./index-ULLd3gpz.js\";async function o(){await a(),await e();try{await r(\"exit_app\")}catch(t){console.error(\"[quitApp] exit_app failed\",t)}}async function s(){await a(),await e();try{await i()}catch(t){console.error(\"[restartApp] relaunch failed\",t)}}export{o as quitApp,s as restartApp};\n",
+          "context": "import{dP as a,dQ as e,p as r,dR as i}from\"./index-CG0a5NfR.js\";async function o(){await a(),await e();try{await r(\"exit_app\")}catch(t){console.error(\"[quitApp] exit_app failed\",t)}}async function s(){await a(),await e();try{await i()}catch(t){console.error(\"[restartApp] relaunch failed\",t)}}export{o as quitApp,s as restartApp};\n",
           "callee": "r",
           "role": "invoke",
           "arguments": {
@@ -594,7 +595,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DoBiGJDE.js",
+          "file": "index-n0E32GJU.js",
           "charRange": [
             3057,
             3080
@@ -606,7 +607,7 @@
           "line": 2,
           "function": "S",
           "source": "a(\"exit_installed_app\")",
-          "context": "ke:t}=await import(\"./index-ULLd3gpz.js\").then(n=>n.dT);return{invoke:t}},__vite__mapDeps([0,1]),import.meta.url);await a(\"exit_installed_app\"),u.value=!1,await x()}catch(a){console.error(\"Failed to exit the installed app:\",a),b(),u.value=!1,f(l.value.exitAppFailed)}finally{o.value=!1}}}async function x(){g=!1;try{if(!(\"__TAURI_INTERNALS__\"in window)){P(),s.value=\"progre",
+          "context": "ke:t}=await import(\"./index-CG0a5NfR.js\").then(n=>n.dT);return{invoke:t}},__vite__mapDeps([0,1]),import.meta.url);await a(\"exit_installed_app\"),u.value=!1,await x()}catch(a){console.error(\"Failed to exit the installed app:\",a),b(),u.value=!1,f(l.value.exitAppFailed)}finally{o.value=!1}}}async function x(){g=!1;try{if(!(\"__TAURI_INTERNALS__\"in window)){P(),s.value=\"progre",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -627,7 +628,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             7659,
             7697
@@ -660,7 +661,7 @@
       ],
       "callSites": [
         {
-          "file": "index-Dd5xVlaL.js",
+          "file": "index-DprPimoz.js",
           "charRange": [
             9344,
             9370
@@ -702,20 +703,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            121666,
-            121692
+            121853,
+            121879
           ],
           "byteRange": [
-            121870,
-            121896
+            122057,
+            122083
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"get_boot_diagnostics\")",
-          "context": ",s.size),work_area_px:Lc(s.workArea.position,s.workArea.size),scale:s.scaleFactor})}}async function xg(){const n=vn(()=>kt(\"get_boot_diagnostics\"),null,4e3),[a,c,u,v]=await Promise.all([vn(Lh,null),vn(Bh,null),vn(Nh,null),vn(Hh,null)]);await le(\"APP\",\"boot\",{session:crypto.randomUUID(),version:a,product:c,bundle:u,mode:\"release\",build_mode:\"global-prod\",locale:String(Mn.glo",
-          "callee": "kt",
+          "source": "Ct(\"get_boot_diagnostics\")",
+          "context": ",s.size),work_area_px:Qc(s.workArea.position,s.workArea.size),scale:s.scaleFactor})}}async function Jg(){const n=yn(()=>Ct(\"get_boot_diagnostics\"),null,4e3),[a,c,u,v]=await Promise.all([yn(em,null),yn(tm,null),yn(nm,null),yn(om,null)]);await le(\"APP\",\"boot\",{session:crypto.randomUUID(),version:a,product:c,bundle:u,mode:\"release\",build_mode:\"global-prod\",locale:String(Tn.glo",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
@@ -760,7 +761,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DoBiGJDE.js",
+          "file": "index-n0E32GJU.js",
           "charRange": [
             2276,
             2319
@@ -772,7 +773,7 @@
           "line": 2,
           "function": null,
           "source": "a(\"get_installed_app_locale\",{domestic:!1})",
-          "context": ":n}=await import(\"./index-ULLd3gpz.js\").then(C=>C.dT);return{invoke:n}},__vite__mapDeps([0,1]),import.meta.url),t=await a(\"get_installed_app_locale\",{domestic:!1});typeof t==\"string\"&&X(t)&&(w.value=t)}catch{}})()),A):Promise.resolve()}async function O(){if(!o.value){o.value=!0;try{if(await U(),Y(),p.value=\"\",\"__TAURI_INTERNALS__\"in window){const{invoke:a}=await c(async()=>{const{invoke:t}=",
+          "context": ":n}=await import(\"./index-CG0a5NfR.js\").then(C=>C.dT);return{invoke:n}},__vite__mapDeps([0,1]),import.meta.url),t=await a(\"get_installed_app_locale\",{domestic:!1});typeof t==\"string\"&&X(t)&&(w.value=t)}catch{}})()),A):Promise.resolve()}async function O(){if(!o.value){o.value=!0;try{if(await U(),Y(),p.value=\"\",\"__TAURI_INTERNALS__\"in window){const{invoke:a}=await c(async()=>{const{invoke:t}=",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -806,7 +807,7 @@
       ],
       "callSites": [
         {
-          "file": "index-_y2SYhRg.js",
+          "file": "index-rL90uGAR.js",
           "charRange": [
             27527,
             27557
@@ -818,7 +819,7 @@
           "line": 2,
           "function": null,
           "source": "a(\"get_installer_launch_mode\")",
-          "context": "e:n}=await import(\"./index-ULLd3gpz.js\").then(T=>T.dT);return{invoke:n}},__vite__mapDeps([0,1]),import.meta.url);(await a(\"get_installer_launch_mode\")).otaUpdate&&B(!0)}catch{}})()}),Ie(()=>{$?.(),k!==void 0&&window.clearTimeout(k)}),(a,e)=>(A(),_(\"main\",{class:O([\"installer-shell\",[`locale-${I.value}`,`installer-shell--${u.value}`,`installer-shell--locale-${I.value}`,{\"is-expa",
+          "context": "e:n}=await import(\"./index-CG0a5NfR.js\").then(T=>T.dT);return{invoke:n}},__vite__mapDeps([0,1]),import.meta.url);(await a(\"get_installer_launch_mode\")).otaUpdate&&B(!0)}catch{}})()}),Ie(()=>{$?.(),k!==void 0&&window.clearTimeout(k)}),(a,e)=>(A(),_(\"main\",{class:O([\"installer-shell\",[`locale-${I.value}`,`installer-shell--${u.value}`,`installer-shell--locale-${I.value}`,{\"is-expa",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -843,7 +844,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             672,
             703
@@ -913,7 +914,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             722,
             750
@@ -959,7 +960,7 @@
       ],
       "callSites": [
         {
-          "file": "index-Dd5xVlaL.js",
+          "file": "index-DprPimoz.js",
           "charRange": [
             9786,
             9821
@@ -998,7 +999,7 @@
       ],
       "callSites": [
         {
-          "file": "index-_y2SYhRg.js",
+          "file": "index-rL90uGAR.js",
           "charRange": [
             24883,
             24921
@@ -1010,7 +1011,7 @@
           "line": 2,
           "function": "_e",
           "source": "a(\"get_preferred_system_ui_languages\")",
-          "context": ":T}=await import(\"./index-ULLd3gpz.js\").then(V=>V.dT);return{invoke:T}},__vite__mapDeps([0,1]),import.meta.url),e=await a(\"get_preferred_system_ui_languages\");if(d||!Array.isArray(e))return;const n=e.filter(T=>typeof T==\"string\");n.length>0&&(I.value=me(n))}catch{}}async function U(a){if(!(\"__TAURI_INTERNALS__\"in window)){window.open(a,\"_blank\",\"noopener,noreferrer\");return}try{const{o",
+          "context": ":T}=await import(\"./index-CG0a5NfR.js\").then(V=>V.dT);return{invoke:T}},__vite__mapDeps([0,1]),import.meta.url),e=await a(\"get_preferred_system_ui_languages\");if(d||!Array.isArray(e))return;const n=e.filter(T=>typeof T==\"string\");n.length>0&&(I.value=me(n))}catch{}}async function U(a){if(!(\"__TAURI_INTERNALS__\"in window)){window.open(a,\"_blank\",\"noopener,noreferrer\");return}try{const{o",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -1033,7 +1034,7 @@
       ],
       "callSites": [
         {
-          "file": "index-_y2SYhRg.js",
+          "file": "index-rL90uGAR.js",
           "charRange": [
             19832,
             19859
@@ -1076,7 +1077,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DoBiGJDE.js",
+          "file": "index-n0E32GJU.js",
           "charRange": [
             3626,
             3663
@@ -1119,7 +1120,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             536294,
             536323
@@ -1159,7 +1160,7 @@
       ],
       "callSites": [
         {
-          "file": "index-Dd5xVlaL.js",
+          "file": "index-DprPimoz.js",
           "charRange": [
             9822,
             9849
@@ -1191,7 +1192,7 @@
       ],
       "callSites": [
         {
-          "file": "index-Dd5xVlaL.js",
+          "file": "index-DprPimoz.js",
           "charRange": [
             8976,
             9021
@@ -1224,7 +1225,7 @@
       ],
       "callSites": [
         {
-          "file": "index-_y2SYhRg.js",
+          "file": "index-rL90uGAR.js",
           "charRange": [
             23977,
             24039
@@ -1236,7 +1237,7 @@
           "line": 2,
           "function": "K",
           "source": "e(\"inspect_install_directory\",{payload:{installPath:P.value}})",
-          "context": "}=await import(\"./index-ULLd3gpz.js\").then(V=>V.dT);return{invoke:T}},__vite__mapDeps([0,1]),import.meta.url);if((await e(\"inspect_install_directory\",{payload:{installPath:P.value}})).hasExistingInstallation){o.value=\"existing-directory\";return}}catch(e){if(\"__TAURI_INTERNALS__\"in window){console.error(\"Failed to inspect installation directory:\",e),y(x(e,I.value,s.value));return}}B()}async function q(a){try{c",
+          "context": "}=await import(\"./index-CG0a5NfR.js\").then(V=>V.dT);return{invoke:T}},__vite__mapDeps([0,1]),import.meta.url);if((await e(\"inspect_install_directory\",{payload:{installPath:P.value}})).hasExistingInstallation){o.value=\"existing-directory\";return}}catch(e){if(\"__TAURI_INTERNALS__\"in window){console.error(\"Failed to inspect installation directory:\",e),y(x(e,I.value,s.value));return}}B()}async function q(a){try{c",
           "callee": "e",
           "role": "invoke",
           "arguments": {
@@ -1285,20 +1286,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            186868,
-            186899
+            188006,
+            188037
           ],
           "byteRange": [
-            187178,
-            187209
+            188316,
+            188347
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"is_devtools_hotkeys_build\")",
-          "context": "n=await kt(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Io=await kt(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Io=kn}kn&&(Nt=Pg(),Ad());try{localStorage.removeItem(\"wuwatappo-main-dock\")}catch{}await Oe();try{await To({relocate:!1}),await cu(void 0,{snapDockToContentOrigin",
-          "callee": "kt",
+          "source": "Ct(\"is_devtools_hotkeys_build\")",
+          "context": "n=await Ct(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Do=await Ct(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Do=An}An&&(Ut=zg(),Vd());try{localStorage.removeItem(\"wuwatappo-main-dock\")}catch{}await De();try{await Bo({relocate:!1}),await Au(void 0,{snapDockToContentOrigin",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
@@ -1317,7 +1318,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             11666,
             11700
@@ -1349,7 +1350,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             558492,
             558526
@@ -1381,7 +1382,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DoBiGJDE.js",
+          "file": "index-n0E32GJU.js",
           "charRange": [
             2666,
             2695
@@ -1393,7 +1394,7 @@
           "line": 2,
           "function": "O",
           "source": "a(\"is_installed_app_running\")",
-          "context": "t}=await import(\"./index-ULLd3gpz.js\").then(n=>n.dT);return{invoke:t}},__vite__mapDeps([0,1]),import.meta.url);if(await a(\"is_installed_app_running\")){u.value=!0;return}}await x()}catch(a){console.error(\"Failed to check the installed app:\",a),b(),f(l.value.uninstallStartFailed)}finally{o.value=!1}}}async function S(){if(!o.value){o.value=!0;try{const{invoke:a}=await c(async()=",
+          "context": "t}=await import(\"./index-CG0a5NfR.js\").then(n=>n.dT);return{invoke:t}},__vite__mapDeps([0,1]),import.meta.url);if(await a(\"is_installed_app_running\")){u.value=!0;return}}await x()}catch(a){console.error(\"Failed to check the installed app:\",a),b(),f(l.value.uninstallStartFailed)}finally{o.value=!1}}}async function S(){if(!o.value){o.value=!0;try{const{invoke:a}=await c(async()=",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -1413,20 +1414,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            186756,
-            186787
+            187894,
+            187925
           ],
           "byteRange": [
-            187066,
-            187097
+            188204,
+            188235
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"is_internal_testing_build\")",
-          "context": "sor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await da();try{kn=await kt(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Io=await kt(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Io=kn}kn&&(Nt=Pg(),Ad());try{localStorage.removeIt",
-          "callee": "kt",
+          "source": "Ct(\"is_internal_testing_build\")",
+          "context": "sor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await Aa();try{An=await Ct(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Do=await Ct(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Do=An}An&&(Ut=zg(),Vd());try{localStorage.removeIt",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
@@ -1445,7 +1446,7 @@
       ],
       "callSites": [
         {
-          "file": "index-_y2SYhRg.js",
+          "file": "index-rL90uGAR.js",
           "charRange": [
             27059,
             27101
@@ -1457,7 +1458,7 @@
           "line": 2,
           "function": "Z",
           "source": "a(\"launch_installed_app\",{locale:I.value})",
-          "context": "ke:e}=await import(\"./index-ULLd3gpz.js\").then(n=>n.dT);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await a(\"launch_installed_app\",{locale:I.value}),await M()}catch(a){if(!(\"__TAURI_INTERNALS__\"in window)){y(s.value.previewLaunchNotice);return}console.error(\"Failed to launch installed app:\",a),y(x(a,I.value,s.value,\"launch\"))}}return Le(()=>{de(),(async()=>{if(await _e(),\"__T",
+          "context": "ke:e}=await import(\"./index-CG0a5NfR.js\").then(n=>n.dT);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await a(\"launch_installed_app\",{locale:I.value}),await M()}catch(a){if(!(\"__TAURI_INTERNALS__\"in window)){y(s.value.previewLaunchNotice);return}console.error(\"Failed to launch installed app:\",a),y(x(a,I.value,s.value,\"launch\"))}}return Le(()=>{de(),(async()=>{if(await _e(),\"__T",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -1492,7 +1493,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             644812,
             644889
@@ -1554,7 +1555,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             643326,
             643396
@@ -1603,7 +1604,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             530,
             552
@@ -1636,7 +1637,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             101,
             144
@@ -1648,7 +1649,7 @@
           "line": 1,
           "function": "w",
           "source": "n(\"open_login_window\",{intent:i,compact:t})",
-          "context": "import{p as n,dH as t}from\"./index-ULLd3gpz.js\";async function w(o){const i=o?.intent??\"login\";await n(\"open_login_window\",{intent:i,compact:t})}async function c(){await n(\"close_login_window\")}async function e(o,i){await n(\"resize_login_window_to_content\",{payload:{width:o,height:i}})}async function s(o){await n(\"open_update_window\",{detail:o})}async function d(){await n",
+          "context": "import{p as n,dH as t}from\"./index-CG0a5NfR.js\";async function w(o){const i=o?.intent??\"login\";await n(\"open_login_window\",{intent:i,compact:t})}async function c(){await n(\"close_login_window\")}async function e(o,i){await n(\"resize_login_window_to_content\",{payload:{width:o,height:i}})}async function s(o){await n(\"open_update_window\",{detail:o})}async function d(){await n",
           "callee": "n",
           "role": "invoke",
           "arguments": {
@@ -1691,7 +1692,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             391001,
             391054
@@ -1745,7 +1746,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             423,
             450
@@ -1778,7 +1779,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5480,
             5526
@@ -1842,7 +1843,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             313,
             347
@@ -1889,7 +1890,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446985,
             447018
@@ -1919,7 +1920,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446842,
             446869
@@ -1949,7 +1950,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446910,
             446946
@@ -1979,7 +1980,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446779,
             446809
@@ -2009,7 +2010,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             11346,
             11375
@@ -2039,7 +2040,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             11292,
             11320
@@ -2069,7 +2070,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             11233,
             11265
@@ -2099,7 +2100,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             632292,
             632330
@@ -2129,7 +2130,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DHKoZfmS.js",
+          "file": "index-CbaIng_9.js",
           "charRange": [
             539,
             627
@@ -2177,7 +2178,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DHKoZfmS.js",
+          "file": "index-CbaIng_9.js",
           "charRange": [
             359,
             394
@@ -2213,7 +2214,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DHKoZfmS.js",
+          "file": "index-CbaIng_9.js",
           "charRange": [
             468,
             503
@@ -2249,7 +2250,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             385084,
             385133
@@ -2289,7 +2290,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             385169,
             385275
@@ -2333,7 +2334,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             384858,
             384939
@@ -2367,7 +2368,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             632140,
             632217
@@ -2411,7 +2412,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             384644,
             384697
@@ -2441,7 +2442,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             631993,
             632044
@@ -2481,7 +2482,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             421726,
             421787
@@ -2517,7 +2518,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             421839,
             421882
@@ -2553,7 +2554,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             421603,
             421673
@@ -2597,7 +2598,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             421922,
             421966
@@ -2633,7 +2634,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             422014,
             422058
@@ -2669,7 +2670,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             392236,
             392285
@@ -2709,7 +2710,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             392153,
             392200
@@ -2749,7 +2750,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             392327,
             392402
@@ -2785,7 +2786,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             391820,
             391894
@@ -2821,7 +2822,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             447051,
             447085
@@ -2851,7 +2852,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             383527,
             383576
@@ -2887,7 +2888,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             447376,
             447441
@@ -2928,7 +2929,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             447807,
             447884
@@ -2969,7 +2970,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             447590,
             447679
@@ -3009,7 +3010,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437790,
             437840
@@ -3039,7 +3040,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             435481,
             435567
@@ -3085,7 +3086,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             438871,
             439033
@@ -3131,7 +3132,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             435188,
             435231
@@ -3161,7 +3162,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437663,
             437753
@@ -3201,7 +3202,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437307,
             437384
@@ -3241,7 +3242,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437876,
             437941
@@ -3267,7 +3268,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             439843,
             439908
@@ -3303,7 +3304,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437213,
             437276
@@ -3339,7 +3340,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437076,
             437188
@@ -3379,7 +3380,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             436947,
             437047
@@ -3419,7 +3420,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437567,
             437637
@@ -3459,7 +3460,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             436863,
             436922
@@ -3495,7 +3496,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437405,
             437463
@@ -3531,7 +3532,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             436638,
             436700
@@ -3567,7 +3568,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             437484,
             437542
@@ -3603,7 +3604,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             436754,
             436812
@@ -3639,7 +3640,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             434360,
             434404
@@ -3669,7 +3670,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426022,
             426073
@@ -3705,7 +3706,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427502,
             427552
@@ -3741,7 +3742,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             423059,
             423205
@@ -3787,7 +3788,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             434045,
             434086
@@ -3817,7 +3818,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             434471,
             434512
@@ -3847,7 +3848,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427576,
             427628
@@ -3883,7 +3884,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             422817,
             422858
@@ -3903,7 +3904,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             438676,
             438717
@@ -3933,7 +3934,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427431,
             427480
@@ -3969,7 +3970,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             424480,
             424539
@@ -4005,7 +4006,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             424720,
             424775
@@ -4041,7 +4042,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425938,
             425999
@@ -4077,7 +4078,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425627,
             425683
@@ -4113,7 +4114,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425280,
             425337
@@ -4149,7 +4150,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426492,
             426547
@@ -4185,7 +4186,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425197,
             425252
@@ -4221,7 +4222,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             424943,
             425001
@@ -4257,7 +4258,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425452,
             425511
@@ -4293,7 +4294,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425114,
             425171
@@ -4329,7 +4330,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425541,
             425600
@@ -4365,7 +4366,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425029,
             425086
@@ -4401,7 +4402,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425365,
             425422
@@ -4437,7 +4438,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425709,
             425764
@@ -4473,7 +4474,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426954,
             427007
@@ -4509,7 +4510,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427205,
             427258
@@ -4545,7 +4546,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             434246,
             434300
@@ -4585,7 +4586,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             424602,
             424661
@@ -4621,7 +4622,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             424830,
             424885
@@ -4657,7 +4658,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             434143,
             434184
@@ -4687,7 +4688,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426203,
             426278
@@ -4727,7 +4728,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             424393,
             424450
@@ -4763,7 +4764,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428143,
             428216
@@ -4803,7 +4804,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428038,
             428108
@@ -4843,7 +4844,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430010,
             430066
@@ -4869,7 +4870,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             439777,
             439833
@@ -4905,7 +4906,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430558,
             430626
@@ -4945,7 +4946,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430657,
             430725
@@ -4985,7 +4986,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426776,
             426841
@@ -5025,7 +5026,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428253,
             428327
@@ -5065,7 +5066,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429702,
             429770
@@ -5105,7 +5106,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429906,
             429974
@@ -5145,7 +5146,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430101,
             430211
@@ -5185,7 +5186,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429804,
             429875
@@ -5225,7 +5226,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427660,
             427728
@@ -5265,7 +5266,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427846,
             427910
@@ -5295,7 +5296,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427939,
             428006
@@ -5335,7 +5336,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426402,
             426466
@@ -5375,7 +5376,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429318,
             429372
@@ -5411,7 +5412,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429402,
             429468
@@ -5451,7 +5452,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429115,
             429182
@@ -5491,7 +5492,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429493,
             429570
@@ -5531,7 +5532,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430250,
             430327
@@ -5571,7 +5572,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428601,
             428703
@@ -5611,7 +5612,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426579,
             426647
@@ -5651,7 +5652,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428471,
             428573
@@ -5691,7 +5692,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426679,
             426747
@@ -5731,7 +5732,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430757,
             430851
@@ -5771,7 +5772,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428981,
             429084
@@ -5811,7 +5812,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430883,
             430952
@@ -5851,7 +5852,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426308,
             426374
@@ -5891,7 +5892,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427755,
             427818
@@ -5931,7 +5932,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429219,
             429293
@@ -5971,7 +5972,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428352,
             428443
@@ -6011,7 +6012,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             428779,
             428952
@@ -6068,7 +6069,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             429602,
             429671
@@ -6108,7 +6109,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             431209,
             431271
@@ -6148,7 +6149,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             426867,
             426929
@@ -6188,7 +6189,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             431111,
             431183
@@ -6228,7 +6229,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430995,
             431077
@@ -6268,7 +6269,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427361,
             427410
@@ -6304,7 +6305,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430357,
             430416
@@ -6340,7 +6341,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             430453,
             430527
@@ -6380,7 +6381,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425858,
             425908
@@ -6416,7 +6417,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             425786,
             425836
@@ -6452,7 +6453,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427120,
             427180
@@ -6488,7 +6489,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427034,
             427089
@@ -6524,7 +6525,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             427285,
             427340
@@ -6560,20 +6561,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            176547,
-            176591
+            177458,
+            177502
           ],
           "byteRange": [
-            176857,
-            176901
+            177768,
+            177812
           ],
           "line": 17,
-          "function": "fc",
-          "source": "kt(\"popup_main_dock_context_menu\",{x:e,y:t})",
-          "context": "\"\")),await Fp()&&Ql(),tc()}let Cn=!1,Wn=!1;async function fc(e,t){if(!Me()&&!Cn){Cn=!0,j+=1,T.value=!1,An(!1);try{await kt(\"popup_main_dock_context_menu\",{x:e,y:t})}catch(i){console.warn(\"[dock-context-menu] popup failed\",i)}finally{Cn=!1,An(!1),Vo=null,Pl(),Wn&&window.setTimeout(()=>{Wn=!1},400)}}}async function $p(e){e.preventDefault(),!Me()&&await fc(e.clientX,e.clientY)}function dc(e){co",
-          "callee": "kt",
+          "function": "Ic",
+          "source": "Ct(\"popup_main_dock_context_menu\",{x:e,y:t})",
+          "context": "\"\")),await Zh()&&pc(),gc()}let vn=!1,Kn=!1;async function Ic(e,t){if(!Ie()&&!vn){vn=!0,z+=1,T.value=!1,In(!1);try{await Ct(\"popup_main_dock_context_menu\",{x:e,y:t})}catch(o){console.warn(\"[dock-context-menu] popup failed\",o)}finally{vn=!1,In(!1),$o=null,Yl(),Kn&&window.setTimeout(()=>{Kn=!1},400)}}}async function pp(e){e.preventDefault(),!Ie()&&await Ic(e.clientX,e.clientY)}function Mc(e){co",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6615,7 +6616,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5603,
             5637
@@ -6648,7 +6649,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DrYpW72Z.js",
+          "file": "modalWindows-DnVMMWPJ.js",
           "charRange": [
             222,
             286
@@ -6712,7 +6713,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             645497,
             645589
@@ -6776,7 +6777,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             643761,
             643839
@@ -6806,7 +6807,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             643962,
             644040
@@ -6864,7 +6865,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             11819,
             11858
@@ -6911,20 +6912,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            150648,
-            150695
+            151013,
+            151060
           ],
           "byteRange": [
-            150906,
-            150953
+            151271,
+            151318
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"set_main_force_cursor_ignore\",{enabled:!0})",
-          "context": "apHitFreeze:(e,t)=>{Bn.hit?.beginFullscreenDockSnapHitFreeze(e,t)},restoreFullscreenMainPassthrough:async()=>{try{await kt(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] restore main WebView passthrough failed\",e),me(\"desktop:passthrough_sync_failed\"),le(\"DESKTOP\",\"operation_failed\",{operation:\"restore_webview_passthrough\",reason_code:Vt(e)},\"warn\")}},afterDockWindow",
-          "callee": "kt",
+          "source": "Ct(\"set_main_force_cursor_ignore\",{enabled:!0})",
+          "context": "apHitFreeze:(e,t)=>{Hn.hit?.beginFullscreenDockSnapHitFreeze(e,t)},restoreFullscreenMainPassthrough:async()=>{try{await Ct(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] restore main WebView passthrough failed\",e),me(\"desktop:passthrough_sync_failed\"),le(\"DESKTOP\",\"operation_failed\",{operation:\"restore_webview_passthrough\",reason_code:Gt(e)},\"warn\")}},afterDockWindow",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6937,20 +6938,20 @@
           }
         },
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            186614,
-            186661
+            187752,
+            187799
           ],
           "byteRange": [
-            186924,
-            186971
+            188062,
+            188109
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"set_main_force_cursor_ignore\",{enabled:!0})",
-          "context": "alue),Yn(c);try{await Ae?.setFocusable(!1)}catch(e){console.warn(\"[main] setFocusable(false) failed\",e)}if(Ct)try{await kt(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await da();try{kn=await kt(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Io=await kt(\"is_devtools_hotkeys",
-          "callee": "kt",
+          "source": "Ct(\"set_main_force_cursor_ignore\",{enabled:!0})",
+          "context": "alue),Xn(c);try{await Ae?.setFocusable(!1)}catch(e){console.warn(\"[main] setFocusable(false) failed\",e)}if(St)try{await Ct(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await Aa();try{An=await Ct(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Do=await Ct(\"is_devtools_hotkeys",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6984,7 +6985,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
             21344,
             21473
@@ -6995,9 +6996,9 @@
           ],
           "line": 16,
           "function": "Ve",
-          "source": "kt(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ge,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:Ct&&gh}})",
-          "context": "&qe(ie);const je=F?Ye(ie):null,Ae=F&&je!==O,Ge=Ae?ie:[],ce=performance.now()-x,Qe=performance.now();let ge=!1;try{await kt(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ge,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:Ct&&gh}}),ge=!0,P=0}catch(Ze){console.error(\"[CAT-PASSTHROUGH] syncMainHitRegion failed\",Ze),me(\"desktop:window_hit_region_sync_failed\"),Date.now()-P>=6e4&&(P=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"hit_region_sync\",reason_c",
-          "callee": "kt",
+          "source": "Ct(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ge,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:St&&Fp}})",
+          "context": "&Ue(ie);const je=F?Ye(ie):null,Ae=F&&je!==O,Ge=Ae?ie:[],ce=performance.now()-x,Qe=performance.now();let ge=!1;try{await Ct(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ge,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:St&&Fp}}),ge=!0,P=0}catch(Ze){console.error(\"[CAT-PASSTHROUGH] syncMainHitRegion failed\",Ze),me(\"desktop:window_hit_region_sync_failed\"),Date.now()-P>=6e4&&(P=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"hit_region_sync\",reason_c",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7023,7 +7024,7 @@
                   },
                   "nativeInput": {
                     "type": "expression",
-                    "source": "Ct&&gh"
+                    "source": "St&&Fp"
                   }
                 }
               }
@@ -7112,20 +7113,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            120293,
-            120330
+            120480,
+            120517
           ],
           "byteRange": [
-            120497,
-            120534
+            120684,
+            120721
           ],
           "line": 17,
-          "function": "bf",
-          "source": "kt(\"set_main_skip_taskbar\",{skip:!n})",
-          "context": "eturn gf+=1,{offsetX:Math.round(n.offsetX+yf(5)),offsetY:Math.round(n.offsetY+yf(4)-50)}}async function bf(n){try{await kt(\"set_main_skip_taskbar\",{skip:!n})}catch(a){console.warn(\"[taskbar] setSkipTaskbar failed\",a),me(\"desktop:taskbar_sync_failed\")}}let _f;async function Tg(){const n=rn();await le(\"SETTINGS\",\"boot\",{group:\"appearance\",opacity_percent:n.windowOpacity,pet_scale_percen",
-          "callee": "kt",
+          "function": "Lf",
+          "source": "Ct(\"set_main_skip_taskbar\",{skip:!n})",
+          "context": "eturn Of+=1,{offsetX:Math.round(n.offsetX+Df(5)),offsetY:Math.round(n.offsetY+Df(4)-50)}}async function Lf(n){try{await Ct(\"set_main_skip_taskbar\",{skip:!n})}catch(a){console.warn(\"[taskbar] setSkipTaskbar failed\",a),me(\"desktop:taskbar_sync_failed\")}}let Bf;async function jg(){const n=an();await le(\"SETTINGS\",\"boot\",{group:\"appearance\",opacity_percent:n.windowOpacity,pet_scale_percen",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7151,20 +7152,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            181728,
-            181768
+            182834,
+            182874
           ],
           "byteRange": [
-            182038,
-            182078
+            183144,
+            183184
           ],
           "line": 17,
-          "function": "An",
-          "source": "kt(\"set_main_swallow_mouse\",{enabled:e})",
-          "context": "ull}})(),qo}function Ht(e,t){return rt?{x:(e-rt.innerX)/rt.scale,y:(t-rt.innerY)/rt.scale}:null}let Sc=0;function An(e){kt(\"set_main_swallow_mouse\",{enabled:e}).catch(t=>{console.warn(\"[main] set_main_swallow_mouse failed\",t),me(\"desktop:passthrough_sync_failed\"),Date.now()-Sc>=6e4&&(Sc=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"swallow_mouse\",enabled:e,reason_code:Vt(t)},\"wa",
-          "callee": "kt",
+          "function": "In",
+          "source": "Ct(\"set_main_swallow_mouse\",{enabled:e})",
+          "context": "ull}})(),zo}function Vt(e,t){return it?{x:(e-it.innerX)/it.scale,y:(t-it.innerY)/it.scale}:null}let qc=0;function In(e){Ct(\"set_main_swallow_mouse\",{enabled:e}).catch(t=>{console.warn(\"[main] set_main_swallow_mouse failed\",t),me(\"desktop:passthrough_sync_failed\"),Date.now()-qc>=6e4&&(qc=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"swallow_mouse\",enabled:e,reason_code:Gt(t)},\"wa",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7198,20 +7199,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            125179,
-            125227
+            125366,
+            125414
           ],
           "byteRange": [
-            125383,
-            125431
+            125570,
+            125618
           ],
           "line": 17,
           "function": "m",
-          "source": "kt(\"set_main_window_content_bounds\",{payload:Y})",
-          "context": "i||Math.abs(X-ke)>fi);if(!Ke&&!K&&!H)return;const Y={width:B,height:N,skipPassthroughRefresh:D};O&&(Y.x=De,Y.y=X),await kt(\"set_main_window_content_bounds\",{payload:Y}),r=0}catch(w){console.error(\"[main-window-bounds] sync failed\",w),Date.now()-r>=6e4&&(r=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"content_bounds_sync\",relocate:C,reason_code:Vt(w)},\"warn\"))}finally{if(p=!1,g){g=!1;con",
-          "callee": "kt",
+          "source": "Ct(\"set_main_window_content_bounds\",{payload:Y})",
+          "context": "i||Math.abs(X-ke)>_i);if(!Ke&&!K&&!H)return;const Y={width:B,height:N,skipPassthroughRefresh:D};O&&(Y.x=Fe,Y.y=X),await Ct(\"set_main_window_content_bounds\",{payload:Y}),i=0}catch(w){console.error(\"[main-window-bounds] sync failed\",w),Date.now()-i>=6e4&&(i=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"content_bounds_sync\",relocate:C,reason_code:Gt(w)},\"warn\"))}finally{if(h=!1,g){g=!1;con",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7264,7 +7265,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             1089,
             1126
@@ -7297,7 +7298,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             6271,
             6388
@@ -7376,20 +7377,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            183819,
-            183833
+            184925,
+            184939
           ],
           "byteRange": [
-            184129,
-            184143
+            185235,
+            185249
           ],
           "line": 17,
-          "function": "Wo",
-          "source": "kt(d,{kind:l})",
-          "context": "}const i=Ht(e,t);i&&ch(i.x,i.y);const l=i?sh(i.x,i.y):\"default\";if(l===Uo)return;Uo=l;const d=\"set_native_input_cursor\";kt(d,{kind:l}).catch(k=>{console.warn(`[main] ${d} failed`,k)})}async function Ic(e,t,i,l,d){if(!pt.value||Me()||It.value)return;if(zt.value){if(t!==\"press\"||e!==\"left\")return;let I=Ht(i,l);if(I||(await tn(!1),I=Ht(i,l)),!I)return;const ee=docu",
-          "callee": "kt",
+          "function": "Jo",
+          "source": "Ct(f,{kind:l})",
+          "context": "}const o=Vt(e,t);o&&Ip(o.x,o.y);const l=o?Ap(o.x,o.y):\"default\";if(l===jo)return;jo=l;const f=\"set_native_input_cursor\";Ct(f,{kind:l}).catch(b=>{console.warn(`[main] ${f} failed`,b)})}async function Wc(e,t,o,l,f){if(!pt.value||Ie()||Mt.value)return;if(Jt.value){if(t!==\"press\"||e!==\"left\")return;let M=Vt(o,l);if(M||(await nn(!1),M=Vt(o,l)),!M)return;const ee=docu",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7423,20 +7424,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            183532,
-            183573
+            184638,
+            184679
           ],
           "byteRange": [
-            183842,
-            183883
+            184948,
+            184989
           ],
           "line": 17,
-          "function": "uh",
-          "source": "kt(\"set_overlay_cursor\",{kind:\"default\"})",
-          "context": "ointerId:1,pointerType:\"mouse\",button:0,buttons:t===\"pointerdown\"?1:0,clientX:i,clientY:l}))}function uh(){Uo=\"default\",kt(\"set_overlay_cursor\",{kind:\"default\"}).catch(e=>{console.warn(\"[main] restore overlay cursor failed\",e)})}function Wo(e,t){if(!rt){tn(!0).then(()=>{Wo(e,t)});return}const i=Ht(e,t);i&&ch(i.x,i.y);const l=i?sh(i.x,i.y):\"default\";if(l===Uo)return;Uo=l;const d=\"set_nativ",
-          "callee": "kt",
+          "function": "Mp",
+          "source": "Ct(\"set_overlay_cursor\",{kind:\"default\"})",
+          "context": "ointerId:1,pointerType:\"mouse\",button:0,buttons:t===\"pointerdown\"?1:0,clientX:o,clientY:l}))}function Mp(){jo=\"default\",Ct(\"set_overlay_cursor\",{kind:\"default\"}).catch(e=>{console.warn(\"[main] restore overlay cursor failed\",e)})}function Jo(e,t){if(!it){nn(!0).then(()=>{Jo(e,t)});return}const o=Vt(e,t);o&&Ip(o.x,o.y);const l=o?Ap(o.x,o.y):\"default\";if(l===jo)return;jo=l;const f=\"set_nativ",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7470,7 +7471,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5696,
             5751
@@ -7527,7 +7528,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             443688,
             443718
@@ -7560,7 +7561,7 @@
       ],
       "callSites": [
         {
-          "file": "index-_y2SYhRg.js",
+          "file": "index-rL90uGAR.js",
           "charRange": [
             19736,
             19778
@@ -7607,7 +7608,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DoBiGJDE.js",
+          "file": "index-n0E32GJU.js",
           "charRange": [
             3499,
             3566
@@ -7619,7 +7620,7 @@
           "line": 2,
           "function": "x",
           "source": "a(\"start_silent_nsis_uninstall\",{payload:{deleteUserData:k.value}})",
-          "context": "ke:t}=await import(\"./index-ULLd3gpz.js\").then(n=>n.dT);return{invoke:t}},__vite__mapDeps([0,1]),import.meta.url);await a(\"start_silent_nsis_uninstall\",{payload:{deleteUserData:k.value}}),P(),s.value=\"progress\",r.value=0,h=window.setInterval(()=>{a(\"get_silent_nsis_uninstall_status\").then(t=>{if(t.phase===\"failed\"){m(),b(),s.value=\"confirm\",console.error(\"Uninstall failed:\",t.message),t.message===\"APP_RUNNING\"?u.v",
+          "context": "ke:t}=await import(\"./index-CG0a5NfR.js\").then(n=>n.dT);return{invoke:t}},__vite__mapDeps([0,1]),import.meta.url);await a(\"start_silent_nsis_uninstall\",{payload:{deleteUserData:k.value}}),P(),s.value=\"progress\",r.value=0,h=window.setInterval(()=>{a(\"get_silent_nsis_uninstall_status\").then(t=>{if(t.phase===\"failed\"){m(),b(),s.value=\"confirm\",console.error(\"Uninstall failed:\",t.message),t.message===\"APP_RUNNING\"?u.v",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -7664,7 +7665,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             6959,
             6996
@@ -7697,27 +7698,27 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190987,
-            191028
+            192213,
+            192254
           ],
           "byteRange": [
-            191307,
-            191348
+            192533,
+            192574
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"sync_main_window_to_current_monitor\")",
-          "context": "n_code:Vt(e)},\"error\")}}),Ne([It,zt],()=>{const e=It.value;uh(),Pa(re.value,pe.value),Oe(async()=>{await Ie();try{await kt(\"sync_main_window_to_current_monitor\")}catch(t){console.warn(\"[passthrough] refresh failed\",t)}await Ie(),e||Wo(re.value,pe.value)})}),Ne([Ze,st,pt],()=>{Oe(()=>{Ie(),tt()})}),Ne(ge,e=>{if(e&&(j+=1,T.value=!1),!e){Ie();return}Vn(),tt(),Ie()}),Ne([P,qe,ac,C,w,B,E,M,N,D",
-          "callee": "kt",
+          "source": "Ct(\"sync_main_window_to_current_monitor\")",
+          "context": "n_code:Gt(e)},\"error\")}}),Oe([Mt,Jt],()=>{const e=Mt.value;Mp(),ei(oe.value,de.value),De(async()=>{await Me();try{await Ct(\"sync_main_window_to_current_monitor\")}catch(t){console.warn(\"[passthrough] refresh failed\",t)}await Me(),e||Jo(oe.value,de.value)})}),Oe([Ze,rt,pt],()=>{De(()=>{Me(),tt()})}),Oe(ge,e=>{if(e&&(z+=1,ei(oe.value,de.value)),!e){Me();return}Gn(),tt(),Me()}),Oe([P,Ue,kc,C,",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
           }
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             1453,
             1493
@@ -7737,7 +7738,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             2443,
             2483
@@ -7770,7 +7771,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             418780,
             418955
@@ -7889,7 +7890,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             393166,
             393211
@@ -7919,7 +7920,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             397879,
             397971
@@ -7974,7 +7975,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DgPUp_8E.js",
+          "file": "index-CsOHvZV0.js",
           "charRange": [
             763,
             796
@@ -8007,7 +8008,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             513,
             546
@@ -8044,7 +8045,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             549256,
             549359
@@ -8070,7 +8071,7 @@
           ]
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             550099,
             550160
@@ -8113,7 +8114,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             549158,
             549247
@@ -8138,7 +8139,7 @@
           ]
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             549805,
             549846
@@ -8172,7 +8173,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             549366,
             549418
@@ -8198,7 +8199,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             549649,
             550184
@@ -8236,7 +8237,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             249,
             253
@@ -8256,7 +8257,7 @@
           }
         },
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             445,
             457
@@ -8290,7 +8291,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             279,
             283
@@ -8310,7 +8311,7 @@
           }
         },
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             479,
             491
@@ -8343,7 +8344,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388824,
             388946
@@ -8376,7 +8377,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388908,
             388942
@@ -8408,7 +8409,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387055,
             387085
@@ -8429,7 +8430,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388225,
             388441
@@ -8467,7 +8468,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388491,
             388605
@@ -8500,7 +8501,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388572,
             388601
@@ -8531,7 +8532,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             558594,
             558668
@@ -8567,7 +8568,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             310,
             323
@@ -8593,7 +8594,7 @@
           }
         },
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             393,
             423
@@ -8635,7 +8636,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4102,
             4156
@@ -8660,7 +8661,7 @@
           ]
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             5230,
             5249
@@ -8703,7 +8704,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4163,
             4170
@@ -8724,7 +8725,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4909,
             5202
@@ -8778,7 +8779,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4383,
             4437
@@ -8803,7 +8804,7 @@
           ]
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4867,
             4886
@@ -8846,7 +8847,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4444,
             4450
@@ -8867,7 +8868,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             4601,
             4839
@@ -8924,24 +8925,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190048,
-            190091
+            191274,
+            191317
           ],
           "byteRange": [
-            190368,
-            190411
+            191594,
+            191637
           ],
           "line": 17,
           "function": null,
-          "source": "mt(Na,e=>{ua(e.payload?.reason??\"manual\")})",
-          "context": "ait Jm(()=>{ge.value=!1,wn=Date.now()+wy,Le.value=!1,ga(),Ie()}),Ni=await Qm(()=>{Me()||Hr().then(()=>{q()})}),Ui=await mt(Na,e=>{ua(e.payload?.reason??\"manual\")}),Vi=await uv($d),Wi=await fv(tp),Ar=setInterval(()=>{R.isLoggedIn&&xo()},1e3),Cr=setInterval(()=>{Sn()},5e3),Mr=setInterval(()=>{S.value=2,Wp(),Ln&&clearTimeout(Ln),Ln=setTimeout(()=>{S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tra",
-          "callee": "mt",
+          "source": "ht($a,e=>{Ca(e.payload?.reason??\"manual\")})",
+          "context": "ait mv(()=>{ge.value=!1,_n=Date.now()+Ny,Be.value=!1,Ta(),Me()}),Ji=await vv(()=>{Ie()||$r().then(()=>{q()})}),ea=await ht($a,e=>{Ca(e.payload?.reason??\"manual\")}),ta=await Mv(hh),na=await Pv(yh),Lr=setInterval(()=>{A.isLoggedIn&&Vn()},1e3),Dr=setInterval(()=>{Rn()},5e3),Hr=setInterval(()=>{S.value=2,sp(),Nn&&clearTimeout(Nn),Nn=setTimeout(()=>{S.value=1,Nn=null},250)},5e3),Vi=await ht(\"tra",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{ua(e.payload?.reason??\"manual\")}"
+            "source": "e=>{Ca(e.payload?.reason??\"manual\")}"
           },
           "payloadReads": [
             "",
@@ -8949,7 +8950,7 @@
           ]
         },
         {
-          "file": "switchDisplayMonitor-2jwec8t8.js",
+          "file": "switchDisplayMonitor-BWIbPONB.js",
           "charRange": [
             3060,
             3075
@@ -8992,7 +8993,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             402952,
             403046
@@ -9033,7 +9034,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5177,
             5183
@@ -9054,7 +9055,7 @@
           }
         },
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5356,
             5378
@@ -9091,7 +9092,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5241,
             5245
@@ -9111,7 +9112,7 @@
           }
         },
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5438,
             5452
@@ -9145,7 +9146,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5143,
             5149
@@ -9166,7 +9167,7 @@
           }
         },
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5313,
             5333
@@ -9203,7 +9204,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5109,
             5115
@@ -9224,7 +9225,7 @@
           }
         },
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5268,
             5290
@@ -9261,7 +9262,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5210,
             5214
@@ -9281,7 +9282,7 @@
           }
         },
         {
-          "file": "appAutostart-tz4NyWPy.js",
+          "file": "appAutostart-mbqf5OBJ.js",
           "charRange": [
             5401,
             5415
@@ -9314,7 +9315,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388655,
             388771
@@ -9347,7 +9348,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388736,
             388767
@@ -9379,7 +9380,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386422,
             386472
@@ -9405,7 +9406,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387363,
             387434
@@ -9447,7 +9448,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386518,
             386560
@@ -9473,7 +9474,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387477,
             387540
@@ -9515,7 +9516,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386321,
             386369
@@ -9541,7 +9542,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387244,
             387313
@@ -9583,7 +9584,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386972,
             387010
@@ -9609,7 +9610,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             388093,
             388183
@@ -9651,7 +9652,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386605,
             386652
@@ -9677,7 +9678,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387582,
             387686
@@ -9719,7 +9720,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386226,
             386270
@@ -9745,7 +9746,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387131,
             387196
@@ -9787,7 +9788,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386698,
             386741
@@ -9813,7 +9814,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387729,
             387829
@@ -9855,7 +9856,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386791,
             386837
@@ -9881,7 +9882,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387876,
             387943
@@ -9923,7 +9924,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             386886,
             386928
@@ -9949,7 +9950,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             387989,
             388052
@@ -9986,7 +9987,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446239,
             446340
@@ -10023,7 +10024,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             444409,
             444473
@@ -10048,7 +10049,7 @@
           ]
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             444647,
             444678
@@ -10086,7 +10087,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446007,
             446071
@@ -10123,7 +10124,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             444209,
             444231
@@ -10143,7 +10144,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             445310,
             445332
@@ -10163,7 +10164,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             445513,
             445535
@@ -10183,7 +10184,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446080,
             446133
@@ -10205,7 +10206,7 @@
           "payloadReads": []
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446417,
             446439
@@ -10238,7 +10239,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             444123,
             444160
@@ -10260,7 +10261,7 @@
           "payloadReads": []
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             445887,
             445910
@@ -10280,7 +10281,7 @@
           }
         },
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             446355,
             446409
@@ -10314,7 +10315,7 @@
       ],
       "callSites": [
         {
-          "file": "index-ULLd3gpz.js",
+          "file": "index-CG0a5NfR.js",
           "charRange": [
             632372,
             632419
@@ -10353,20 +10354,20 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            188800,
-            188886
+            190026,
+            190112
           ],
           "byteRange": [
-            189120,
-            189206
+            190346,
+            190432
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload))",
-          "context": ".memberId);return}Al()}}),fl=await mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}),dl=await mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),xo(),Yr(),zh(5e3),Yi=await jh(e=>{oh(e),Yn(c)}),Gi=await $h(e=>{xa(e)}),Ki=await Jh(e=>{jn.value=e,e||Ao()}),Xi=await Qh(e=>{cr.value=e}),zi=await Zh(e=>{pn.value=e}),ji=await em(e=>{Ta(e)}),$i=await tm(e=>{fh(e)}),Ji=await nm(e=",
-          "callee": "mt",
+          "source": "ht(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload))",
+          "context": "alClickCount(),Go())}),Rl=await ht(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Il=await ht(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),Vn(),Xo(),dm(5e3),oa=await hm(e=>{_p(e),Xn(c)}),ra=await pm(e=>{Ya(e)}),ia=await mm(e=>{Jn.value=e,e||xo()}),aa=await vm(e=>{yr.value=e}),sa=await gm(e=>{pn.value=e}),la=await ym(e=>{Va(e)}),ca=await wm(e=>{Pp(e)}),ua=await bm(e=",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
@@ -10389,24 +10390,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190656,
-            190713
+            191882,
+            191939
           ],
           "byteRange": [
-            190976,
-            191033
+            192202,
+            192259
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"dock-open-panel\",e=>{const t=e.payload;Zm(t)&&Ap(t)})",
-          "context": "ndow-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Zm(t)&&Ap(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Oa(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Vt(e)},\"error\")}}),Ne([It,zt],()=>{const e=It.value;uh(),Pa(re.value,",
-          "callee": "mt",
+          "source": "ht(\"dock-open-panel\",e=>{const t=e.payload;gv(t)&&Wh(t)})",
+          "context": "ndow-opacity\",e=>{Ie()||kp(Number(e.payload))}),Xi=await ht(\"tray-toggle-window-passthrough\",()=>{Ie()||Cp()}),zi=await ht(\"dock-open-panel\",e=>{const t=e.payload;gv(t)&&Wh(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Ga(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Gt(e)},\"error\")}}),Oe([Mt,Jt],()=>{const e=Mt.value;Mp(),ei(oe.value,",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{const t=e.payload;Zm(t)&&Ap(t)}"
+            "source": "e=>{const t=e.payload;gv(t)&&Wh(t)}"
           },
           "payloadReads": [
             ""
@@ -10418,30 +10419,64 @@
       }
     },
     {
+      "name": "gamepad-button-press",
+      "operations": [
+        "listen"
+      ],
+      "callSites": [
+        {
+          "file": "index-BkT3Q3xR.js",
+          "charRange": [
+            189938,
+            190016
+          ],
+          "byteRange": [
+            190258,
+            190336
+          ],
+          "line": 17,
+          "function": null,
+          "source": "ht(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())})",
+          "context": ".memberId);return}ql()}}),Al=await ht(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Rl=await ht(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Il=await ht(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),Vn(),Xo(),dm(5e3),oa=await hm(e=>{_p(e),Xn(c)}),ra=await pm(e=>{Ya(e)}),ia=await mm(e=>{Jn.value=e,e||xo()}),aa=await vm(e=>{yr.value",
+          "callee": "ht",
+          "role": "listen",
+          "arguments": {
+            "type": "expression",
+            "source": "()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}"
+          },
+          "payloadReads": []
+        }
+      ],
+      "payload": {
+        "type": "undefined"
+      },
+      "notes": "One controller button rising edge increments local click count and triggers clap feedback. Do not also emit keyboard or mouse events for this input."
+    },
+    {
       "name": "global-clap-mouse",
       "operations": [
         "listen"
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            188715,
-            188790
+            189853,
+            189928
           ],
           "byteRange": [
-            189035,
-            189110
+            190173,
+            190248
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())})",
-          "context": "left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}}),fl=await mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}),dl=await mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),xo(),Yr(),zh(5e3),Yi=await jh(e=>{oh(e),Yn(c)}),Gi=await $h(e=>{xa(e)}),Ki=await Jh(e=>{jn.value=e,e||Ao()}),Xi=await Qh(e=>{cr.value",
-          "callee": "mt",
+          "source": "ht(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())})",
+          "context": "left\"&&Kn)return;A.incrementLocalClickCount(),Go(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}}),Al=await ht(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Rl=await ht(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Il=await ht(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),Vn(),Xo(),dm(5e3),oa=await hm(e=>{_p(e),Xn(c)",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}"
+            "source": "()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}"
           },
           "payloadReads": []
         }
@@ -10458,24 +10493,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            189412,
-            189446
+            190638,
+            190672
           ],
           "byteRange": [
-            189732,
-            189766
+            190958,
+            190992
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"key-press\",e=>{_c(e.payload)})",
-          "context": "ise(e=>{window.setTimeout(e,200)})}),window.addEventListener(\"keydown\",wc),window.addEventListener(\"keyup\",bc),sl=await mt(\"key-press\",e=>{_c(e.payload)}),ll=await mt(\"key-release\",e=>{kc(e.payload)}),window.addEventListener(\"resize\",gc),window.addEventListener(\"cat-click-report-success\",yc),window.addEventListener(\"cat-auth-login-success\",Wr),window.addEventListener(\"cat-auth-logo",
-          "callee": "mt",
+          "source": "ht(\"key-press\",e=>{Bc(e.payload)})",
+          "context": "ise(e=>{window.setTimeout(e,200)})}),window.addEventListener(\"keydown\",Fc),window.addEventListener(\"keyup\",Lc),_l=await ht(\"key-press\",e=>{Bc(e.payload)}),kl=await ht(\"key-release\",e=>{Nc(e.payload)}),window.addEventListener(\"resize\",Oc),window.addEventListener(\"cat-click-report-success\",Dc),window.addEventListener(\"cat-auth-login-success\",Zr),window.addEventListener(\"cat-auth-logo",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{_c(e.payload)}"
+            "source": "e=>{Bc(e.payload)}"
           },
           "payloadReads": [
             ""
@@ -10494,24 +10529,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            189456,
-            189492
+            190682,
+            190718
           ],
           "byteRange": [
-            189776,
-            189812
+            191002,
+            191038
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"key-release\",e=>{kc(e.payload)})",
-          "context": "addEventListener(\"keydown\",wc),window.addEventListener(\"keyup\",bc),sl=await mt(\"key-press\",e=>{_c(e.payload)}),ll=await mt(\"key-release\",e=>{kc(e.payload)}),window.addEventListener(\"resize\",gc),window.addEventListener(\"cat-click-report-success\",yc),window.addEventListener(\"cat-auth-login-success\",Wr),window.addEventListener(\"cat-auth-logout\",Ra),Hi=await Wf(()=>{Wr()}),qi=await Yf(()",
-          "callee": "mt",
+          "source": "ht(\"key-release\",e=>{Nc(e.payload)})",
+          "context": "addEventListener(\"keydown\",Fc),window.addEventListener(\"keyup\",Lc),_l=await ht(\"key-press\",e=>{Bc(e.payload)}),kl=await ht(\"key-release\",e=>{Nc(e.payload)}),window.addEventListener(\"resize\",Oc),window.addEventListener(\"cat-click-report-success\",Dc),window.addEventListener(\"cat-auth-login-success\",Zr),window.addEventListener(\"cat-auth-logout\",Ha),Qi=await id(()=>{Zr()}),Zi=await ad(()",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{kc(e.payload)}"
+            "source": "e=>{Nc(e.payload)}"
           },
           "payloadReads": [
             ""
@@ -10530,7 +10565,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             345,
             371
@@ -10566,7 +10601,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             602,
             630
@@ -10602,24 +10637,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            188081,
-            188705
+            189219,
+            189843
           ],
           "byteRange": [
-            188391,
-            189025
+            189529,
+            190163
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"mouse-button\",e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),i===\"release\"&&t===\"left\"&&(async()=>{if(Wn){Wn=!1,Pl(),An(!1),Uo=\"default\",Wo(re.value,pe.value);return}await Ic(t,i,re.value,pe.value,e.payload.memberId),yd(),await Yd(),An(!1),Uo=\"default\",Wo(re.value,pe.value)})(),!Me()){if(i===\"press\"){if(Cn)return t===\"left\"&&(Wn=!0),void 0;if(t===\"left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}})",
-          "context": ".payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}}),ul=await mt(\"mouse-button\",e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),i===\"release\"&&t===\"left\"&&(async()=>{if(Wn){Wn=!1,Pl(),An(!1),Uo=\"default\",Wo(re.value,pe.value);return}await Ic(t,i,re.value,pe.value,e.payload.memberId),yd(),await Yd(),An(!1),Uo=\"default\",Wo(re.value,pe.value)})(),!Me()){if(i===\"press\"){if(Cn)return t===\"left\"&&(Wn=!0),void 0;if(t===\"left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}}),fl=await mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}),dl=await mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),xo(),Yr(),zh(5e3),Yi=await jh(e=>{oh(e),Yn(c)}),",
-          "callee": "mt",
+          "source": "ht(\"mouse-button\",e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),o===\"release\"&&t===\"left\"&&(async()=>{if(Kn){Kn=!1,Yl(),In(!1),jo=\"default\",Jo(oe.value,de.value);return}await Wc(t,o,oe.value,de.value,e.payload.memberId),Fd(),await sh(),In(!1),jo=\"default\",Jo(oe.value,de.value)})(),!Ie()){if(o===\"press\"){if(vn)return t===\"left\"&&(Kn=!0),void 0;if(t===\"left\"&&Kn)return;A.incrementLocalClickCount(),Go(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}})",
+          "context": ".payload.x,e.payload.y);t?Gl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Gl(o.x,o.y)})}}),Sl=await ht(\"mouse-button\",e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),o===\"release\"&&t===\"left\"&&(async()=>{if(Kn){Kn=!1,Yl(),In(!1),jo=\"default\",Jo(oe.value,de.value);return}await Wc(t,o,oe.value,de.value,e.payload.memberId),Fd(),await sh(),In(!1),jo=\"default\",Jo(oe.value,de.value)})(),!Ie()){if(o===\"press\"){if(vn)return t===\"left\"&&(Kn=!0),void 0;if(t===\"left\"&&Kn)return;A.incrementLocalClickCount(),Go(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}}),Al=await ht(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Rl=await ht(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Go())}),Il=await ht(\"dock-context-menu-debug\",e=>console.info(\"[",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),i===\"release\"&&t===\"left\"&&(async()=>{if(Wn){Wn=!1,Pl(),An(!1),Uo=\"default\",Wo(re.value,pe.value);return}await Ic(t,i,re.value,pe.value,e.payload.memberId),yd(),await Yd(),An(!1),Uo=\"default\",Wo(re.value,pe.value)})(),!Me()){if(i===\"press\"){if(Cn)return t===\"left\"&&(Wn=!0),void 0;if(t===\"left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}}"
+            "source": "e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),o===\"release\"&&t===\"left\"&&(async()=>{if(Kn){Kn=!1,Yl(),In(!1),jo=\"default\",Jo(oe.value,de.value);return}await Wc(t,o,oe.value,de.value,e.payload.memberId),Fd(),await sh(),In(!1),jo=\"default\",Jo(oe.value,de.value)})(),!Ie()){if(o===\"press\"){if(vn)return t===\"left\"&&(Kn=!0),void 0;if(t===\"left\"&&Kn)return;A.incrementLocalClickCount(),Go(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}}"
           },
           "payloadReads": [
             "",
@@ -10662,24 +10697,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            187548,
-            188071
+            188686,
+            189209
           ],
           "byteRange": [
-            187858,
-            188381
+            188996,
+            189519
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"mouse-move\",e=>{if(re.value=Math.round(e.payload.x),pe.value=Math.round(e.payload.y),e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),Ct&&Pt.value!==null){const t=Ht(e.payload.x,e.payload.y);t&&gd(t.x,t.y);return}if(Kd(e.payload.x,e.payload.y),Js(e.payload.x,e.payload.y,e.payload.memberId),Pa(e.payload.x,e.payload.y),Ct&&Wo(e.payload.x,e.payload.y),Ct&&Po.value){const t=Ht(e.payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}})",
-          "context": "(\"[about] startup open failed\",e)}),await ol(),await Ie(),Ct&&(Sr=setInterval(()=>{da()},1500)),Dt.value&&Xh(),cl=await mt(\"mouse-move\",e=>{if(re.value=Math.round(e.payload.x),pe.value=Math.round(e.payload.y),e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),Ct&&Pt.value!==null){const t=Ht(e.payload.x,e.payload.y);t&&gd(t.x,t.y);return}if(Kd(e.payload.x,e.payload.y),Js(e.payload.x,e.payload.y,e.payload.memberId),Pa(e.payload.x,e.payload.y),Ct&&Wo(e.payload.x,e.payload.y),Ct&&Po.value){const t=Ht(e.payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}}),ul=await mt(\"mouse-button\",e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.membe",
-          "callee": "mt",
+          "source": "ht(\"mouse-move\",e=>{if(oe.value=Math.round(e.payload.x),de.value=Math.round(e.payload.y),e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),St&&Tt.value!==null){const t=Vt(e.payload.x,e.payload.y);t&&Dd(t.x,t.y);return}if(ch(e.payload.x,e.payload.y),fl(e.payload.x,e.payload.y,e.payload.memberId),ei(e.payload.x,e.payload.y),St&&Jo(e.payload.x,e.payload.y),St&&Lo.value){const t=Vt(e.payload.x,e.payload.y);t?Gl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Gl(o.x,o.y)})}})",
+          "context": "(\"[about] startup open failed\",e)}),await gl(),await Me(),St&&(Fr=setInterval(()=>{Aa()},1500)),Ft.value&&fm(),Cl=await ht(\"mouse-move\",e=>{if(oe.value=Math.round(e.payload.x),de.value=Math.round(e.payload.y),e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),St&&Tt.value!==null){const t=Vt(e.payload.x,e.payload.y);t&&Dd(t.x,t.y);return}if(ch(e.payload.x,e.payload.y),fl(e.payload.x,e.payload.y,e.payload.memberId),ei(e.payload.x,e.payload.y),St&&Jo(e.payload.x,e.payload.y),St&&Lo.value){const t=Vt(e.payload.x,e.payload.y);t?Gl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Gl(o.x,o.y)})}}),Sl=await ht(\"mouse-button\",e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.membe",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{if(re.value=Math.round(e.payload.x),pe.value=Math.round(e.payload.y),e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),Ct&&Pt.value!==null){const t=Ht(e.payload.x,e.payload.y);t&&gd(t.x,t.y);return}if(Kd(e.payload.x,e.payload.y),Js(e.payload.x,e.payload.y,e.payload.memberId),Pa(e.payload.x,e.payload.y),Ct&&Wo(e.payload.x,e.payload.y),Ct&&Po.value){const t=Ht(e.payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}}"
+            "source": "e=>{if(oe.value=Math.round(e.payload.x),de.value=Math.round(e.payload.y),e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),St&&Tt.value!==null){const t=Vt(e.payload.x,e.payload.y);t&&Dd(t.x,t.y);return}if(ch(e.payload.x,e.payload.y),fl(e.payload.x,e.payload.y,e.payload.memberId),ei(e.payload.x,e.payload.y),St&&Jo(e.payload.x,e.payload.y),St&&Lo.value){const t=Vt(e.payload.x,e.payload.y);t?Gl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Gl(o.x,o.y)})}}"
           },
           "payloadReads": [
             "",
@@ -10713,7 +10748,7 @@
       ],
       "callSites": [
         {
-          "file": "index-e1e-VINk.js",
+          "file": "index-Cv-ZpTqg.js",
           "charRange": [
             2243,
             2265
@@ -10746,24 +10781,24 @@
       ],
       "callSites": [
         {
-          "file": "index-B8v13rah.js",
+          "file": "index-BQSxcG_d.js",
           "charRange": [
-            72020,
-            72103
+            72072,
+            72155
           ],
           "byteRange": [
-            72078,
-            72161
+            72130,
+            72213
           ],
           "line": 2,
           "function": null,
-          "source": "Wn(\"panel-open-tab\",m=>{Qt(m.payload)&&(de({type:\"tab-click\",key:m.payload}),d())})",
-          "context": "m,Kn(m.assetsCdnHost,{triggerSilentCheck:!1}),x(m),K(m)}),V=await io(m=>{f.value&&(f.value={...f.value,...m})}),N=await Wn(\"panel-open-tab\",m=>{Qt(m.payload)&&(de({type:\"tab-click\",key:m.payload}),d())});const C=O.query.tab;typeof C==\"string\"&&Qt(C)&&await de({type:\"tab-click\",key:C}),await de({type:\"ready\"}),d()}),pt(()=>{k?.(),V?.(),N?.(),xt()}),ae(()=>f.value?.collapsed,C=>{typeof C==\"boolean\"&&co(C).catch(m=>{console.warn(\"[p",
+          "source": "Wn(\"panel-open-tab\",d=>{Qt(d.payload)&&(de({type:\"tab-click\",key:d.payload}),B())})",
+          "context": "d,Kn(d.assetsCdnHost,{triggerSilentCheck:!1}),b(d),f(d)}),V=await io(d=>{g.value&&(g.value={...g.value,...d})}),z=await Wn(\"panel-open-tab\",d=>{Qt(d.payload)&&(de({type:\"tab-click\",key:d.payload}),B())});const C=O.query.tab;typeof C==\"string\"&&Qt(C)&&await de({type:\"tab-click\",key:C}),await de({type:\"ready\"}),B()}),pt(()=>{k?.(),V?.(),z?.(),xt()}),ae(()=>g.value?.collapsed,C=>{typeof C==\"boolean\"&&co(C).catch(d=>{console.warn(\"[p",
           "callee": "Wn",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "m=>{Qt(m.payload)&&(de({type:\"tab-click\",key:m.payload}),d())}"
+            "source": "d=>{Qt(d.payload)&&(de({type:\"tab-click\",key:d.payload}),B())}"
           },
           "payloadReads": [
             ""
@@ -10781,24 +10816,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190314,
-            190340
+            191540,
+            191566
           ],
           "byteRange": [
-            190634,
-            190660
+            191860,
+            191886
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-quit\",()=>{th()})",
-          "context": ",5e3),Mr=setInterval(()=>{S.value=2,Wp(),Ln&&clearTimeout(Ln),Ln=setTimeout(()=>{S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tray-quit\",()=>{th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(",
-          "callee": "mt",
+          "source": "ht(\"tray-quit\",()=>{wp()})",
+          "context": ",5e3),Hr=setInterval(()=>{S.value=2,sp(),Nn&&clearTimeout(Nn),Nn=setTimeout(()=>{S.value=1,Nn=null},250)},5e3),Vi=await ht(\"tray-quit\",()=>{wp()}),Wi=await ht(\"tray-restart\",()=>{Ie()||bp()}),Yi=await ht(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Gi=await ht(\"tray-set-pet-scale\",e=>{Ie()||Tp(Number(e.payload))}),Ki=await ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{th()}"
+            "source": "()=>{wp()}"
           },
           "payloadReads": []
         }
@@ -10814,24 +10849,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190350,
-            190385
+            191576,
+            191611
           ],
           "byteRange": [
-            190670,
-            190705
+            191896,
+            191931
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-restart\",()=>{Me()||nh()})",
-          "context": "Wp(),Ln&&clearTimeout(Ln),Ln=setTimeout(()=>{S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tray-quit\",()=>{th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window",
-          "callee": "mt",
+          "source": "ht(\"tray-restart\",()=>{Ie()||bp()})",
+          "context": "sp(),Nn&&clearTimeout(Nn),Nn=setTimeout(()=>{S.value=1,Nn=null},250)},5e3),Vi=await ht(\"tray-quit\",()=>{wp()}),Wi=await ht(\"tray-restart\",()=>{Ie()||bp()}),Yi=await ht(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Gi=await ht(\"tray-set-pet-scale\",e=>{Ie()||Tp(Number(e.payload))}),Ki=await ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(e.payload))}),Xi=await ht(\"tray-toggle-window",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||nh()}"
+            "source": "()=>{Ie()||bp()}"
           },
           "payloadReads": []
         }
@@ -10847,24 +10882,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190454,
-            190511
+            191680,
+            191737
           ],
           "byteRange": [
-            190774,
-            190831
+            192000,
+            192057
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))})",
-          "context": "th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Zm(t)&&Ap(t)})}catch(e){console.warn(\"[mai",
-          "callee": "mt",
+          "source": "ht(\"tray-set-pet-scale\",e=>{Ie()||Tp(Number(e.payload))})",
+          "context": "wp()}),Wi=await ht(\"tray-restart\",()=>{Ie()||bp()}),Yi=await ht(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Gi=await ht(\"tray-set-pet-scale\",e=>{Ie()||Tp(Number(e.payload))}),Ki=await ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(e.payload))}),Xi=await ht(\"tray-toggle-window-passthrough\",()=>{Ie()||Cp()}),zi=await ht(\"dock-open-panel\",e=>{const t=e.payload;gv(t)&&Wh(t)})}catch(e){console.warn(\"[mai",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{Me()||dh(Number(e.payload))}"
+            "source": "e=>{Ie()||Tp(Number(e.payload))}"
           },
           "payloadReads": [
             ""
@@ -10882,24 +10917,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190521,
-            190583
+            191747,
+            191809
           ],
           "byteRange": [
-            190841,
-            190903
+            192067,
+            192129
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))})",
-          "context": "ay-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Zm(t)&&Ap(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Oa(\"main_mount_failed\"),me(\"boot:main_mount_fai",
-          "callee": "mt",
+          "source": "ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(e.payload))})",
+          "context": "ay-toggle-pet-visibility\",()=>{Ie()||dc()}),Gi=await ht(\"tray-set-pet-scale\",e=>{Ie()||Tp(Number(e.payload))}),Ki=await ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(e.payload))}),Xi=await ht(\"tray-toggle-window-passthrough\",()=>{Ie()||Cp()}),zi=await ht(\"dock-open-panel\",e=>{const t=e.payload;gv(t)&&Wh(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Ga(\"main_mount_failed\"),me(\"boot:main_mount_fai",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{Me()||rh(Number(e.payload))}"
+            "source": "e=>{Ie()||kp(Number(e.payload))}"
           },
           "payloadReads": [
             ""
@@ -10917,24 +10952,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190395,
-            190444
+            191621,
+            191670
           ],
           "byteRange": [
-            190715,
-            190764
+            191941,
+            191990
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()})",
-          "context": "S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tray-quit\",()=>{th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-pane",
-          "callee": "mt",
+          "source": "ht(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()})",
+          "context": "S.value=1,Nn=null},250)},5e3),Vi=await ht(\"tray-quit\",()=>{wp()}),Wi=await ht(\"tray-restart\",()=>{Ie()||bp()}),Yi=await ht(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Gi=await ht(\"tray-set-pet-scale\",e=>{Ie()||Tp(Number(e.payload))}),Ki=await ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(e.payload))}),Xi=await ht(\"tray-toggle-window-passthrough\",()=>{Ie()||Cp()}),zi=await ht(\"dock-open-pane",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||$l()}"
+            "source": "()=>{Ie()||dc()}"
           },
           "payloadReads": []
         }
@@ -10950,24 +10985,24 @@
       ],
       "callSites": [
         {
-          "file": "index-CHhF-M4P.js",
+          "file": "index-BkT3Q3xR.js",
           "charRange": [
-            190593,
-            190646
+            191819,
+            191872
           ],
           "byteRange": [
-            190913,
-            190966
+            192139,
+            192192
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()})",
-          "context": "ale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Zm(t)&&Ap(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Oa(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Vt",
-          "callee": "mt",
+          "source": "ht(\"tray-toggle-window-passthrough\",()=>{Ie()||Cp()})",
+          "context": "ale\",e=>{Ie()||Tp(Number(e.payload))}),Ki=await ht(\"tray-set-window-opacity\",e=>{Ie()||kp(Number(e.payload))}),Xi=await ht(\"tray-toggle-window-passthrough\",()=>{Ie()||Cp()}),zi=await ht(\"dock-open-panel\",e=>{const t=e.payload;gv(t)&&Wh(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Ga(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Gt",
+          "callee": "ht",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||ih()}"
+            "source": "()=>{Ie()||Cp()}"
           },
           "payloadReads": []
         }
@@ -10983,7 +11018,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-BpS-RTWY.js",
+          "file": "modalBridge-It6UBs3W.js",
           "charRange": [
             568,
             580
@@ -11012,7 +11047,7 @@
   ],
   "dynamicCalls": [
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         382615,
         382708
@@ -11030,7 +11065,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         382790,
         382851
@@ -11048,7 +11083,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         382900,
         382960
@@ -11066,7 +11101,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         383033,
         383074
@@ -11084,7 +11119,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         383119,
         383162
@@ -11102,7 +11137,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         385009,
         385052
@@ -11120,7 +11155,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         389518,
         389537
@@ -11138,7 +11173,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         389568,
         389575
@@ -11156,7 +11191,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         423723,
         423778
@@ -11174,7 +11209,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         423887,
         423938
@@ -11192,7 +11227,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         424070,
         424079
@@ -11210,7 +11245,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         424215,
         424228
@@ -11228,7 +11263,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         435975,
         436031
@@ -11246,7 +11281,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         436140,
         436192
@@ -11264,7 +11299,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         436322,
         436331
@@ -11282,7 +11317,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         436465,
         436478
@@ -11300,7 +11335,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         439512,
         439574
@@ -11318,7 +11353,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         439683,
         439741
@@ -11336,7 +11371,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-ULLd3gpz.js",
+      "file": "index-CG0a5NfR.js",
       "charRange": [
         444548,
         444557

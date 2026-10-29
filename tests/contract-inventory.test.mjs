@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import vm from 'node:vm';
+import { parse } from 'acorn';
 import { inventoryAssets } from '../scripts/inventory-contract.mjs';
 
 import { contract, profile, root, assetDirectory } from './frontend-context.mjs';
@@ -12,7 +14,7 @@ test('selected region runtime and Windows installer have separate exhaustive inv
   assert.equal(runtimeCommands.length, 50);
   assert.equal(contract.commands.filter(item => item.kind === 'application' && item.scopes.includes('windows-installer')).length, profile.id === 'cn' ? 9 : 11);
   assert.equal(contract.commands.filter(item => item.kind === 'plugin').length, profile.id === 'cn' ? 119 : 120);
-  assert.equal(contract.events.length, profile.id === 'cn' ? 59 : 60);
+  assert.equal(contract.events.length, profile.id === 'cn' ? 60 : 61);
   assert.equal(contract.sourceApplication.region, profile.region);
   assert.equal(contract.sourceApplication.version, JSON.parse(fs.readFileSync(path.join(root, profile.upstreamLock), 'utf8')).version);
   assert.equal(Object.hasOwn(contract.runtimeConstants, 'authCallbackScheme'), profile.id === 'global');
@@ -63,6 +65,37 @@ test('keyboard and mouse payloads cannot accidentally share a count stream', () 
   assert.equal(find('mouse-button').payload.properties.memberId.type, 'number');
   assert.match(find('mouse-button').notes, /Do not also emit key-press/);
   assert.ok(find('mouse-button').callSites[0].payloadReads.includes('memberId'));
+});
+
+test('official gamepad consumer counts once, keeps feedback and respects both input guards', () => {
+  const event = contract.events.find(item => item.name === 'gamepad-button-press');
+  assert.deepEqual(event.payload, { type: 'undefined' });
+  assert.deepEqual(event.operations, ['listen']);
+  assert.equal(event.callSites.length, 1);
+  assert.deepEqual(event.callSites[0].payloadReads, []);
+  assert.ok(contract.bootContract.inputRegistration.includes(event.name));
+  const site = event.callSites[0];
+  const source = fs.readFileSync(path.join(assetDirectory, site.file), 'utf8').slice(...site.charRange);
+  assert.equal(source, site.source);
+  const callback = parse(source, { ecmaVersion: 'latest' }).body[0].expression.arguments[1];
+  const expression = callback.body.body[0].expression;
+  assert.equal(expression.operator, '||');
+  assert.equal(expression.left.operator, '||');
+  const [count, feedback] = expression.right.expressions;
+  assert.equal(count.callee.property.name, 'incrementLocalClickCount');
+  for (const [firstGuard, secondGuard, expected] of [[false, false, 1], [true, false, 0], [false, true, 0], [true, true, 0]]) {
+    let counts = 0, claps = 0;
+    const handler = vm.runInNewContext(source, {
+      [site.callee]: (name, listener) => { assert.equal(name, event.name); return listener; },
+      [expression.left.left.callee.name]: () => firstGuard,
+      [expression.left.right.name]: secondGuard,
+      [count.callee.object.name]: { incrementLocalClickCount() { counts += 1; } },
+      [feedback.callee.name]: () => { claps += 1; },
+    });
+    handler();
+    assert.equal(counts, expected);
+    assert.equal(claps, expected);
+  }
 });
 
 test('storage retains account/environment identity and intentional zero counts', () => {

@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { getRegionProfile } from '../scripts/regions.mjs';
-import { contract, verifyGlobalCallbackBridge, verifySourceContract } from '../scripts/network-smoke.mjs';
+import { contract, verifyDomesticSdkAssetBinding, verifyGlobalCallbackBridge, verifySourceContract } from '../scripts/network-smoke.mjs';
 
 const profile = getRegionProfile();
 const root = path.resolve(import.meta.dirname, '..');
@@ -13,6 +13,18 @@ const assets = path.join(root, profile.frontendDir, 'assets');
 const currentCallback = 'async function getCurrent(){return await invoke("plugin:deep-link|get_current")}';
 const officialCallback = 'async function onOpenUrl(e){return await listen("deep-link://new-url",t=>{e(t.payload)})}';
 const privateCallback = 'async function onOpenUrl(e){return await listen("mac-oauth-callback-ready",()=>{getCurrent().then(t=>{if(t?.length)return e(t)}).catch(()=>console.warn("[macOS] OAuth callback could not be read"))})}';
+
+test('domestic SDK loading follows exported bindings rather than minifier aliases', () => {
+  const main = 'const useHead=()=>{},isdkSrc="script",isdkCss="style";export{useHead as a,isdkSrc as b,isdkCss as c}';
+  for (const head of ['Re', 'Oe']) {
+    const view = `import{a as ${head},b as S,c as C}from"./${contract.source.main}";${head}({link:[{rel:"stylesheet",href:C}],script:[{src:S,onload:()=>{}}]});`;
+    assert.equal(verifyDomesticSdkAssetBinding(main, view), undefined);
+    assert.throws(() => verifyDomesticSdkAssetBinding(main, view.replace('href:C', 'href:S')), /stylesheet must use/);
+    assert.throws(() => verifyDomesticSdkAssetBinding(main, view.replace('src:S', 'src:C')), /script must use/);
+    assert.throws(() => verifyDomesticSdkAssetBinding(main, view.replace('a as', 'unknown as')), /must import/);
+    assert.throws(() => verifyDomesticSdkAssetBinding(main, view.replace('link:[{rel:"stylesheet",href:C}],', '')), /both SDK stylesheet and script/);
+  }
+});
 
 test('OAuth callback transport accepts only the known official bridge or explicitly prepared private wake', () => {
   assert.equal(verifyGlobalCallbackBridge(currentCallback + officialCallback), 'official-url-event');

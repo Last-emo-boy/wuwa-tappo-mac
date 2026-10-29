@@ -12,6 +12,20 @@ const current = 'try{const t=await getCurrent();t?.length&&handleRawUrls(t)}catc
 const listener = 'try{unlisten=await onOpenUrl(t=>{handleRawUrls(t)})}catch(t){throw console.warn("[overseas-auth] onOpenUrl failed:",t),bound=!1,t}';
 const fixture = `${originalBridge}async function bindOverseasAuthDeepLink(e){if(successHandler=e.onSuccess,errorHandler=e.onError??null,bound)return()=>{};bound=!0;${current}${listener}return()=>{unlisten?.(),unlisten=null,bound=!1,successHandler=null,errorHandler=null}}`;
 
+test('login regression fixtures preserve the selected official loader or state filter', async () => {
+  const domestic = profile.region === 'CN';
+  const name = domestic ? 'we' : 'handleRawUrls';
+  const source = findSource(value => value.includes(`async function ${name}(`)).source;
+  const fixture = await readFile(new URL(domestic ? './fixtures/domestic-sdk-loader.js' : './fixtures/global-oauth-handler.js', import.meta.url), 'utf8');
+  function declaration(value) {
+    const node = parse(value, { sourceType: 'module', ecmaVersion: 'latest' }).body
+      .find(item => item.type === 'FunctionDeclaration' && item.id.name === name);
+    assert.ok(node, `Official ${name} declaration must remain available`);
+    return value.slice(node.start, node.end);
+  }
+  assert.equal(declaration(source), declaration(fixture));
+});
+
 test('GLOBAL OAuth listens before reading cold callbacks and fetches URLs through the protected command', async () => {
   const order = [], events = new Map(), deliveries = [];
   const pending = [['synthetic-cold-callback']];

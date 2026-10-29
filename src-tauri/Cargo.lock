@@ -2463,6 +2463,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "objc2-game-controller"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1962c1882c5abcedb18e5f01acffeaad7b3cbd0a9d4cd8f5ca259ba8a64cb9a3"
+dependencies = [
+ "block2",
+ "objc2",
+ "objc2-foundation",
+]
+
+[[package]]
 name = "objc2-io-surface"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5485,12 +5496,14 @@ dependencies = [
 
 [[package]]
 name = "wuwatappo-mac"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
+ "block2",
  "futures-util",
  "objc2",
  "objc2-app-kit",
  "objc2-foundation",
+ "objc2-game-controller",
  "reqwest 0.12.28",
  "security-framework",
  "serde",

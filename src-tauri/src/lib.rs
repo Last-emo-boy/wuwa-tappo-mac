@@ -1,4 +1,5 @@
 mod auth;
+mod gamepad;
 mod geometry;
 mod input;
 mod menu;
@@ -107,6 +108,9 @@ fn begin_session(
                 windows::setup(&handle)?;
                 if let Err(error) = input::start(handle.clone()) {
                     eprintln!("Global input unavailable: {error}");
+                }
+                if let Err(error) = gamepad::start(handle.clone()) {
+                    eprintln!("Game controller input unavailable: {error}");
                 }
                 if let Some(bootstrap) = handle.get_webview_window("bootstrap") {
                     bootstrap.close().map_err(|error| error.to_string())?;
@@ -334,6 +338,9 @@ pub fn run() {
     };
     app.run(|app, event| {
         if let tauri::RunEvent::Exit = event {
+            if let Err(error) = gamepad::stop() {
+                eprintln!("Game controller shutdown failed: {error}");
+            }
             socket::shutdown(app);
             if let Some(monitor) = app.try_state::<system::SystemMonitor>() {
                 if let Err(error) = monitor.stop() {

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "application": "WuwaTappo-cn 1.0.1",
+  "application": "WuwaTappo-cn 1.0.2",
   "region": "CN",
   "source": {
-    "main": "index-D8GJxFG7.js",
-    "room": "index-DmC0wUEw.js",
-    "login": "useLogin-OBrag7nP.js",
-    "loginView": "login-D8U7h0FY.js"
+    "main": "index-DsnG26DH.js",
+    "room": "index-CAndEweT.js",
+    "login": "useLogin-CHDQXIa7.js",
+    "loginView": "login-BHKKfXyJ.js"
   },
   "http": {
     "baseUrl": "https://api-mc-wuwatappo.kurogames-global.com",
@@ -127,15 +127,15 @@
     "sameModeAcrossAppWindows": true
   },
   "officialDiscovery": {
-    "date": "2026-10-27",
+    "date": "2026-10-30",
     "announcement": "https://www.kurobbs.com/mc/post/1563983571163721728",
     "downloadPage": "https://download-mc-wuwatappo.kurogames-global.com/download/",
     "downloadPageRegion": "cn",
     "versionPointer": "https://mc-wuwatappo.kurogames-global.com/app/json-host/latest_host.json",
-    "versionManifest": "https://mc-wuwatappo.kurogames-global.com/app/version-json/latest.json?t=1793027259",
-    "windowsInstallerFilename": "WuwaTappo-cn_1.0.1_x64-setup.exe",
-    "windowsInstallerUrl": "https://mc-wuwatappo.kurogames-global.com/app/1517538a-823a-4bd0-a874-94e821649d60/WuwaTappo-cn_1.0.1_x64-setup.exe",
-    "updateVersion": "1.0.1",
+    "versionManifest": "https://mc-wuwatappo.kurogames-global.com/app/version-json/latest.json?t=1793158532",
+    "windowsInstallerFilename": "WuwaTappo-cn_1.0.2_x64-setup.exe",
+    "windowsInstallerUrl": "https://mc-wuwatappo.kurogames-global.com/app/3da1be53-0918-4d65-a606-d96eae7d5233/WuwaTappo-cn_1.0.2_x64-setup.exe",
+    "updateVersion": "1.0.2",
     "updatePlatforms": ["windows-x86_64"],
     "publicSdkDeclaredVersion": "1.2.3w",
     "cnWebviewCorsTested": false,
