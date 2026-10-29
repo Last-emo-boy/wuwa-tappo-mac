@@ -82,6 +82,16 @@ jobs:
           npm ci
           set -o pipefail
           node scripts/sync-upstream.mjs --update-lock 2>&1 | tee .work/upstream-extract.log
+      - name: Read verified candidate installer cache identity
+        id: installer
+        if: steps.extract.outcome == 'success'
+        run: node scripts/installer-cache.mjs
+      - name: Save verified candidate official installer
+        if: steps.extract.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.installer.outputs.path }}
+          key: ${{ steps.installer.outputs.key }}
       - name: Record candidate contract changes without accepting them
         id: inventory
         if: steps.extract.outcome == 'success'

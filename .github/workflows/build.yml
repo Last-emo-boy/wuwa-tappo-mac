@@ -38,6 +38,15 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+      - name: Read pinned official installer cache identity
+        id: installer
+        run: node scripts/installer-cache.mjs
+      - name: Restore pinned official installer
+        id: installer-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.installer.outputs.path }}
+          key: ${{ steps.installer.outputs.key }}
       - name: Install build tools
         run: |
           test "$(uname -m)" = arm64
@@ -54,7 +63,14 @@ jobs:
           key: macos-arm64-${{ matrix.region }}-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
       - run: npm ci
       - name: Prepare verified regional resources and native build inputs
+        id: prepare
         run: npm run setup
+      - name: Save verified official installer
+        if: steps.prepare.outcome == 'success' && steps.installer-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.installer.outputs.path }}
+          key: ${{ steps.installer.outputs.key }}
       - name: Test frontend contracts and native backend
         id: native-tests
         run: |

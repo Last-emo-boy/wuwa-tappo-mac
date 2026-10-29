@@ -120,10 +120,22 @@ export function findSevenZip(explicit, environment = process.env) {
   throw new Error('未找到 7-Zip。请先安装 7zip，或通过 --sevenzip /路径/7zz 指定。');
 }
 
+function installerCachePath(url, work, profile) {
+  const parts = new URL(officialAssetUrl(url, profile)).pathname.split('/').filter(Boolean).map(encodeURIComponent);
+  return path.join(work, 'installers', ...parts);
+}
+
+export function pinnedInstallerCache(lock, projectRoot = root, profile = cn) {
+  validateLock(lock, profile);
+  return {
+    key: `official-installer-v1-${profile.id}-${lock.installer.size}-${lock.installer.sha256}-${encodeURIComponent(new URL(lock.installer.url).pathname)}`,
+    path: installerCachePath(lock.installer.url, path.join(projectRoot, '.work'), profile),
+  };
+}
+
 async function installerBytes(lock, options, work, profile) {
   if (options.installer) return { filename: path.resolve(options.installer), bytes: await readFile(options.installer) };
-  const parts = new URL(lock.installer.url).pathname.split('/').filter(Boolean).map(encodeURIComponent);
-  const filename = path.join(work, 'installers', ...parts);
+  const filename = installerCachePath(lock.installer.url, work, profile);
   if (!options.updateLock && await exists(filename)) return { filename, bytes: await readFile(filename) };
   const bytes = await fetchOfficial(lock.installer.url, {
     stage: `${profile.region} 安装包下载`, timeout: 300_000,
