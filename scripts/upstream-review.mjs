@@ -52,7 +52,7 @@ export function exactIssueNumber(issues, title) {
 
 export function updatePullRequestArguments({ profile, version, branch, runUrl, outcomes }) {
   const validated = reviewStages.every(stage => outcomes[stage] === 'success');
-  const results = reviewStages.map(stage => `- ${stage}: ${outcomes[stage] || 'skipped'}`).join('\n');
+  const results = [...reviewStages, ...(outcomes.mirror === undefined ? [] : ['mirror'])].map(stage => `- ${stage}: ${outcomes[stage] || 'skipped'}`).join('\n');
   const body = [
     `${profile.label}官方资源锁定更新至 ${version}，不修改另一个地区。`,
     validated ? '资源检查、契约测试、Rust 测试、原生构建和 ZIP/DMG 打包均已通过。请完成真人登录、输入权限和联机检查后再合并发布。' : '候选版本尚未通过兼容性验证。此 PR 保持草稿，需要审核接口变化、修复失败项并通过两服 CI 后再合并。',
@@ -75,6 +75,7 @@ export async function openUpdatePullRequest({ projectRoot = root, profile = getR
   run('git', ['commit', '-m', `chore: sync official ${profile.id} resources ${check.latestVersion}`]);
   run('git', ['push', 'origin', branch]);
   const outcomes = Object.fromEntries(reviewStages.map(stage => [stage, environment[`${stage.toUpperCase()}_OUTCOME`]]));
+  if (environment.MIRROR_OUTCOME !== undefined) outcomes.mirror = environment.MIRROR_OUTCOME;
   const runUrl = `https://github.com/${environment.GITHUB_REPOSITORY}/actions/runs/${environment.GITHUB_RUN_ID}`;
   run('gh', updatePullRequestArguments({ profile, version: check.latestVersion, branch, runUrl, outcomes }));
 }

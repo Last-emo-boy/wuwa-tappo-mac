@@ -27,6 +27,7 @@ jobs:
             artifact: Global
     env:
       WUWA_REGION: ${{ matrix.region }}
+      WUWA_INSTALLER_MIRROR_BASE: ${{ github.server_url }}/${{ github.repository }}/releases/download/upstream-resources
       MACOSX_DEPLOYMENT_TARGET: '13.0'
       CARGO_INCREMENTAL: '0'
     steps:

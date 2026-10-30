@@ -155,6 +155,10 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           include-hidden-files: true
+      - name: Publish verified official installer as an immutable build input
+        id: mirror
+        if: always() && !cancelled() && steps.extract.outcome == 'success'
+        run: node scripts/installer-mirror.mjs
       - name: Open validated update or draft requiring adaptation
         if: always() && !cancelled() && steps.extract.outcome == 'success'
         env:
@@ -163,6 +167,7 @@ jobs:
           NATIVE_OUTCOME: ${{ steps.native-tests.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
           PACKAGE_OUTCOME: ${{ steps.validate.outcome }}
+          MIRROR_OUTCOME: ${{ steps.mirror.outcome }}
         run: node scripts/upstream-review.mjs open-pr
       - name: Report incompatible or unavailable upstream
         if: failure()

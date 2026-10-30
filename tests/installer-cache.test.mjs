@@ -52,10 +52,12 @@ test('cache metadata CLI emits only the selected region pinned file and immutabl
 test('restored installers avoid network but remain size and digest verified before extraction', async () => {
   const directory = await mkdtemp(path.join(tmpdir(), 'wuwa-cache-verified-'));
   const previousRegion = process.env.WUWA_REGION, previousFetch = globalThis.fetch;
+  const previousMirror = process.env.WUWA_INSTALLER_MIRROR_BASE;
   try {
     const lock = fixtureLock();
     const cache = pinnedInstallerCache(lock, directory);
     process.env.WUWA_REGION = 'cn';
+    delete process.env.WUWA_INSTALLER_MIRROR_BASE;
     await mkdir(path.dirname(cache.path), { recursive: true });
     await mkdir(path.join(directory, 'scripts'));
     await writeFile(path.join(directory, 'upstream-cn.json'), JSON.stringify(lock));
@@ -99,6 +101,8 @@ test('restored installers avoid network but remain size and digest verified befo
     globalThis.fetch = previousFetch;
     if (previousRegion === undefined) delete process.env.WUWA_REGION;
     else process.env.WUWA_REGION = previousRegion;
+    if (previousMirror === undefined) delete process.env.WUWA_INSTALLER_MIRROR_BASE;
+    else process.env.WUWA_INSTALLER_MIRROR_BASE = previousMirror;
     await rm(directory, { recursive: true, force: true });
   }
 });

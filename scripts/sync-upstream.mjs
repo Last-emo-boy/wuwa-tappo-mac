@@ -133,15 +133,76 @@ export function pinnedInstallerCache(lock, projectRoot = root, profile = cn) {
   };
 }
 
+export function installerMirrorAssetName(lock, profile = cn) {
+  validateLock(lock, profile);
+  return `${lock.installer.sha256}-${new URL(lock.installer.url).pathname.split('/').at(-1)}`;
+}
+
+export function installerMirrorUrl(lock, profile = cn, environment = process.env) {
+  const filename = installerMirrorAssetName(lock, profile);
+  const repository = environment.GITHUB_REPOSITORY;
+  if (environment.GITHUB_ACTIONS !== 'true' || environment.GITHUB_SERVER_URL !== 'https://github.com' || !/^[A-Za-z0-9][A-Za-z0-9_.-]*\/[A-Za-z0-9][A-Za-z0-9_.-]*$/.test(repository)) {
+    throw new Error('安装包镜像仅支持明确配置的本仓库 GitHub Actions 构建。');
+  }
+  const expected = `https://github.com/${repository}/releases/download/upstream-resources`;
+  const base = new URL(environment.WUWA_INSTALLER_MIRROR_BASE);
+  if (base.href.replace(/\/$/, '') !== expected || base.username || base.password || base.search || base.hash) {
+    throw new Error('安装包镜像必须是本仓库固定的 upstream-resources GitHub Release。');
+  }
+  return `${expected}/${encodeURIComponent(filename)}`;
+}
+
+function mirrorEligibleFailure(error) {
+  const causes = errorDetails(error);
+  if (causes.some(cause => (cause.status >= 400 && cause.status < 500) || /CERT|^ERR_TLS_|^UNABLE_TO_VERIFY_LEAF_SIGNATURE$/.test(cause.code || ''))) return false;
+  return causes.some(cause => retryableStatuses.has(cause.status) || retryableCodes.has(cause.code) || cause.name === 'TimeoutError');
+}
+
+async function fetchInstallerMirror(url, fetcher) {
+  try {
+    let response = await fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(300_000) });
+    if ([301, 302, 303, 307, 308].includes(response.status)) {
+      const location = response.headers.get('location');
+      const asset = location ? new URL(location, url) : null;
+      if (!asset || asset.origin !== 'https://release-assets.githubusercontent.com' || asset.username || asset.password || asset.hash) {
+        throw Object.assign(new Error('GitHub Release redirect must target its HTTPS asset host'), { code: 'UNTRUSTED_MIRROR_REDIRECT' });
+      }
+      await response.body?.cancel();
+      response = await fetcher(asset.href, { redirect: 'error', signal: AbortSignal.timeout(300_000) });
+    }
+    if (!response.ok) throw Object.assign(new Error(`HTTP ${response.status}`), { status: response.status });
+    return Buffer.from(await response.arrayBuffer());
+  } catch (error) {
+    // Signed CDN query parameters must not appear in CI logs.
+    const reason = errorDetails(error).map(cause => cause.status ? `HTTP ${cause.status}` : cause.code || cause.name).join(' → ');
+    throw new Error(`GitHub 安装包镜像下载失败：${url}；${reason}`, { cause: error });
+  }
+}
+
+export async function downloadInstaller(lock, { profile = cn, updateLock = false, environment = process.env, fetcher = fetch, sleep = delay, log = console.warn } = {}) {
+  if (updateLock) parseManifest({ version: lock.version, platforms: { 'windows-x86_64': lock.installer } }, lock.manifestUrl, profile);
+  else validateLock(lock, profile);
+  let bytes;
+  try {
+    bytes = await fetchOfficial(lock.installer.url, {
+      stage: `${profile.region} 安装包下载`, timeout: 300_000, fetcher, sleep,
+      read: async response => Buffer.from(await response.arrayBuffer()),
+    });
+  } catch (error) {
+    if (updateLock || !environment.WUWA_INSTALLER_MIRROR_BASE || !mirrorEligibleFailure(error)) throw error;
+    const mirror = installerMirrorUrl(lock, profile, environment);
+    log(`[${profile.region}] 官方安装包请求耗尽：${error.message}\n[${profile.region}] 使用显式构建源镜像（仍校验官方锁定大小及 SHA-256）：${mirror}`);
+    bytes = await fetchInstallerMirror(mirror, fetcher);
+  }
+  if (lock.installer.sha256) verifyInstaller(bytes, lock, profile);
+  return bytes;
+}
+
 async function installerBytes(lock, options, work, profile) {
   if (options.installer) return { filename: path.resolve(options.installer), bytes: await readFile(options.installer) };
   const filename = installerCachePath(lock.installer.url, work, profile);
   if (!options.updateLock && await exists(filename)) return { filename, bytes: await readFile(filename) };
-  const bytes = await fetchOfficial(lock.installer.url, {
-    stage: `${profile.region} 安装包下载`, timeout: 300_000,
-    read: async response => Buffer.from(await response.arrayBuffer()),
-  });
-  if (lock.installer.sha256) verifyInstaller(bytes, lock, profile);
+  const bytes = await downloadInstaller(lock, { profile, updateLock: options.updateLock });
   await mkdir(path.dirname(filename), { recursive: true });
   await writeFile(`${filename}.download`, bytes);
   await rename(`${filename}.download`, filename);
