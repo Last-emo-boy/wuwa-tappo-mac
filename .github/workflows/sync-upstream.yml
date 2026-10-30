@@ -55,7 +55,7 @@ jobs:
           const result = JSON.parse(readFileSync('.work/upstream-check.json', 'utf8'));
           if (typeof result.changed !== 'boolean' || !/^\d+\.\d+\.\d+$/.test(result.latestVersion)) throw new Error('Invalid official version response');
           const title = `同步${profile.label}官方资源 ${result.latestVersion}`;
-          const open = JSON.parse(execFileSync('gh', ['pr', 'list', '--state', 'open', '--search', `${title} in:title`, '--json', 'title'], { encoding: 'utf8' }));
+          const open = JSON.parse(execFileSync('gh', ['pr', 'list', '--state', 'open', '--search', `${title} in:title`, '--limit', '100', '--json', 'title'], { encoding: 'utf8' }));
           const pending = open.some(pr => pr.title === title);
           appendFileSync(process.env.GITHUB_OUTPUT, `changed=${result.changed && !pending}\nversion=${result.latestVersion}\nlock=${profile.upstreamLock}\n`);
           NODE
@@ -75,21 +75,47 @@ jobs:
             ~/.cargo/git
             src-tauri/target
           key: macos-arm64-${{ matrix.region }}-rust-1.97.1-${{ hashFiles('src-tauri/Cargo.lock') }}
-      - name: Validate updated official resources
+      - name: Extract updated official resources
+        id: extract
         if: steps.upstream.outputs.changed == 'true'
         run: |
           npm ci
-          node scripts/sync-upstream.mjs --update-lock
-          npm run icons
-          npm run prepare:frontend
-          npm test
+          set -o pipefail
+          node scripts/sync-upstream.mjs --update-lock 2>&1 | tee .work/upstream-extract.log
+      - name: Read verified candidate installer cache identity
+        id: installer
+        if: steps.extract.outcome == 'success'
+        run: node scripts/installer-cache.mjs
+      - name: Save verified candidate official installer
+        if: steps.extract.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.installer.outputs.path }}
+          key: ${{ steps.installer.outputs.key }}
+      - name: Record candidate contract changes without accepting them
+        id: inventory
+        if: steps.extract.outcome == 'success'
+        run: |
+          set -o pipefail
+          node scripts/upstream-review.mjs inventory 2>&1 | tee .work/upstream-inventory.log
+      - name: Validate frontend compatibility
+        id: frontend
+        if: steps.extract.outcome == 'success'
+        run: |
+          set -o pipefail
+          { npm run icons && npm run prepare:frontend && npm test; } 2>&1 | tee .work/upstream-frontend.log
       - name: Test native backend
         id: native-tests
         if: steps.upstream.outputs.changed == 'true'
-        run: npm run test:rust
+        run: |
+          set -o pipefail
+          npm run test:rust 2>&1 | tee .work/upstream-native.log
       - name: Build native application
+        id: build
         if: steps.upstream.outputs.changed == 'true'
-        run: npm run build -- -- --locked
+        run: |
+          set -o pipefail
+          npm run build -- -- --locked 2>&1 | tee .work/upstream-build.log
       - name: Package candidate
         id: validate
         if: steps.upstream.outputs.changed == 'true'
@@ -115,31 +141,29 @@ jobs:
             ~/.cargo/git
             src-tauri/target
           key: ${{ steps.cargo-cache.outputs.cache-primary-key }}
-      - name: Open official-resource update pull request
-        if: steps.validate.outcome == 'success'
+      - name: Keep upstream review evidence
+        if: always() && steps.upstream.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-${{ matrix.region }}-review
+          path: |
+            .work/upstream-check.json
+            .work/upstream-*.log
+            .work/upstream-review/*.json
+            .work/package-macos.log
+            upstream-${{ matrix.region }}.json
+          if-no-files-found: error
+          retention-days: 30
+          include-hidden-files: true
+      - name: Open validated update or draft requiring adaptation
+        if: always() && !cancelled() && steps.extract.outcome == 'success'
         env:
-          VERSION: ${{ steps.upstream.outputs.version }}
-          LOCK: ${{ steps.upstream.outputs.lock }}
-        run: |
-          set -euo pipefail
-          if git diff --quiet -- "$LOCK"; then exit 0; fi
-          BRANCH="codex/official-${WUWA_REGION}-${VERSION}-${GITHUB_RUN_ID}"
-          git switch -c "$BRANCH"
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add "$LOCK"
-          git commit -m "chore: sync official ${WUWA_REGION} resources ${VERSION}"
-          git push origin "$BRANCH"
-          gh pr create --base main --head "$BRANCH" --title "同步${REGION_LABEL}官方资源 ${VERSION}" --body "${REGION_LABEL}官方资源锁定已更新，不修改另一个地区。此工作流已通过资源完整性校验、契约测试、Rust 测试、原生构建及 ZIP/DMG 打包。请完成真人登录、输入权限和联机检查后合并，并打新的 Mac 版本标签发布。候选安装包见 Actions 的 official-${WUWA_REGION}-candidate。"
+          INVENTORY_OUTCOME: ${{ steps.inventory.outcome }}
+          FRONTEND_OUTCOME: ${{ steps.frontend.outcome }}
+          NATIVE_OUTCOME: ${{ steps.native-tests.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          PACKAGE_OUTCOME: ${{ steps.validate.outcome }}
+        run: node scripts/upstream-review.mjs open-pr
       - name: Report incompatible or unavailable upstream
         if: failure()
-        run: |
-          set -euo pipefail
-          TITLE="${REGION_LABEL}官方同步需要处理"
-          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
-          BODY="官方同步或兼容性验证失败，未发布新版本。请查看运行日志：https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          if [ -n "$EXISTING" ]; then
-            gh issue comment "$EXISTING" --body "$BODY"
-          else
-            gh issue create --title "$TITLE" --body "$BODY"
-          fi
+        run: node scripts/upstream-review.mjs report

@@ -2,12 +2,54 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse } from 'acorn';
 import { getRegionProfile } from './regions.mjs';
 
 const profile = getRegionProfile();
 const contractUrl = new URL(`../tests/network-contract${profile.id === 'global' ? '-global' : ''}.json`, import.meta.url);
 const root = fileURLToPath(new URL('..', import.meta.url));
 export const contract = JSON.parse(await readFile(contractUrl, 'utf8'));
+
+export function verifyDomesticSdkAssetBinding(main, loginView) {
+  const exports = new Map();
+  for (const node of parse(main, { sourceType: 'module', ecmaVersion: 'latest' }).body) {
+    if (node.type === 'ExportNamedDeclaration') {
+      for (const item of node.specifiers) exports.set(item.local.name, item.exported.name);
+    }
+  }
+  const tree = parse(loginView, { sourceType: 'module', ecmaVersion: 'latest' });
+  const imports = new Map();
+  for (const node of tree.body) {
+    if (node.type === 'ImportDeclaration' && node.source.value === `./${contract.source.main}`) {
+      for (const item of node.specifiers) if (item.type === 'ImportSpecifier') imports.set(item.imported.name, item.local.name);
+    }
+  }
+  const [head, script, stylesheet] = ['useHead', 'isdkSrc', 'isdkCss'].map(name => imports.get(exports.get(name)));
+  assert.ok(head && script && stylesheet, 'Login view must import the official SDK asset bindings');
+  const calls = [];
+  function visit(node) {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'CallExpression' && node.callee.type === 'Identifier' && node.callee.name === head) calls.push(node);
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+    }
+  }
+  visit(tree);
+  assert.equal(calls.length, 1, 'Login view must load the embedded SDK assets exactly once');
+  const properties = node => new Map((node?.type === 'ObjectExpression' ? node.properties : []).map(item => [item.key?.name ?? item.key?.value, item.value]));
+  const assets = properties(calls[0].arguments[0]);
+  const links = assets.get('link'), scripts = assets.get('script');
+  assert.ok(links?.type === 'ArrayExpression' && scripts?.type === 'ArrayExpression', 'Login view must declare both SDK stylesheet and script');
+  assert.equal(links.elements.length, 1);
+  assert.equal(scripts.elements.length, 1);
+  const link = properties(links.elements[0]), loader = properties(scripts.elements[0]);
+  assert.equal(link.get('rel')?.value, 'stylesheet');
+  assert.equal(link.get('href')?.type, 'Identifier');
+  assert.equal(link.get('href')?.name, stylesheet, 'Login stylesheet must use the official SDK binding');
+  assert.equal(loader.get('src')?.type, 'Identifier');
+  assert.equal(loader.get('src')?.name, script, 'Login script must use the official SDK binding');
+}
 
 export function verifyGlobalCallbackBridge(source, { prepared = false } = {}) {
   const current = 'async function getCurrent(){return await invoke("plugin:deep-link|get_current")}';
@@ -54,7 +96,7 @@ export async function verifySourceContract(assetDirectory = path.join(root, prof
     assert.ok(/\b_e\(e,1\)/.test(login), 'Domestic player query must pass is_domestic=1');
     assert.ok(/\bse\([^;]+,"sdk",i,a,1\)/.test(login), 'Domestic SDK login must pass source=sdk and is_domestic=1');
     assert.ok(loginView.includes('handleInlandSDKLogin'), 'Login view must bind the domestic SDK callback');
-    assert.ok(loginView.includes('Re({link:'), 'Login view must load the embedded SDK assets');
+    verifyDomesticSdkAssetBinding(main, loginView);
     const scriptIsHttps = main.includes(`isdkSrc="${contract.auth.sdk.scriptUrl}"`);
     const stylesheetIsHttps = main.includes(`isdkCss="${contract.auth.sdk.stylesheetUrl}"`);
     assert.ok(scriptIsHttps || main.includes(`isdkSrc="${contract.auth.sdk.sourceScriptUrl}"`), 'Unexpected domestic SDK script URL');

@@ -3,8 +3,8 @@
   "sourceApplication": {
     "name": "Wuwa Tappo",
     "region": "CN",
-    "entryModule": "index-D8GJxFG7.js",
-    "version": "1.0.1",
+    "entryModule": "index-DsnG26DH.js",
+    "version": "1.0.2",
     "frontend": "Vue / Tauri 2.10.3"
   },
   "runtimeConstants": {
@@ -31,7 +31,7 @@
     }
   },
   "bootContract": {
-    "entry": "index.html -> index-D8GJxFG7.js router / -> index-DmC0wUEw.js onMounted",
+    "entry": "index.html -> index-DsnG26DH.js router / -> index-CAndEweT.js onMounted",
     "routes": {
       "main": "/",
       "panel": "/panel",
@@ -63,133 +63,134 @@
       "mouse-button",
       "global-clap-mouse",
       "key-press",
-      "key-release"
+      "key-release",
+      "gamepad-button-press"
     ],
     "auth": "Frontend preserves official HTTP/Socket.IO account, inventory, rewards, and room protocols. Native backend owns window/event transport, not account emulation."
   },
   "nativeAliases": [
     {
-      "file": "appAutostart-ZFMxHrq5.js",
+      "file": "appAutostart-CVnAsS9A.js",
       "name": "y",
       "role": "listen"
     },
     {
-      "file": "appAutostart-ZFMxHrq5.js",
+      "file": "appAutostart-CVnAsS9A.js",
       "name": "p",
       "role": "emit"
     },
     {
-      "file": "appAutostart-ZFMxHrq5.js",
+      "file": "appAutostart-CVnAsS9A.js",
       "name": "_",
       "role": "invoke"
     },
     {
-      "file": "index-BE0i_XCi.js",
-      "name": "F",
-      "role": "invoke"
-    },
-    {
-      "file": "index-CQKDcPpI.js",
-      "name": "M",
-      "role": "listen"
-    },
-    {
-      "file": "index-CbVX5b7i.js",
+      "file": "index-B4yr8KUa.js",
       "name": "i",
       "role": "invoke"
     },
     {
-      "file": "index-D8GJxFG7.js",
-      "name": "invoke$1",
+      "file": "index-CAndEweT.js",
+      "name": "Ct",
       "role": "invoke"
     },
     {
-      "file": "index-D8GJxFG7.js",
-      "name": "listen",
+      "file": "index-CAndEweT.js",
+      "name": "pt",
       "role": "listen"
     },
     {
-      "file": "index-D8GJxFG7.js",
-      "name": "once",
-      "role": "once"
-    },
-    {
-      "file": "index-D8GJxFG7.js",
-      "name": "emit",
-      "role": "emit"
-    },
-    {
-      "file": "index-D8GJxFG7.js",
-      "name": "emitTo",
-      "role": "emitTo"
-    },
-    {
-      "file": "index-D8GJxFG7.js",
-      "name": "invoke",
-      "role": "invoke"
-    },
-    {
-      "file": "index-DJ7ReN0h.js",
-      "name": "tn",
-      "role": "invoke"
-    },
-    {
-      "file": "index-DJ7ReN0h.js",
-      "name": "Dn",
-      "role": "listen"
-    },
-    {
-      "file": "index-DenkafYz.js",
+      "file": "index-Cbcn3ySG.js",
       "name": "B",
       "role": "listen"
     },
     {
-      "file": "index-DmC0wUEw.js",
-      "name": "kt",
-      "role": "invoke"
-    },
-    {
-      "file": "index-DmC0wUEw.js",
-      "name": "mt",
+      "file": "index-D7ueDIgS.js",
+      "name": "M",
       "role": "listen"
     },
     {
-      "file": "modalBridge-DrPKsAwT.js",
+      "file": "index-DH_DNc-i.js",
+      "name": "tn",
+      "role": "invoke"
+    },
+    {
+      "file": "index-DH_DNc-i.js",
+      "name": "Dn",
+      "role": "listen"
+    },
+    {
+      "file": "index-Dm9XLOYA.js",
+      "name": "F",
+      "role": "invoke"
+    },
+    {
+      "file": "index-DsnG26DH.js",
+      "name": "invoke$1",
+      "role": "invoke"
+    },
+    {
+      "file": "index-DsnG26DH.js",
+      "name": "listen",
+      "role": "listen"
+    },
+    {
+      "file": "index-DsnG26DH.js",
+      "name": "once",
+      "role": "once"
+    },
+    {
+      "file": "index-DsnG26DH.js",
+      "name": "emit",
+      "role": "emit"
+    },
+    {
+      "file": "index-DsnG26DH.js",
+      "name": "emitTo",
+      "role": "emitTo"
+    },
+    {
+      "file": "index-DsnG26DH.js",
+      "name": "invoke",
+      "role": "invoke"
+    },
+    {
+      "file": "modalBridge-XRMnG1Hr.js",
       "name": "a",
       "role": "emit"
     },
     {
-      "file": "modalBridge-DrPKsAwT.js",
+      "file": "modalBridge-XRMnG1Hr.js",
       "name": "o",
       "role": "listen"
     },
     {
-      "file": "modalWindows-DaZSMM8K.js",
+      "file": "modalWindows-TgT7e7nx.js",
       "name": "n",
       "role": "invoke"
     },
     {
-      "file": "quitApp-DsjyTbze.js",
+      "file": "quitApp-D9Qe8LRS.js",
       "name": "r",
       "role": "invoke"
     },
     {
-      "file": "switchDisplayMonitor-BnjVcRPf.js",
+      "file": "switchDisplayMonitor-CH1c_9nU.js",
       "name": "f",
       "role": "invoke"
     },
     {
-      "file": "switchDisplayMonitor-BnjVcRPf.js",
+      "file": "switchDisplayMonitor-CH1c_9nU.js",
       "name": "g",
       "role": "emit"
     },
     {
-      "file": "switchDisplayMonitor-BnjVcRPf.js",
+      "file": "switchDisplayMonitor-CH1c_9nU.js",
       "name": "F",
       "role": "listen"
     },
     {
-      "file": "useLogin-OBrag7nP.js",
+      "file": "useLogin-CHDQXIa7.js",
       "name": "N",
       "role": "invoke"
     }
@@ -203,7 +204,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DJ7ReN0h.js",
+          "file": "index-DH_DNc-i.js",
           "charRange": [
             11134,
             11226
@@ -213,9 +214,9 @@
             11246
           ],
           "line": 2,
-          "function": "Bt",
-          "source": "tn(\"apply_main_window_position\",{payload:{alwaysOnTop:sn,position:f.value,applyPosition:h}})",
-          "context": "alue)}catch{He(n(\"setting_autostart_fail\")),B.value=await Xt()}finally{k.value=!1}}}async function Bt(h){Ve();try{await tn(\"apply_main_window_position\",{payload:{alwaysOnTop:sn,position:f.value,applyPosition:h}}),h&&go(\"corner-applied\")}catch(o){console.error(\"应用设置失败:\",o)}}async function Ms(){if(!(!le||ce.value)){nn(),ce.value=!0,ge.value=n(\"setting_version_checking\");try{const h=await on({interactive:!0});if(h.kind===\"none\"){Vt(),ge.valu",
+          "function": "Ot",
+          "source": "tn(\"apply_main_window_position\",{payload:{alwaysOnTop:sn,position:g.value,applyPosition:w}})",
+          "context": "alue)}catch{He(n(\"setting_autostart_fail\")),N.value=await Xt()}finally{k.value=!1}}}async function Ot(w){Ve();try{await tn(\"apply_main_window_position\",{payload:{alwaysOnTop:sn,position:g.value,applyPosition:w}}),w&&go(\"corner-applied\")}catch(o){console.error(\"应用设置失败:\",o)}}async function Ms(){if(!(!le||ce.value)){nn(),ce.value=!0,ge.value=n(\"setting_version_checking\");try{const w=await on({interactive:!0});if(w.kind===\"none\"){Vt(),ge.valu",
           "callee": "tn",
           "role": "invoke",
           "arguments": {
@@ -230,11 +231,11 @@
                   },
                   "position": {
                     "type": "expression",
-                    "source": "f.value"
+                    "source": "g.value"
                   },
                   "applyPosition": {
                     "type": "expression",
-                    "source": "h"
+                    "source": "w"
                   }
                 }
               }
@@ -242,7 +243,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             2631,
             2717
@@ -319,7 +320,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             545868,
             545909
@@ -395,7 +396,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             580,
             603
@@ -428,7 +429,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             172,
             195
@@ -461,7 +462,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             478,
             506
@@ -494,7 +495,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5553,
             5576
@@ -527,7 +528,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             375,
             399
@@ -560,7 +561,7 @@
       ],
       "callSites": [
         {
-          "file": "quitApp-DsjyTbze.js",
+          "file": "quitApp-D9Qe8LRS.js",
           "charRange": [
             113,
             126
@@ -572,7 +573,7 @@
           "line": 1,
           "function": "o",
           "source": "r(\"exit_app\")",
-          "context": "import{dM as a,dN as e,p as r,dO as i}from\"./index-D8GJxFG7.js\";async function o(){await a(),await e();try{await r(\"exit_app\")}catch(t){console.error(\"[quitApp] exit_app failed\",t)}}async function s(){await a(),await e();try{await i()}catch(t){console.error(\"[restartApp] relaunch failed\",t)}}export{o as quitApp,s as restartApp};\n",
+          "context": "import{dM as a,dN as e,p as r,dO as i}from\"./index-DsnG26DH.js\";async function o(){await a(),await e();try{await r(\"exit_app\")}catch(t){console.error(\"[quitApp] exit_app failed\",t)}}async function s(){await a(),await e();try{await i()}catch(t){console.error(\"[restartApp] relaunch failed\",t)}}export{o as quitApp,s as restartApp};\n",
           "callee": "r",
           "role": "invoke",
           "arguments": {
@@ -593,7 +594,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CUVNVoOP.js",
+          "file": "index-CcB8-lyl.js",
           "charRange": [
             2725,
             2748
@@ -605,7 +606,7 @@
           "line": 2,
           "function": "O",
           "source": "l(\"exit_installed_app\")",
-          "context": "ke:e}=await import(\"./index-D8GJxFG7.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await l(\"exit_installed_app\"),u.value=!1,await U()}catch(l){console.error(\"Failed to exit the installed app:\",l),b(),u.value=!1,f(a.value.exitAppFailed)}finally{o.value=!1}}}async function U(){g=!1;try{if(!(\"__TAURI_INTERNALS__\"in window)){N(),s.value=\"progre",
+          "context": "ke:e}=await import(\"./index-DsnG26DH.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await l(\"exit_installed_app\"),u.value=!1,await U()}catch(l){console.error(\"Failed to exit the installed app:\",l),b(),u.value=!1,f(a.value.exitAppFailed)}finally{o.value=!1}}}async function U(){g=!1;try{if(!(\"__TAURI_INTERNALS__\"in window)){N(),s.value=\"progre",
           "callee": "l",
           "role": "invoke",
           "arguments": {
@@ -626,7 +627,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             7659,
             7697
@@ -659,7 +660,7 @@
       ],
       "callSites": [
         {
-          "file": "index-BE0i_XCi.js",
+          "file": "index-Dm9XLOYA.js",
           "charRange": [
             9344,
             9370
@@ -701,20 +702,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            121701,
-            121727
+            121894,
+            121920
           ],
           "byteRange": [
-            121905,
-            121931
+            122098,
+            122124
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"get_boot_diagnostics\")",
-          "context": ",s.size),work_area_px:Lc(s.workArea.position,s.workArea.size),scale:s.scaleFactor})}}async function xg(){const n=vn(()=>kt(\"get_boot_diagnostics\"),null,4e3),[a,c,u,v]=await Promise.all([vn(xh,null),vn(Oh,null),vn(Dh,null),vn(Fh,null)]);await le(\"APP\",\"boot\",{session:crypto.randomUUID(),version:a,product:c,bundle:u,mode:\"release\",build_mode:\"cn-prod\",locale:String(Mn.global.",
-          "callee": "kt",
+          "source": "Ct(\"get_boot_diagnostics\")",
+          "context": ",s.size),work_area_px:Qc(s.workArea.position,s.workArea.size),scale:s.scaleFactor})}}async function Jg(){const n=yn(()=>Ct(\"get_boot_diagnostics\"),null,4e3),[a,c,u,v]=await Promise.all([yn($h,null),yn(Jh,null),yn(Qh,null),yn(Zh,null)]);await le(\"APP\",\"boot\",{session:crypto.randomUUID(),version:a,product:c,bundle:u,mode:\"release\",build_mode:\"cn-prod\",locale:String(Tn.global.",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
@@ -759,7 +760,7 @@
       ],
       "callSites": [
         {
-          "file": "index-SIFFVg-c.js",
+          "file": "index-BzQeohgt.js",
           "charRange": [
             26461,
             26491
@@ -771,7 +772,7 @@
           "line": 2,
           "function": null,
           "source": "a(\"get_installer_launch_mode\")",
-          "context": "e:n}=await import(\"./index-D8GJxFG7.js\").then(E=>E.dQ);return{invoke:n}},__vite__mapDeps([0,1]),import.meta.url);(await a(\"get_installer_launch_mode\")).otaUpdate&&k(!0)}catch{}})()}),Le(()=>{L?.(),O!==void 0&&window.clearTimeout(O)}),(a,e)=>(c(),u(\"main\",{class:w([\"installer-shell\",[`locale-${T.value}`,`installer-shell--${r.value}`,`installer-shell--locale-${T.value}`,{\"is-expa",
+          "context": "e:n}=await import(\"./index-DsnG26DH.js\").then(E=>E.dQ);return{invoke:n}},__vite__mapDeps([0,1]),import.meta.url);(await a(\"get_installer_launch_mode\")).otaUpdate&&k(!0)}catch{}})()}),Le(()=>{L?.(),O!==void 0&&window.clearTimeout(O)}),(a,e)=>(c(),u(\"main\",{class:w([\"installer-shell\",[`locale-${T.value}`,`installer-shell--${r.value}`,`installer-shell--locale-${T.value}`,{\"is-expa",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -796,7 +797,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             672,
             703
@@ -866,7 +867,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             722,
             750
@@ -912,7 +913,7 @@
       ],
       "callSites": [
         {
-          "file": "index-BE0i_XCi.js",
+          "file": "index-Dm9XLOYA.js",
           "charRange": [
             9786,
             9821
@@ -951,7 +952,7 @@
       ],
       "callSites": [
         {
-          "file": "index-SIFFVg-c.js",
+          "file": "index-BzQeohgt.js",
           "charRange": [
             19373,
             19400
@@ -994,7 +995,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CUVNVoOP.js",
+          "file": "index-CcB8-lyl.js",
           "charRange": [
             3294,
             3331
@@ -1037,7 +1038,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             535078,
             535107
@@ -1077,7 +1078,7 @@
       ],
       "callSites": [
         {
-          "file": "index-BE0i_XCi.js",
+          "file": "index-Dm9XLOYA.js",
           "charRange": [
             9822,
             9849
@@ -1109,7 +1110,7 @@
       ],
       "callSites": [
         {
-          "file": "index-BE0i_XCi.js",
+          "file": "index-Dm9XLOYA.js",
           "charRange": [
             8976,
             9021
@@ -1142,7 +1143,7 @@
       ],
       "callSites": [
         {
-          "file": "index-SIFFVg-c.js",
+          "file": "index-BzQeohgt.js",
           "charRange": [
             23316,
             23378
@@ -1154,7 +1155,7 @@
           "line": 2,
           "function": "x",
           "source": "e(\"inspect_install_directory\",{payload:{installPath:P.value}})",
-          "context": "await import(\"./index-D8GJxFG7.js\").then(oe=>oe.dQ);return{invoke:E}},__vite__mapDeps([0,1]),import.meta.url);if((await e(\"inspect_install_directory\",{payload:{installPath:P.value}})).hasExistingInstallation){o.value=\"existing-directory\";return}}catch(e){if(\"__TAURI_INTERNALS__\"in window){console.error(\"Failed to inspect installation directory:\",e),C(G(e,T.value,s.value));return}}k()}async function W(a){try{c",
+          "context": "await import(\"./index-DsnG26DH.js\").then(oe=>oe.dQ);return{invoke:E}},__vite__mapDeps([0,1]),import.meta.url);if((await e(\"inspect_install_directory\",{payload:{installPath:P.value}})).hasExistingInstallation){o.value=\"existing-directory\";return}}catch(e){if(\"__TAURI_INTERNALS__\"in window){console.error(\"Failed to inspect installation directory:\",e),C(G(e,T.value,s.value));return}}k()}async function W(a){try{c",
           "callee": "e",
           "role": "invoke",
           "arguments": {
@@ -1203,20 +1204,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            186907,
-            186938
+            188051,
+            188082
           ],
           "byteRange": [
-            187217,
-            187248
+            188361,
+            188392
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"is_devtools_hotkeys_build\")",
-          "context": "n=await kt(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Io=await kt(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Io=kn}kn&&(Nt=Pg(),Ad());try{localStorage.removeItem(\"wuwatappo-main-dock\")}catch{}await Oe();try{await To({relocate:!1}),await cu(void 0,{snapDockToContentOrigin",
-          "callee": "kt",
+          "source": "Ct(\"is_devtools_hotkeys_build\")",
+          "context": "n=await Ct(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Do=await Ct(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Do=An}An&&(Ut=zg(),Vd());try{localStorage.removeItem(\"wuwatappo-main-dock\")}catch{}await De();try{await Bo({relocate:!1}),await Au(void 0,{snapDockToContentOrigin",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
@@ -1235,7 +1236,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             11666,
             11700
@@ -1267,7 +1268,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             557213,
             557247
@@ -1299,7 +1300,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CUVNVoOP.js",
+          "file": "index-CcB8-lyl.js",
           "charRange": [
             2334,
             2363
@@ -1311,7 +1312,7 @@
           "line": 2,
           "function": "L",
           "source": "l(\"is_installed_app_running\")",
-          "context": "e}=await import(\"./index-D8GJxFG7.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);if(await l(\"is_installed_app_running\")){u.value=!0;return}}await U()}catch(l){console.error(\"Failed to check the installed app:\",l),b(),f(a.value.uninstallStartFailed)}finally{o.value=!1}}}async function O(){if(!o.value){o.value=!0;try{const{invoke:l}=await v(async()=",
+          "context": "e}=await import(\"./index-DsnG26DH.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);if(await l(\"is_installed_app_running\")){u.value=!0;return}}await U()}catch(l){console.error(\"Failed to check the installed app:\",l),b(),f(a.value.uninstallStartFailed)}finally{o.value=!1}}}async function O(){if(!o.value){o.value=!0;try{const{invoke:l}=await v(async()=",
           "callee": "l",
           "role": "invoke",
           "arguments": {
@@ -1331,20 +1332,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            186795,
-            186826
+            187939,
+            187970
           ],
           "byteRange": [
-            187105,
-            187136
+            188249,
+            188280
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"is_internal_testing_build\")",
-          "context": "sor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await da();try{kn=await kt(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Io=await kt(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Io=kn}kn&&(Nt=Pg(),Ad());try{localStorage.removeIt",
-          "callee": "kt",
+          "source": "Ct(\"is_internal_testing_build\")",
+          "context": "sor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await Aa();try{An=await Ct(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Do=await Ct(\"is_devtools_hotkeys_build\")}catch(e){console.warn(\"[main] is_devtools_hotkeys_build failed\",e),Do=An}An&&(Ut=zg(),Vd());try{localStorage.removeIt",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
@@ -1363,7 +1364,7 @@
       ],
       "callSites": [
         {
-          "file": "index-SIFFVg-c.js",
+          "file": "index-BzQeohgt.js",
           "charRange": [
             25993,
             26035
@@ -1375,7 +1376,7 @@
           "line": 2,
           "function": "X",
           "source": "a(\"launch_installed_app\",{locale:T.value})",
-          "context": "ke:e}=await import(\"./index-D8GJxFG7.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await a(\"launch_installed_app\",{locale:T.value}),await H()}catch(a){if(!(\"__TAURI_INTERNALS__\"in window)){C(s.value.previewLaunchNotice);return}console.error(\"Failed to launch installed app:\",a),C(G(a,T.value,s.value,\"launch\"))}}return Ae(()=>{_e(),(async()=>{if(await ne(),\"__T",
+          "context": "ke:e}=await import(\"./index-DsnG26DH.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await a(\"launch_installed_app\",{locale:T.value}),await H()}catch(a){if(!(\"__TAURI_INTERNALS__\"in window)){C(s.value.previewLaunchNotice);return}console.error(\"Failed to launch installed app:\",a),C(G(a,T.value,s.value,\"launch\"))}}return Ae(()=>{_e(),(async()=>{if(await ne(),\"__T",
           "callee": "a",
           "role": "invoke",
           "arguments": {
@@ -1410,7 +1411,7 @@
       ],
       "callSites": [
         {
-          "file": "useLogin-OBrag7nP.js",
+          "file": "useLogin-CHDQXIa7.js",
           "charRange": [
             8109,
             8157
@@ -1472,7 +1473,7 @@
       ],
       "callSites": [
         {
-          "file": "useLogin-OBrag7nP.js",
+          "file": "useLogin-CHDQXIa7.js",
           "charRange": [
             7176,
             7217
@@ -1521,7 +1522,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             532,
             554
@@ -1554,7 +1555,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             93,
             146
@@ -1566,7 +1567,7 @@
           "line": 1,
           "function": "a",
           "source": "n(\"open_login_window\",{intent:i,compact:i===\"login\"})",
-          "context": "import{p as n}from\"./index-D8GJxFG7.js\";async function a(o){const i=o?.intent??\"login\";await n(\"open_login_window\",{intent:i,compact:i===\"login\"})}async function w(){await n(\"close_login_window\")}async function c(o,i){await n(\"resize_login_window_to_content\",{payload:{width:o,height:i}})}async function e(o){await n(\"open_update_window\",{detail:o})}async function s(){await n",
+          "context": "import{p as n}from\"./index-DsnG26DH.js\";async function a(o){const i=o?.intent??\"login\";await n(\"open_login_window\",{intent:i,compact:i===\"login\"})}async function w(){await n(\"close_login_window\")}async function c(o,i){await n(\"resize_login_window_to_content\",{payload:{width:o,height:i}})}async function e(o){await n(\"open_update_window\",{detail:o})}async function s(){await n",
           "callee": "n",
           "role": "invoke",
           "arguments": {
@@ -1609,7 +1610,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             389899,
             389952
@@ -1663,7 +1664,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             425,
             452
@@ -1696,7 +1697,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5480,
             5526
@@ -1760,7 +1761,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             315,
             349
@@ -1807,7 +1808,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445771,
             445804
@@ -1837,7 +1838,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445628,
             445655
@@ -1867,7 +1868,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445696,
             445732
@@ -1897,7 +1898,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445565,
             445595
@@ -1927,7 +1928,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             11346,
             11375
@@ -1957,7 +1958,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             11292,
             11320
@@ -1987,7 +1988,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             11233,
             11265
@@ -2017,7 +2018,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CbVX5b7i.js",
+          "file": "index-B4yr8KUa.js",
           "charRange": [
             539,
             627
@@ -2065,7 +2066,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CbVX5b7i.js",
+          "file": "index-B4yr8KUa.js",
           "charRange": [
             359,
             394
@@ -2101,7 +2102,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CbVX5b7i.js",
+          "file": "index-B4yr8KUa.js",
           "charRange": [
             468,
             503
@@ -2137,7 +2138,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             384010,
             384059
@@ -2177,7 +2178,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             384095,
             384201
@@ -2221,7 +2222,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             383792,
             383871
@@ -2265,7 +2266,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             383580,
             383633
@@ -2305,7 +2306,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             420530,
             420591
@@ -2341,7 +2342,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             420643,
             420686
@@ -2377,7 +2378,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             420407,
             420477
@@ -2421,7 +2422,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             420726,
             420770
@@ -2457,7 +2458,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             420818,
             420862
@@ -2493,7 +2494,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             391042,
             391091
@@ -2533,7 +2534,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             390959,
             391006
@@ -2573,7 +2574,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             391133,
             391208
@@ -2609,7 +2610,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             390718,
             390792
@@ -2645,7 +2646,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445837,
             445871
@@ -2675,7 +2676,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             382485,
             382534
@@ -2711,7 +2712,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             446162,
             446227
@@ -2752,7 +2753,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             446593,
             446670
@@ -2793,7 +2794,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             446376,
             446465
@@ -2833,7 +2834,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436590,
             436640
@@ -2863,7 +2864,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             434283,
             434369
@@ -2909,7 +2910,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             437671,
             437833
@@ -2955,7 +2956,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             433990,
             434033
@@ -2985,7 +2986,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436463,
             436553
@@ -3025,7 +3026,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436107,
             436184
@@ -3065,7 +3066,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436676,
             436741
@@ -3091,7 +3092,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             438641,
             438706
@@ -3127,7 +3128,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436013,
             436076
@@ -3163,7 +3164,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             435876,
             435988
@@ -3203,7 +3204,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             435747,
             435847
@@ -3243,7 +3244,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436367,
             436437
@@ -3283,7 +3284,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             435663,
             435722
@@ -3319,7 +3320,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436205,
             436263
@@ -3355,7 +3356,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             435438,
             435500
@@ -3391,7 +3392,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             436284,
             436342
@@ -3427,7 +3428,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             435554,
             435612
@@ -3463,7 +3464,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             433162,
             433206
@@ -3493,7 +3494,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424824,
             424875
@@ -3529,7 +3530,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426304,
             426354
@@ -3565,7 +3566,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             421863,
             422009
@@ -3611,7 +3612,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             432847,
             432888
@@ -3641,7 +3642,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             433273,
             433314
@@ -3671,7 +3672,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426378,
             426430
@@ -3707,7 +3708,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             421621,
             421662
@@ -3727,7 +3728,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             437476,
             437517
@@ -3757,7 +3758,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426233,
             426282
@@ -3793,7 +3794,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423282,
             423341
@@ -3829,7 +3830,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423522,
             423577
@@ -3865,7 +3866,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424740,
             424801
@@ -3901,7 +3902,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424429,
             424485
@@ -3937,7 +3938,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424082,
             424139
@@ -3973,7 +3974,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425294,
             425349
@@ -4009,7 +4010,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423999,
             424054
@@ -4045,7 +4046,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423745,
             423803
@@ -4081,7 +4082,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424254,
             424313
@@ -4117,7 +4118,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423916,
             423973
@@ -4153,7 +4154,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424343,
             424402
@@ -4189,7 +4190,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423831,
             423888
@@ -4225,7 +4226,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424167,
             424224
@@ -4261,7 +4262,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424511,
             424566
@@ -4297,7 +4298,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425756,
             425809
@@ -4333,7 +4334,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426007,
             426060
@@ -4369,7 +4370,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             433048,
             433102
@@ -4409,7 +4410,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423404,
             423463
@@ -4445,7 +4446,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423632,
             423687
@@ -4481,7 +4482,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             432945,
             432986
@@ -4511,7 +4512,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425005,
             425080
@@ -4551,7 +4552,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             423195,
             423252
@@ -4587,7 +4588,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426945,
             427018
@@ -4627,7 +4628,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426840,
             426910
@@ -4667,7 +4668,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428812,
             428868
@@ -4693,7 +4694,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             438575,
             438631
@@ -4729,7 +4730,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429360,
             429428
@@ -4769,7 +4770,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429459,
             429527
@@ -4809,7 +4810,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425578,
             425643
@@ -4849,7 +4850,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427055,
             427129
@@ -4889,7 +4890,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428504,
             428572
@@ -4929,7 +4930,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428708,
             428776
@@ -4969,7 +4970,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428903,
             429013
@@ -5009,7 +5010,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428606,
             428677
@@ -5049,7 +5050,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426462,
             426530
@@ -5089,7 +5090,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426648,
             426712
@@ -5119,7 +5120,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426741,
             426808
@@ -5159,7 +5160,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425204,
             425268
@@ -5199,7 +5200,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428120,
             428174
@@ -5235,7 +5236,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428204,
             428270
@@ -5275,7 +5276,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427917,
             427984
@@ -5315,7 +5316,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428295,
             428372
@@ -5355,7 +5356,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429052,
             429129
@@ -5395,7 +5396,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427403,
             427505
@@ -5435,7 +5436,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425381,
             425449
@@ -5475,7 +5476,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427273,
             427375
@@ -5515,7 +5516,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425481,
             425549
@@ -5555,7 +5556,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429559,
             429653
@@ -5595,7 +5596,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427783,
             427886
@@ -5635,7 +5636,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429685,
             429754
@@ -5675,7 +5676,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425110,
             425176
@@ -5715,7 +5716,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426557,
             426620
@@ -5755,7 +5756,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428021,
             428095
@@ -5795,7 +5796,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427154,
             427245
@@ -5835,7 +5836,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             427581,
             427754
@@ -5892,7 +5893,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             428404,
             428473
@@ -5932,7 +5933,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             430011,
             430073
@@ -5972,7 +5973,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425669,
             425731
@@ -6012,7 +6013,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429913,
             429985
@@ -6052,7 +6053,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429797,
             429879
@@ -6092,7 +6093,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426163,
             426212
@@ -6128,7 +6129,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429159,
             429218
@@ -6164,7 +6165,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             429255,
             429329
@@ -6204,7 +6205,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424660,
             424710
@@ -6240,7 +6241,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             424588,
             424638
@@ -6276,7 +6277,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425922,
             425982
@@ -6312,7 +6313,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             425836,
             425891
@@ -6348,7 +6349,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             426087,
             426142
@@ -6384,20 +6385,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            176582,
-            176626
+            177499,
+            177543
           ],
           "byteRange": [
-            176892,
-            176936
+            177809,
+            177853
           ],
           "line": 17,
-          "function": "fc",
-          "source": "kt(\"popup_main_dock_context_menu\",{x:e,y:t})",
-          "context": "\"\")),await Fp()&&Ql(),tc()}let Cn=!1,Wn=!1;async function fc(e,t){if(!Me()&&!Cn){Cn=!0,j+=1,T.value=!1,An(!1);try{await kt(\"popup_main_dock_context_menu\",{x:e,y:t})}catch(i){console.warn(\"[dock-context-menu] popup failed\",i)}finally{Cn=!1,An(!1),Vo=null,Pl(),Wn&&window.setTimeout(()=>{Wn=!1},400)}}}async function $p(e){e.preventDefault(),!Me()&&await fc(e.clientX,e.clientY)}function dc(e){co",
-          "callee": "kt",
+          "function": "Ic",
+          "source": "Ct(\"popup_main_dock_context_menu\",{x:e,y:t})",
+          "context": "\"\")),await Zp()&&hc(),gc()}let vn=!1,Kn=!1;async function Ic(e,t){if(!Ie()&&!vn){vn=!0,z+=1,T.value=!1,In(!1);try{await Ct(\"popup_main_dock_context_menu\",{x:e,y:t})}catch(o){console.warn(\"[dock-context-menu] popup failed\",o)}finally{vn=!1,In(!1),$o=null,Gl(),Kn&&window.setTimeout(()=>{Kn=!1},400)}}}async function hh(e){e.preventDefault(),!Ie()&&await Ic(e.clientX,e.clientY)}function Mc(e){co",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6439,7 +6440,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5603,
             5637
@@ -6472,7 +6473,7 @@
       ],
       "callSites": [
         {
-          "file": "modalWindows-DaZSMM8K.js",
+          "file": "modalWindows-TgT7e7nx.js",
           "charRange": [
             224,
             288
@@ -6536,7 +6537,7 @@
       ],
       "callSites": [
         {
-          "file": "useLogin-OBrag7nP.js",
+          "file": "useLogin-CHDQXIa7.js",
           "charRange": [
             8573,
             8636
@@ -6600,7 +6601,7 @@
       ],
       "callSites": [
         {
-          "file": "useLogin-OBrag7nP.js",
+          "file": "useLogin-CHDQXIa7.js",
           "charRange": [
             7461,
             7510
@@ -6630,7 +6631,7 @@
           }
         },
         {
-          "file": "useLogin-OBrag7nP.js",
+          "file": "useLogin-CHDQXIa7.js",
           "charRange": [
             7602,
             7651
@@ -6688,7 +6689,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             11819,
             11858
@@ -6735,20 +6736,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            150683,
-            150730
+            151054,
+            151101
           ],
           "byteRange": [
-            150941,
-            150988
+            151312,
+            151359
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"set_main_force_cursor_ignore\",{enabled:!0})",
-          "context": "apHitFreeze:(e,t)=>{Bn.hit?.beginFullscreenDockSnapHitFreeze(e,t)},restoreFullscreenMainPassthrough:async()=>{try{await kt(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] restore main WebView passthrough failed\",e),me(\"desktop:passthrough_sync_failed\"),le(\"DESKTOP\",\"operation_failed\",{operation:\"restore_webview_passthrough\",reason_code:Vt(e)},\"warn\")}},afterDockWindow",
-          "callee": "kt",
+          "source": "Ct(\"set_main_force_cursor_ignore\",{enabled:!0})",
+          "context": "apHitFreeze:(e,t)=>{Hn.hit?.beginFullscreenDockSnapHitFreeze(e,t)},restoreFullscreenMainPassthrough:async()=>{try{await Ct(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] restore main WebView passthrough failed\",e),me(\"desktop:passthrough_sync_failed\"),le(\"DESKTOP\",\"operation_failed\",{operation:\"restore_webview_passthrough\",reason_code:Yt(e)},\"warn\")}},afterDockWindow",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6761,20 +6762,20 @@
           }
         },
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            186653,
-            186700
+            187797,
+            187844
           ],
           "byteRange": [
-            186963,
-            187010
+            188107,
+            188154
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"set_main_force_cursor_ignore\",{enabled:!0})",
-          "context": "alue),Yn(c);try{await Ae?.setFocusable(!1)}catch(e){console.warn(\"[main] setFocusable(false) failed\",e)}if(Ct)try{await kt(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await da();try{kn=await kt(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Io=await kt(\"is_devtools_hotkeys",
-          "callee": "kt",
+          "source": "Ct(\"set_main_force_cursor_ignore\",{enabled:!0})",
+          "context": "alue),Xn(c);try{await Ae?.setFocusable(!1)}catch(e){console.warn(\"[main] setFocusable(false) failed\",e)}if(St)try{await Ct(\"set_main_force_cursor_ignore\",{enabled:!0})}catch(e){console.warn(\"[main] set_main_force_cursor_ignore failed\",e)}await Aa();try{An=await Ct(\"is_internal_testing_build\")}catch(e){console.warn(\"[main] is_internal_testing_build failed\",e)}try{Do=await Ct(\"is_devtools_hotkeys",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6808,20 +6809,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            21391,
-            21520
+            21397,
+            21526
           ],
           "byteRange": [
-            21391,
-            21520
+            21397,
+            21526
           ],
           "line": 16,
           "function": "Ve",
-          "source": "kt(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ge,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:Ct&&gh}})",
-          "context": "&qe(ie);const je=F?Ye(ie):null,Ae=F&&je!==O,Ge=Ae?ie:[],ce=performance.now()-x,Qe=performance.now();let ge=!1;try{await kt(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ge,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:Ct&&gh}}),ge=!0,P=0}catch(Ze){console.error(\"[CAT-PASSTHROUGH] syncMainHitRegion failed\",Ze),me(\"desktop:window_hit_region_sync_failed\"),Date.now()-P>=6e4&&(P=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"hit_region_sync\",reason_c",
-          "callee": "kt",
+          "source": "Ct(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ye,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:St&&Fh}})",
+          "context": "&Ue(ie);const je=F?Ge(ie):null,Ae=F&&je!==O,Ye=Ae?ie:[],ce=performance.now()-x,Qe=performance.now();let ge=!1;try{await Ct(\"set_main_hit_region\",{payload:{regions:$,inputRegions:Ye,updateNativeInput:Ae,windowPassthrough:y.value,nativeInput:St&&Fh}}),ge=!0,P=0}catch(Ze){console.error(\"[CAT-PASSTHROUGH] syncMainHitRegion failed\",Ze),me(\"desktop:window_hit_region_sync_failed\"),Date.now()-P>=6e4&&(P=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"hit_region_sync\",reason_c",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6835,7 +6836,7 @@
                   },
                   "inputRegions": {
                     "type": "expression",
-                    "source": "Ge"
+                    "source": "Ye"
                   },
                   "updateNativeInput": {
                     "type": "expression",
@@ -6847,7 +6848,7 @@
                   },
                   "nativeInput": {
                     "type": "expression",
-                    "source": "Ct&&gh"
+                    "source": "St&&Fh"
                   }
                 }
               }
@@ -6936,20 +6937,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            120328,
-            120365
+            120521,
+            120558
           ],
           "byteRange": [
-            120532,
-            120569
+            120725,
+            120762
           ],
           "line": 17,
-          "function": "bf",
-          "source": "kt(\"set_main_skip_taskbar\",{skip:!n})",
-          "context": "eturn gf+=1,{offsetX:Math.round(n.offsetX+yf(5)),offsetY:Math.round(n.offsetY+yf(4)-50)}}async function bf(n){try{await kt(\"set_main_skip_taskbar\",{skip:!n})}catch(a){console.warn(\"[taskbar] setSkipTaskbar failed\",a),me(\"desktop:taskbar_sync_failed\")}}let _f;async function Tg(){const n=rn();await le(\"SETTINGS\",\"boot\",{group:\"appearance\",opacity_percent:n.windowOpacity,pet_scale_percen",
-          "callee": "kt",
+          "function": "Lf",
+          "source": "Ct(\"set_main_skip_taskbar\",{skip:!n})",
+          "context": "eturn Of+=1,{offsetX:Math.round(n.offsetX+Df(5)),offsetY:Math.round(n.offsetY+Df(4)-50)}}async function Lf(n){try{await Ct(\"set_main_skip_taskbar\",{skip:!n})}catch(a){console.warn(\"[taskbar] setSkipTaskbar failed\",a),me(\"desktop:taskbar_sync_failed\")}}let Bf;async function jg(){const n=an();await le(\"SETTINGS\",\"boot\",{group:\"appearance\",opacity_percent:n.windowOpacity,pet_scale_percen",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -6975,20 +6976,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            181767,
-            181807
+            182879,
+            182919
           ],
           "byteRange": [
-            182077,
-            182117
+            183189,
+            183229
           ],
           "line": 17,
-          "function": "An",
-          "source": "kt(\"set_main_swallow_mouse\",{enabled:e})",
-          "context": "ull}})(),qo}function Ht(e,t){return rt?{x:(e-rt.innerX)/rt.scale,y:(t-rt.innerY)/rt.scale}:null}let Sc=0;function An(e){kt(\"set_main_swallow_mouse\",{enabled:e}).catch(t=>{console.warn(\"[main] set_main_swallow_mouse failed\",t),me(\"desktop:passthrough_sync_failed\"),Date.now()-Sc>=6e4&&(Sc=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"swallow_mouse\",enabled:e,reason_code:Vt(t)},\"wa",
-          "callee": "kt",
+          "function": "In",
+          "source": "Ct(\"set_main_swallow_mouse\",{enabled:e})",
+          "context": "ull}})(),zo}function Vt(e,t){return it?{x:(e-it.innerX)/it.scale,y:(t-it.innerY)/it.scale}:null}let qc=0;function In(e){Ct(\"set_main_swallow_mouse\",{enabled:e}).catch(t=>{console.warn(\"[main] set_main_swallow_mouse failed\",t),me(\"desktop:passthrough_sync_failed\"),Date.now()-qc>=6e4&&(qc=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"swallow_mouse\",enabled:e,reason_code:Yt(t)},\"wa",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7022,27 +7023,27 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            125214,
-            125262
+            125407,
+            125455
           ],
           "byteRange": [
-            125418,
-            125466
+            125611,
+            125659
           ],
           "line": 17,
           "function": "m",
-          "source": "kt(\"set_main_window_content_bounds\",{payload:Y})",
-          "context": "i||Math.abs(X-ke)>fi);if(!Ke&&!K&&!H)return;const Y={width:B,height:N,skipPassthroughRefresh:D};O&&(Y.x=De,Y.y=X),await kt(\"set_main_window_content_bounds\",{payload:Y}),r=0}catch(w){console.error(\"[main-window-bounds] sync failed\",w),Date.now()-r>=6e4&&(r=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"content_bounds_sync\",relocate:C,reason_code:Vt(w)},\"warn\"))}finally{if(p=!1,g){g=!1;con",
-          "callee": "kt",
+          "source": "Ct(\"set_main_window_content_bounds\",{payload:G})",
+          "context": "i||Math.abs(X-ke)>_i);if(!Ke&&!K&&!H)return;const G={width:B,height:N,skipPassthroughRefresh:D};O&&(G.x=Fe,G.y=X),await Ct(\"set_main_window_content_bounds\",{payload:G}),i=0}catch(w){console.error(\"[main-window-bounds] sync failed\",w),Date.now()-i>=6e4&&(i=Date.now(),le(\"DESKTOP\",\"operation_failed\",{operation:\"content_bounds_sync\",relocate:C,reason_code:Yt(w)},\"warn\"))}finally{if(p=!1,g){g=!1;con",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
             "properties": {
               "payload": {
                 "type": "expression",
-                "source": "Y"
+                "source": "G"
               }
             }
           }
@@ -7088,7 +7089,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             1089,
             1126
@@ -7121,7 +7122,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             6271,
             6388
@@ -7200,20 +7201,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            183858,
-            183872
+            184970,
+            184984
           ],
           "byteRange": [
-            184168,
-            184182
+            185280,
+            185294
           ],
           "line": 17,
-          "function": "Wo",
-          "source": "kt(d,{kind:l})",
-          "context": "}const i=Ht(e,t);i&&ch(i.x,i.y);const l=i?sh(i.x,i.y):\"default\";if(l===Uo)return;Uo=l;const d=\"set_native_input_cursor\";kt(d,{kind:l}).catch(k=>{console.warn(`[main] ${d} failed`,k)})}async function Ic(e,t,i,l,d){if(!pt.value||Me()||It.value)return;if(zt.value){if(t!==\"press\"||e!==\"left\")return;let I=Ht(i,l);if(I||(await tn(!1),I=Ht(i,l)),!I)return;const ee=docu",
-          "callee": "kt",
+          "function": "Jo",
+          "source": "Ct(f,{kind:l})",
+          "context": "}const o=Vt(e,t);o&&Ih(o.x,o.y);const l=o?Ah(o.x,o.y):\"default\";if(l===jo)return;jo=l;const f=\"set_native_input_cursor\";Ct(f,{kind:l}).catch(b=>{console.warn(`[main] ${f} failed`,b)})}async function Wc(e,t,o,l,f){if(!ht.value||Ie()||Mt.value)return;if(Jt.value){if(t!==\"press\"||e!==\"left\")return;let M=Vt(o,l);if(M||(await nn(!1),M=Vt(o,l)),!M)return;const ee=docu",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7247,20 +7248,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            183571,
-            183612
+            184683,
+            184724
           ],
           "byteRange": [
-            183881,
-            183922
+            184993,
+            185034
           ],
           "line": 17,
-          "function": "uh",
-          "source": "kt(\"set_overlay_cursor\",{kind:\"default\"})",
-          "context": "ointerId:1,pointerType:\"mouse\",button:0,buttons:t===\"pointerdown\"?1:0,clientX:i,clientY:l}))}function uh(){Uo=\"default\",kt(\"set_overlay_cursor\",{kind:\"default\"}).catch(e=>{console.warn(\"[main] restore overlay cursor failed\",e)})}function Wo(e,t){if(!rt){tn(!0).then(()=>{Wo(e,t)});return}const i=Ht(e,t);i&&ch(i.x,i.y);const l=i?sh(i.x,i.y):\"default\";if(l===Uo)return;Uo=l;const d=\"set_nativ",
-          "callee": "kt",
+          "function": "Mh",
+          "source": "Ct(\"set_overlay_cursor\",{kind:\"default\"})",
+          "context": "ointerId:1,pointerType:\"mouse\",button:0,buttons:t===\"pointerdown\"?1:0,clientX:o,clientY:l}))}function Mh(){jo=\"default\",Ct(\"set_overlay_cursor\",{kind:\"default\"}).catch(e=>{console.warn(\"[main] restore overlay cursor failed\",e)})}function Jo(e,t){if(!it){nn(!0).then(()=>{Jo(e,t)});return}const o=Vt(e,t);o&&Ih(o.x,o.y);const l=o?Ah(o.x,o.y):\"default\";if(l===jo)return;jo=l;const f=\"set_nativ",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "object",
@@ -7294,7 +7295,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5696,
             5751
@@ -7351,7 +7352,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             442486,
             442516
@@ -7384,7 +7385,7 @@
       ],
       "callSites": [
         {
-          "file": "index-SIFFVg-c.js",
+          "file": "index-BzQeohgt.js",
           "charRange": [
             19277,
             19319
@@ -7431,7 +7432,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CUVNVoOP.js",
+          "file": "index-CcB8-lyl.js",
           "charRange": [
             3167,
             3234
@@ -7443,7 +7444,7 @@
           "line": 2,
           "function": "U",
           "source": "l(\"start_silent_nsis_uninstall\",{payload:{deleteUserData:y.value}})",
-          "context": "ke:e}=await import(\"./index-D8GJxFG7.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await l(\"start_silent_nsis_uninstall\",{payload:{deleteUserData:y.value}}),N(),s.value=\"progress\",r.value=0,w=window.setInterval(()=>{l(\"get_silent_nsis_uninstall_status\").then(e=>{if(e.phase===\"failed\"){m(),b(),s.value=\"confirm\",console.error(\"Uninstall failed:\",e.message),e.message===\"APP_RUNNING\"?u.v",
+          "context": "ke:e}=await import(\"./index-DsnG26DH.js\").then(n=>n.dQ);return{invoke:e}},__vite__mapDeps([0,1]),import.meta.url);await l(\"start_silent_nsis_uninstall\",{payload:{deleteUserData:y.value}}),N(),s.value=\"progress\",r.value=0,w=window.setInterval(()=>{l(\"get_silent_nsis_uninstall_status\").then(e=>{if(e.phase===\"failed\"){m(),b(),s.value=\"confirm\",console.error(\"Uninstall failed:\",e.message),e.message===\"APP_RUNNING\"?u.v",
           "callee": "l",
           "role": "invoke",
           "arguments": {
@@ -7488,7 +7489,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             6959,
             6996
@@ -7521,27 +7522,27 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            191026,
-            191067
+            192258,
+            192299
           ],
           "byteRange": [
-            191346,
-            191387
+            192578,
+            192619
           ],
           "line": 17,
           "function": null,
-          "source": "kt(\"sync_main_window_to_current_monitor\")",
-          "context": "n_code:Vt(e)},\"error\")}}),Ne([It,zt],()=>{const e=It.value;uh(),Pa(re.value,pe.value),Oe(async()=>{await Ie();try{await kt(\"sync_main_window_to_current_monitor\")}catch(t){console.warn(\"[passthrough] refresh failed\",t)}await Ie(),e||Wo(re.value,pe.value)})}),Ne([Ze,st,pt],()=>{Oe(()=>{Ie(),tt()})}),Ne(ge,e=>{if(e&&(j+=1,T.value=!1),!e){Ie();return}Vn(),tt(),Ie()}),Ne([P,qe,ac,C,w,B,E,M,N,D",
-          "callee": "kt",
+          "source": "Ct(\"sync_main_window_to_current_monitor\")",
+          "context": "n_code:Yt(e)},\"error\")}}),Oe([Mt,Jt],()=>{const e=Mt.value;Mh(),ei(oe.value,de.value),De(async()=>{await Me();try{await Ct(\"sync_main_window_to_current_monitor\")}catch(t){console.warn(\"[passthrough] refresh failed\",t)}await Me(),e||Jo(oe.value,de.value)})}),Oe([Ze,rt,ht],()=>{De(()=>{Me(),tt()})}),Oe(ge,e=>{if(e&&(z+=1,ei(oe.value,de.value)),!e){Me();return}Yn(),tt(),Me()}),Oe([P,Ue,kc,C,",
+          "callee": "Ct",
           "role": "invoke",
           "arguments": {
             "type": "undefined"
           }
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             1453,
             1493
@@ -7561,7 +7562,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             2443,
             2483
@@ -7594,7 +7595,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             417584,
             417759
@@ -7713,7 +7714,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             391972,
             392017
@@ -7743,7 +7744,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             396685,
             396777
@@ -7798,7 +7799,7 @@
       ],
       "callSites": [
         {
-          "file": "index-DenkafYz.js",
+          "file": "index-Cbcn3ySG.js",
           "charRange": [
             763,
             796
@@ -7831,7 +7832,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             513,
             546
@@ -7868,7 +7869,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             548036,
             548137
@@ -7894,7 +7895,7 @@
           ]
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             548875,
             548936
@@ -7937,7 +7938,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             547940,
             548027
@@ -7962,7 +7963,7 @@
           ]
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             548581,
             548622
@@ -7996,7 +7997,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             548144,
             548196
@@ -8022,7 +8023,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             548427,
             548960
@@ -8060,7 +8061,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             249,
             253
@@ -8080,7 +8081,7 @@
           }
         },
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             445,
             457
@@ -8114,7 +8115,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             279,
             283
@@ -8134,7 +8135,7 @@
           }
         },
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             479,
             491
@@ -8167,7 +8168,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387726,
             387846
@@ -8200,7 +8201,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387808,
             387842
@@ -8232,7 +8233,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385981,
             386011
@@ -8253,7 +8254,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387133,
             387347
@@ -8291,7 +8292,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387397,
             387509
@@ -8324,7 +8325,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387476,
             387505
@@ -8355,7 +8356,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             557315,
             557387
@@ -8391,7 +8392,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             310,
             323
@@ -8417,7 +8418,7 @@
           }
         },
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             393,
             423
@@ -8459,7 +8460,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4102,
             4156
@@ -8484,7 +8485,7 @@
           ]
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             5230,
             5249
@@ -8527,7 +8528,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4163,
             4170
@@ -8548,7 +8549,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4909,
             5202
@@ -8602,7 +8603,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4383,
             4437
@@ -8627,7 +8628,7 @@
           ]
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4867,
             4886
@@ -8670,7 +8671,7 @@
       ],
       "callSites": [
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4444,
             4450
@@ -8691,7 +8692,7 @@
           }
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             4601,
             4839
@@ -8748,24 +8749,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190087,
-            190130
+            191319,
+            191362
           ],
           "byteRange": [
-            190407,
-            190450
+            191639,
+            191682
           ],
           "line": 17,
           "function": null,
-          "source": "mt(Na,e=>{ua(e.payload?.reason??\"manual\")})",
-          "context": "ait Gm(()=>{ge.value=!1,wn=Date.now()+wy,Le.value=!1,ga(),Ie()}),Ni=await Km(()=>{Me()||Hr().then(()=>{q()})}),Ui=await mt(Na,e=>{ua(e.payload?.reason??\"manual\")}),Vi=await rv($d),Wi=await iv(tp),Ar=setInterval(()=>{R.isLoggedIn&&xo()},1e3),Cr=setInterval(()=>{Sn()},5e3),Mr=setInterval(()=>{S.value=2,Wp(),Ln&&clearTimeout(Ln),Ln=setTimeout(()=>{S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tra",
-          "callee": "mt",
+          "source": "pt($a,e=>{Ca(e.payload?.reason??\"manual\")})",
+          "context": "ait cv(()=>{ge.value=!1,_n=Date.now()+Ny,Be.value=!1,Ta(),Me()}),Ji=await uv(()=>{Ie()||$r().then(()=>{q()})}),ea=await pt($a,e=>{Ca(e.payload?.reason??\"manual\")}),ta=await kv(pp),na=await Cv(yp),Lr=setInterval(()=>{A.isLoggedIn&&Vn()},1e3),Dr=setInterval(()=>{Rn()},5e3),Hr=setInterval(()=>{S.value=2,sh(),Nn&&clearTimeout(Nn),Nn=setTimeout(()=>{S.value=1,Nn=null},250)},5e3),Vi=await pt(\"tra",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{ua(e.payload?.reason??\"manual\")}"
+            "source": "e=>{Ca(e.payload?.reason??\"manual\")}"
           },
           "payloadReads": [
             "",
@@ -8773,7 +8774,7 @@
           ]
         },
         {
-          "file": "switchDisplayMonitor-BnjVcRPf.js",
+          "file": "switchDisplayMonitor-CH1c_9nU.js",
           "charRange": [
             3060,
             3075
@@ -8816,7 +8817,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             401758,
             401850
@@ -8857,7 +8858,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5177,
             5183
@@ -8878,7 +8879,7 @@
           }
         },
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5356,
             5378
@@ -8915,7 +8916,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5241,
             5245
@@ -8935,7 +8936,7 @@
           }
         },
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5438,
             5452
@@ -8969,7 +8970,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5143,
             5149
@@ -8990,7 +8991,7 @@
           }
         },
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5313,
             5333
@@ -9027,7 +9028,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5109,
             5115
@@ -9048,7 +9049,7 @@
           }
         },
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5268,
             5290
@@ -9085,7 +9086,7 @@
       ],
       "callSites": [
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5210,
             5214
@@ -9105,7 +9106,7 @@
           }
         },
         {
-          "file": "appAutostart-ZFMxHrq5.js",
+          "file": "appAutostart-CVnAsS9A.js",
           "charRange": [
             5401,
             5415
@@ -9138,7 +9139,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387559,
             387673
@@ -9171,7 +9172,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387638,
             387669
@@ -9203,7 +9204,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385348,
             385398
@@ -9229,7 +9230,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386285,
             386354
@@ -9271,7 +9272,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385444,
             385486
@@ -9297,7 +9298,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386397,
             386458
@@ -9339,7 +9340,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385247,
             385295
@@ -9365,7 +9366,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386168,
             386235
@@ -9407,7 +9408,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385898,
             385936
@@ -9433,7 +9434,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             387003,
             387091
@@ -9475,7 +9476,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385531,
             385578
@@ -9501,7 +9502,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386500,
             386602
@@ -9543,7 +9544,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385152,
             385196
@@ -9569,7 +9570,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386057,
             386120
@@ -9611,7 +9612,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385624,
             385667
@@ -9637,7 +9638,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386645,
             386743
@@ -9679,7 +9680,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385717,
             385763
@@ -9705,7 +9706,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386790,
             386855
@@ -9747,7 +9748,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             385812,
             385854
@@ -9773,7 +9774,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             386901,
             386962
@@ -9810,7 +9811,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445029,
             445128
@@ -9847,7 +9848,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             443205,
             443267
@@ -9872,7 +9873,7 @@
           ]
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             443441,
             443472
@@ -9910,7 +9911,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             444801,
             444863
@@ -9947,7 +9948,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             443005,
             443027
@@ -9967,7 +9968,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             444104,
             444126
@@ -9987,7 +9988,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             444307,
             444329
@@ -10007,7 +10008,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             444872,
             444923
@@ -10029,7 +10030,7 @@
           "payloadReads": []
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445203,
             445225
@@ -10062,7 +10063,7 @@
       ],
       "callSites": [
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             442921,
             442956
@@ -10084,7 +10085,7 @@
           "payloadReads": []
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             444681,
             444704
@@ -10104,7 +10105,7 @@
           }
         },
         {
-          "file": "index-D8GJxFG7.js",
+          "file": "index-DsnG26DH.js",
           "charRange": [
             445143,
             445195
@@ -10138,20 +10139,20 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            188839,
-            188925
+            190071,
+            190157
           ],
           "byteRange": [
-            189159,
-            189245
+            190391,
+            190477
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload))",
-          "context": ".memberId);return}Al()}}),fl=await mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}),dl=await mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),xo(),Yr(),Yh(5e3),Yi=await Gh(e=>{oh(e),Yn(c)}),Gi=await Kh(e=>{xa(e)}),Ki=await Xh(e=>{jn.value=e,e||Ao()}),Xi=await zh(e=>{cr.value=e}),zi=await jh(e=>{pn.value=e}),ji=await $h(e=>{Ta(e)}),$i=await Jh(e=>{fh(e)}),Ji=await Qh(e=",
-          "callee": "mt",
+          "source": "pt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload))",
+          "context": "alClickCount(),Yo())}),Rl=await pt(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Il=await pt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),Vn(),Xo(),lm(5e3),oa=await cm(e=>{_h(e),Xn(c)}),ra=await um(e=>{Ga(e)}),ia=await fm(e=>{Jn.value=e,e||xo()}),aa=await dm(e=>{yr.value=e}),sa=await pm(e=>{hn.value=e}),la=await hm(e=>{Va(e)}),ca=await mm(e=>{Ph(e)}),ua=await vm(e=",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
@@ -10174,24 +10175,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190695,
-            190752
+            191927,
+            191984
           ],
           "byteRange": [
-            191015,
-            191072
+            192247,
+            192304
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"dock-open-panel\",e=>{const t=e.payload;Xm(t)&&Ap(t)})",
-          "context": "ndow-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Xm(t)&&Ap(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Oa(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Vt(e)},\"error\")}}),Ne([It,zt],()=>{const e=It.value;uh(),Pa(re.value,",
-          "callee": "mt",
+          "source": "pt(\"dock-open-panel\",e=>{const t=e.payload;fv(t)&&Wp(t)})",
+          "context": "ndow-opacity\",e=>{Ie()||kh(Number(e.payload))}),Xi=await pt(\"tray-toggle-window-passthrough\",()=>{Ie()||Ch()}),zi=await pt(\"dock-open-panel\",e=>{const t=e.payload;fv(t)&&Wp(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Ya(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Yt(e)},\"error\")}}),Oe([Mt,Jt],()=>{const e=Mt.value;Mh(),ei(oe.value,",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{const t=e.payload;Xm(t)&&Ap(t)}"
+            "source": "e=>{const t=e.payload;fv(t)&&Wp(t)}"
           },
           "payloadReads": [
             ""
@@ -10203,30 +10204,64 @@
       }
     },
     {
+      "name": "gamepad-button-press",
+      "operations": [
+        "listen"
+      ],
+      "callSites": [
+        {
+          "file": "index-CAndEweT.js",
+          "charRange": [
+            189983,
+            190061
+          ],
+          "byteRange": [
+            190303,
+            190381
+          ],
+          "line": 17,
+          "function": null,
+          "source": "pt(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())})",
+          "context": ".memberId);return}ql()}}),Al=await pt(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Rl=await pt(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Il=await pt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),Vn(),Xo(),lm(5e3),oa=await cm(e=>{_h(e),Xn(c)}),ra=await um(e=>{Ga(e)}),ia=await fm(e=>{Jn.value=e,e||xo()}),aa=await dm(e=>{yr.value",
+          "callee": "pt",
+          "role": "listen",
+          "arguments": {
+            "type": "expression",
+            "source": "()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}"
+          },
+          "payloadReads": []
+        }
+      ],
+      "payload": {
+        "type": "undefined"
+      },
+      "notes": "One controller button rising edge increments local click count and triggers clap feedback. Do not also emit keyboard or mouse events for this input."
+    },
+    {
       "name": "global-clap-mouse",
       "operations": [
         "listen"
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            188754,
-            188829
+            189898,
+            189973
           ],
           "byteRange": [
-            189074,
-            189149
+            190218,
+            190293
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())})",
-          "context": "left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}}),fl=await mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}),dl=await mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),xo(),Yr(),Yh(5e3),Yi=await Gh(e=>{oh(e),Yn(c)}),Gi=await Kh(e=>{xa(e)}),Ki=await Xh(e=>{jn.value=e,e||Ao()}),Xi=await zh(e=>{cr.value",
-          "callee": "mt",
+          "source": "pt(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())})",
+          "context": "left\"&&Kn)return;A.incrementLocalClickCount(),Yo(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}}),Al=await pt(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Rl=await pt(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Il=await pt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),Vn(),Xo(),lm(5e3),oa=await cm(e=>{_h(e),Xn(c)",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}"
+            "source": "()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}"
           },
           "payloadReads": []
         }
@@ -10243,24 +10278,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            189451,
-            189485
+            190683,
+            190717
           ],
           "byteRange": [
-            189771,
-            189805
+            191003,
+            191037
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"key-press\",e=>{_c(e.payload)})",
-          "context": "ise(e=>{window.setTimeout(e,200)})}),window.addEventListener(\"keydown\",wc),window.addEventListener(\"keyup\",bc),sl=await mt(\"key-press\",e=>{_c(e.payload)}),ll=await mt(\"key-release\",e=>{kc(e.payload)}),window.addEventListener(\"resize\",gc),window.addEventListener(\"cat-click-report-success\",yc),window.addEventListener(\"cat-auth-login-success\",Wr),window.addEventListener(\"cat-auth-logo",
-          "callee": "mt",
+          "source": "pt(\"key-press\",e=>{Bc(e.payload)})",
+          "context": "ise(e=>{window.setTimeout(e,200)})}),window.addEventListener(\"keydown\",Fc),window.addEventListener(\"keyup\",Lc),_l=await pt(\"key-press\",e=>{Bc(e.payload)}),kl=await pt(\"key-release\",e=>{Nc(e.payload)}),window.addEventListener(\"resize\",Oc),window.addEventListener(\"cat-click-report-success\",Dc),window.addEventListener(\"cat-auth-login-success\",Zr),window.addEventListener(\"cat-auth-logo",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{_c(e.payload)}"
+            "source": "e=>{Bc(e.payload)}"
           },
           "payloadReads": [
             ""
@@ -10279,24 +10314,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            189495,
-            189531
+            190727,
+            190763
           ],
           "byteRange": [
-            189815,
-            189851
+            191047,
+            191083
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"key-release\",e=>{kc(e.payload)})",
-          "context": "addEventListener(\"keydown\",wc),window.addEventListener(\"keyup\",bc),sl=await mt(\"key-press\",e=>{_c(e.payload)}),ll=await mt(\"key-release\",e=>{kc(e.payload)}),window.addEventListener(\"resize\",gc),window.addEventListener(\"cat-click-report-success\",yc),window.addEventListener(\"cat-auth-login-success\",Wr),window.addEventListener(\"cat-auth-logout\",Ra),Hi=await Wf(()=>{Wr()}),qi=await Yf(()",
-          "callee": "mt",
+          "source": "pt(\"key-release\",e=>{Nc(e.payload)})",
+          "context": "addEventListener(\"keydown\",Fc),window.addEventListener(\"keyup\",Lc),_l=await pt(\"key-press\",e=>{Bc(e.payload)}),kl=await pt(\"key-release\",e=>{Nc(e.payload)}),window.addEventListener(\"resize\",Oc),window.addEventListener(\"cat-click-report-success\",Dc),window.addEventListener(\"cat-auth-login-success\",Zr),window.addEventListener(\"cat-auth-logout\",Ha),Qi=await id(()=>{Zr()}),Zi=await ad(()",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{kc(e.payload)}"
+            "source": "e=>{Nc(e.payload)}"
           },
           "payloadReads": [
             ""
@@ -10315,7 +10350,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             345,
             371
@@ -10351,7 +10386,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             602,
             630
@@ -10387,24 +10422,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            188120,
-            188744
+            189264,
+            189888
           ],
           "byteRange": [
-            188430,
-            189064
+            189574,
+            190208
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"mouse-button\",e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),i===\"release\"&&t===\"left\"&&(async()=>{if(Wn){Wn=!1,Pl(),An(!1),Uo=\"default\",Wo(re.value,pe.value);return}await Ic(t,i,re.value,pe.value,e.payload.memberId),yd(),await Yd(),An(!1),Uo=\"default\",Wo(re.value,pe.value)})(),!Me()){if(i===\"press\"){if(Cn)return t===\"left\"&&(Wn=!0),void 0;if(t===\"left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}})",
-          "context": ".payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}}),ul=await mt(\"mouse-button\",e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),i===\"release\"&&t===\"left\"&&(async()=>{if(Wn){Wn=!1,Pl(),An(!1),Uo=\"default\",Wo(re.value,pe.value);return}await Ic(t,i,re.value,pe.value,e.payload.memberId),yd(),await Yd(),An(!1),Uo=\"default\",Wo(re.value,pe.value)})(),!Me()){if(i===\"press\"){if(Cn)return t===\"left\"&&(Wn=!0),void 0;if(t===\"left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}}),fl=await mt(\"global-clap-mouse\",()=>{Me()||Cn||(R.incrementLocalClickCount(),Vr())}),dl=await mt(\"dock-context-menu-debug\",e=>console.info(\"[dock-context-menu][native]\",e.payload)),xo(),Yr(),Yh(5e3),Yi=await Gh(e=>{oh(e),Yn(c)}),",
-          "callee": "mt",
+          "source": "pt(\"mouse-button\",e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),o===\"release\"&&t===\"left\"&&(async()=>{if(Kn){Kn=!1,Gl(),In(!1),jo=\"default\",Jo(oe.value,de.value);return}await Wc(t,o,oe.value,de.value,e.payload.memberId),Fd(),await sp(),In(!1),jo=\"default\",Jo(oe.value,de.value)})(),!Ie()){if(o===\"press\"){if(vn)return t===\"left\"&&(Kn=!0),void 0;if(t===\"left\"&&Kn)return;A.incrementLocalClickCount(),Yo(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}})",
+          "context": ".payload.x,e.payload.y);t?Yl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Yl(o.x,o.y)})}}),Sl=await pt(\"mouse-button\",e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),o===\"release\"&&t===\"left\"&&(async()=>{if(Kn){Kn=!1,Gl(),In(!1),jo=\"default\",Jo(oe.value,de.value);return}await Wc(t,o,oe.value,de.value,e.payload.memberId),Fd(),await sp(),In(!1),jo=\"default\",Jo(oe.value,de.value)})(),!Ie()){if(o===\"press\"){if(vn)return t===\"left\"&&(Kn=!0),void 0;if(t===\"left\"&&Kn)return;A.incrementLocalClickCount(),Yo(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}}),Al=await pt(\"global-clap-mouse\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Rl=await pt(\"gamepad-button-press\",()=>{Ie()||vn||(A.incrementLocalClickCount(),Yo())}),Il=await pt(\"dock-context-menu-debug\",e=>console.info(\"[",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),i===\"release\"&&t===\"left\"&&(async()=>{if(Wn){Wn=!1,Pl(),An(!1),Uo=\"default\",Wo(re.value,pe.value);return}await Ic(t,i,re.value,pe.value,e.payload.memberId),yd(),await Yd(),An(!1),Uo=\"default\",Wo(re.value,pe.value)})(),!Me()){if(i===\"press\"){if(Cn)return t===\"left\"&&(Wn=!0),void 0;if(t===\"left\"&&Wn)return;R.incrementLocalClickCount(),Vr(),Ic(t,i,re.value,pe.value,e.payload.memberId);return}Al()}}"
+            "source": "e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.memberId),o===\"release\"&&t===\"left\"&&(async()=>{if(Kn){Kn=!1,Gl(),In(!1),jo=\"default\",Jo(oe.value,de.value);return}await Wc(t,o,oe.value,de.value,e.payload.memberId),Fd(),await sp(),In(!1),jo=\"default\",Jo(oe.value,de.value)})(),!Ie()){if(o===\"press\"){if(vn)return t===\"left\"&&(Kn=!0),void 0;if(t===\"left\"&&Kn)return;A.incrementLocalClickCount(),Yo(),Wc(t,o,oe.value,de.value,e.payload.memberId);return}ql()}}"
           },
           "payloadReads": [
             "",
@@ -10447,24 +10482,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            187587,
-            188110
+            188731,
+            189254
           ],
           "byteRange": [
-            187897,
-            188420
+            189041,
+            189564
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"mouse-move\",e=>{if(re.value=Math.round(e.payload.x),pe.value=Math.round(e.payload.y),e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),Ct&&Pt.value!==null){const t=Ht(e.payload.x,e.payload.y);t&&gd(t.x,t.y);return}if(Kd(e.payload.x,e.payload.y),Js(e.payload.x,e.payload.y,e.payload.memberId),Pa(e.payload.x,e.payload.y),Ct&&Wo(e.payload.x,e.payload.y),Ct&&Po.value){const t=Ht(e.payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}})",
-          "context": "(\"[about] startup open failed\",e)}),await ol(),await Ie(),Ct&&(Sr=setInterval(()=>{da()},1500)),Dt.value&&Wh(),cl=await mt(\"mouse-move\",e=>{if(re.value=Math.round(e.payload.x),pe.value=Math.round(e.payload.y),e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),Ct&&Pt.value!==null){const t=Ht(e.payload.x,e.payload.y);t&&gd(t.x,t.y);return}if(Kd(e.payload.x,e.payload.y),Js(e.payload.x,e.payload.y,e.payload.memberId),Pa(e.payload.x,e.payload.y),Ct&&Wo(e.payload.x,e.payload.y),Ct&&Po.value){const t=Ht(e.payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}}),ul=await mt(\"mouse-button\",e=>{Fe.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,i=e.payload.action;if(e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"button\",e.payload.membe",
-          "callee": "mt",
+          "source": "pt(\"mouse-move\",e=>{if(oe.value=Math.round(e.payload.x),de.value=Math.round(e.payload.y),e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),St&&Tt.value!==null){const t=Vt(e.payload.x,e.payload.y);t&&Dd(t.x,t.y);return}if(cp(e.payload.x,e.payload.y),fl(e.payload.x,e.payload.y,e.payload.memberId),ei(e.payload.x,e.payload.y),St&&Jo(e.payload.x,e.payload.y),St&&Lo.value){const t=Vt(e.payload.x,e.payload.y);t?Yl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Yl(o.x,o.y)})}})",
+          "context": "(\"[about] startup open failed\",e)}),await gl(),await Me(),St&&(Fr=setInterval(()=>{Aa()},1500)),Ft.value&&sm(),Cl=await pt(\"mouse-move\",e=>{if(oe.value=Math.round(e.payload.x),de.value=Math.round(e.payload.y),e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),St&&Tt.value!==null){const t=Vt(e.payload.x,e.payload.y);t&&Dd(t.x,t.y);return}if(cp(e.payload.x,e.payload.y),fl(e.payload.x,e.payload.y,e.payload.memberId),ei(e.payload.x,e.payload.y),St&&Jo(e.payload.x,e.payload.y),St&&Lo.value){const t=Vt(e.payload.x,e.payload.y);t?Yl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Yl(o.x,o.y)})}}),Sl=await pt(\"mouse-button\",e=>{Le.value=`${e.payload.button} 键 ${e.payload.action===\"press\"?\"按下\":\"释放\"}`;const t=e.payload.button,o=e.payload.action;if(e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"button\",e.payload.membe",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{if(re.value=Math.round(e.payload.x),pe.value=Math.round(e.payload.y),e.payload.memberId&&Nt?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),Ct&&Pt.value!==null){const t=Ht(e.payload.x,e.payload.y);t&&gd(t.x,t.y);return}if(Kd(e.payload.x,e.payload.y),Js(e.payload.x,e.payload.y,e.payload.memberId),Pa(e.payload.x,e.payload.y),Ct&&Wo(e.payload.x,e.payload.y),Ct&&Po.value){const t=Ht(e.payload.x,e.payload.y);t?Tl(t.x,t.y):tn(!0).then(()=>{const i=Ht(e.payload.x,e.payload.y);i&&Tl(i.x,i.y)})}}"
+            "source": "e=>{if(oe.value=Math.round(e.payload.x),de.value=Math.round(e.payload.y),e.payload.memberId&&Ut?.recordNativeRoutedMemberEvent(\"move\",e.payload.memberId),St&&Tt.value!==null){const t=Vt(e.payload.x,e.payload.y);t&&Dd(t.x,t.y);return}if(cp(e.payload.x,e.payload.y),fl(e.payload.x,e.payload.y,e.payload.memberId),ei(e.payload.x,e.payload.y),St&&Jo(e.payload.x,e.payload.y),St&&Lo.value){const t=Vt(e.payload.x,e.payload.y);t?Yl(t.x,t.y):nn(!0).then(()=>{const o=Vt(e.payload.x,e.payload.y);o&&Yl(o.x,o.y)})}}"
           },
           "payloadReads": [
             "",
@@ -10498,7 +10533,7 @@
       ],
       "callSites": [
         {
-          "file": "index-CQKDcPpI.js",
+          "file": "index-D7ueDIgS.js",
           "charRange": [
             2243,
             2265
@@ -10531,24 +10566,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DJ7ReN0h.js",
+          "file": "index-DH_DNc-i.js",
           "charRange": [
-            72053,
-            72136
+            72105,
+            72188
           ],
           "byteRange": [
-            72111,
-            72194
+            72163,
+            72246
           ],
           "line": 2,
           "function": null,
-          "source": "Dn(\"panel-open-tab\",m=>{Qt(m.payload)&&(de({type:\"tab-click\",key:m.payload}),d())})",
-          "context": "m,Hn(m.assetsCdnHost,{triggerSilentCheck:!1}),x(m),K(m)}),V=await io(m=>{f.value&&(f.value={...f.value,...m})}),N=await Dn(\"panel-open-tab\",m=>{Qt(m.payload)&&(de({type:\"tab-click\",key:m.payload}),d())});const C=O.query.tab;typeof C==\"string\"&&Qt(C)&&await de({type:\"tab-click\",key:C}),await de({type:\"ready\"}),d()}),pt(()=>{k?.(),V?.(),N?.(),xt()}),ae(()=>f.value?.collapsed,C=>{typeof C==\"boolean\"&&co(C).catch(m=>{console.warn(\"[p",
+          "source": "Dn(\"panel-open-tab\",d=>{Qt(d.payload)&&(de({type:\"tab-click\",key:d.payload}),O())})",
+          "context": "d,Hn(d.assetsCdnHost,{triggerSilentCheck:!1}),b(d),f(d)}),V=await io(d=>{g.value&&(g.value={...g.value,...d})}),z=await Dn(\"panel-open-tab\",d=>{Qt(d.payload)&&(de({type:\"tab-click\",key:d.payload}),O())});const C=B.query.tab;typeof C==\"string\"&&Qt(C)&&await de({type:\"tab-click\",key:C}),await de({type:\"ready\"}),O()}),pt(()=>{k?.(),V?.(),z?.(),xt()}),ae(()=>g.value?.collapsed,C=>{typeof C==\"boolean\"&&co(C).catch(d=>{console.warn(\"[p",
           "callee": "Dn",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "m=>{Qt(m.payload)&&(de({type:\"tab-click\",key:m.payload}),d())}"
+            "source": "d=>{Qt(d.payload)&&(de({type:\"tab-click\",key:d.payload}),O())}"
           },
           "payloadReads": [
             ""
@@ -10566,24 +10601,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190353,
-            190379
+            191585,
+            191611
           ],
           "byteRange": [
-            190673,
-            190699
+            191905,
+            191931
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-quit\",()=>{th()})",
-          "context": ",5e3),Mr=setInterval(()=>{S.value=2,Wp(),Ln&&clearTimeout(Ln),Ln=setTimeout(()=>{S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tray-quit\",()=>{th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(",
-          "callee": "mt",
+          "source": "pt(\"tray-quit\",()=>{wh()})",
+          "context": ",5e3),Hr=setInterval(()=>{S.value=2,sh(),Nn&&clearTimeout(Nn),Nn=setTimeout(()=>{S.value=1,Nn=null},250)},5e3),Vi=await pt(\"tray-quit\",()=>{wh()}),Wi=await pt(\"tray-restart\",()=>{Ie()||bh()}),Gi=await pt(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Yi=await pt(\"tray-set-pet-scale\",e=>{Ie()||Th(Number(e.payload))}),Ki=await pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{th()}"
+            "source": "()=>{wh()}"
           },
           "payloadReads": []
         }
@@ -10599,24 +10634,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190389,
-            190424
+            191621,
+            191656
           ],
           "byteRange": [
-            190709,
-            190744
+            191941,
+            191976
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-restart\",()=>{Me()||nh()})",
-          "context": "Wp(),Ln&&clearTimeout(Ln),Ln=setTimeout(()=>{S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tray-quit\",()=>{th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window",
-          "callee": "mt",
+          "source": "pt(\"tray-restart\",()=>{Ie()||bh()})",
+          "context": "sh(),Nn&&clearTimeout(Nn),Nn=setTimeout(()=>{S.value=1,Nn=null},250)},5e3),Vi=await pt(\"tray-quit\",()=>{wh()}),Wi=await pt(\"tray-restart\",()=>{Ie()||bh()}),Gi=await pt(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Yi=await pt(\"tray-set-pet-scale\",e=>{Ie()||Th(Number(e.payload))}),Ki=await pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(e.payload))}),Xi=await pt(\"tray-toggle-window",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||nh()}"
+            "source": "()=>{Ie()||bh()}"
           },
           "payloadReads": []
         }
@@ -10632,24 +10667,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190493,
-            190550
+            191725,
+            191782
           ],
           "byteRange": [
-            190813,
-            190870
+            192045,
+            192102
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))})",
-          "context": "th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Xm(t)&&Ap(t)})}catch(e){console.warn(\"[mai",
-          "callee": "mt",
+          "source": "pt(\"tray-set-pet-scale\",e=>{Ie()||Th(Number(e.payload))})",
+          "context": "wh()}),Wi=await pt(\"tray-restart\",()=>{Ie()||bh()}),Gi=await pt(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Yi=await pt(\"tray-set-pet-scale\",e=>{Ie()||Th(Number(e.payload))}),Ki=await pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(e.payload))}),Xi=await pt(\"tray-toggle-window-passthrough\",()=>{Ie()||Ch()}),zi=await pt(\"dock-open-panel\",e=>{const t=e.payload;fv(t)&&Wp(t)})}catch(e){console.warn(\"[mai",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{Me()||dh(Number(e.payload))}"
+            "source": "e=>{Ie()||Th(Number(e.payload))}"
           },
           "payloadReads": [
             ""
@@ -10667,24 +10702,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190560,
-            190622
+            191792,
+            191854
           ],
           "byteRange": [
-            190880,
-            190942
+            192112,
+            192174
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))})",
-          "context": "ay-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Xm(t)&&Ap(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Oa(\"main_mount_failed\"),me(\"boot:main_mount_fai",
-          "callee": "mt",
+          "source": "pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(e.payload))})",
+          "context": "ay-toggle-pet-visibility\",()=>{Ie()||dc()}),Yi=await pt(\"tray-set-pet-scale\",e=>{Ie()||Th(Number(e.payload))}),Ki=await pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(e.payload))}),Xi=await pt(\"tray-toggle-window-passthrough\",()=>{Ie()||Ch()}),zi=await pt(\"dock-open-panel\",e=>{const t=e.payload;fv(t)&&Wp(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Ya(\"main_mount_failed\"),me(\"boot:main_mount_fai",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "e=>{Me()||rh(Number(e.payload))}"
+            "source": "e=>{Ie()||kh(Number(e.payload))}"
           },
           "payloadReads": [
             ""
@@ -10702,24 +10737,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190434,
-            190483
+            191666,
+            191715
           ],
           "byteRange": [
-            190754,
-            190803
+            191986,
+            192035
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()})",
-          "context": "S.value=1,Ln=null},250)},5e3),Pi=await mt(\"tray-quit\",()=>{th()}),Ti=await mt(\"tray-restart\",()=>{Me()||nh()}),Ei=await mt(\"tray-toggle-pet-visibility\",()=>{Me()||$l()}),xi=await mt(\"tray-set-pet-scale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-pane",
-          "callee": "mt",
+          "source": "pt(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()})",
+          "context": "S.value=1,Nn=null},250)},5e3),Vi=await pt(\"tray-quit\",()=>{wh()}),Wi=await pt(\"tray-restart\",()=>{Ie()||bh()}),Gi=await pt(\"tray-toggle-pet-visibility\",()=>{Ie()||dc()}),Yi=await pt(\"tray-set-pet-scale\",e=>{Ie()||Th(Number(e.payload))}),Ki=await pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(e.payload))}),Xi=await pt(\"tray-toggle-window-passthrough\",()=>{Ie()||Ch()}),zi=await pt(\"dock-open-pane",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||$l()}"
+            "source": "()=>{Ie()||dc()}"
           },
           "payloadReads": []
         }
@@ -10735,24 +10770,24 @@
       ],
       "callSites": [
         {
-          "file": "index-DmC0wUEw.js",
+          "file": "index-CAndEweT.js",
           "charRange": [
-            190632,
-            190685
+            191864,
+            191917
           ],
           "byteRange": [
-            190952,
-            191005
+            192184,
+            192237
           ],
           "line": 17,
           "function": null,
-          "source": "mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()})",
-          "context": "ale\",e=>{Me()||dh(Number(e.payload))}),Oi=await mt(\"tray-set-window-opacity\",e=>{Me()||rh(Number(e.payload))}),Di=await mt(\"tray-toggle-window-passthrough\",()=>{Me()||ih()}),Fi=await mt(\"dock-open-panel\",e=>{const t=e.payload;Xm(t)&&Ap(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Oa(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Vt",
-          "callee": "mt",
+          "source": "pt(\"tray-toggle-window-passthrough\",()=>{Ie()||Ch()})",
+          "context": "ale\",e=>{Ie()||Th(Number(e.payload))}),Ki=await pt(\"tray-set-window-opacity\",e=>{Ie()||kh(Number(e.payload))}),Xi=await pt(\"tray-toggle-window-passthrough\",()=>{Ie()||Ch()}),zi=await pt(\"dock-open-panel\",e=>{const t=e.payload;fv(t)&&Wp(t)})}catch(e){console.warn(\"[main] mount open failed\",e),Ya(\"main_mount_failed\"),me(\"boot:main_mount_failed\"),le(\"APP\",\"boot_failed\",{stage:\"main_mount\",reason_code:Yt",
+          "callee": "pt",
           "role": "listen",
           "arguments": {
             "type": "expression",
-            "source": "()=>{Me()||ih()}"
+            "source": "()=>{Ie()||Ch()}"
           },
           "payloadReads": []
         }
@@ -10768,7 +10803,7 @@
       ],
       "callSites": [
         {
-          "file": "modalBridge-DrPKsAwT.js",
+          "file": "modalBridge-XRMnG1Hr.js",
           "charRange": [
             568,
             580
@@ -10797,7 +10832,7 @@
   ],
   "dynamicCalls": [
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         381573,
         381666
@@ -10815,7 +10850,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         381748,
         381809
@@ -10833,7 +10868,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         381858,
         381918
@@ -10851,7 +10886,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         381991,
         382032
@@ -10869,7 +10904,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         382077,
         382120
@@ -10887,7 +10922,7 @@
       "category": "framework-plugin-factory"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         383939,
         383978
@@ -10905,7 +10940,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         388418,
         388435
@@ -10923,7 +10958,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         388466,
         388473
@@ -10941,7 +10976,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         422527,
         422580
@@ -10959,7 +10994,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         422689,
         422740
@@ -10977,7 +11012,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         422872,
         422881
@@ -10995,7 +11030,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         423017,
         423030
@@ -11013,7 +11048,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         434777,
         434831
@@ -11031,7 +11066,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         434940,
         434992
@@ -11049,7 +11084,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         435122,
         435131
@@ -11067,7 +11102,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         435265,
         435278
@@ -11085,7 +11120,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         438312,
         438372
@@ -11103,7 +11138,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         438481,
         438539
@@ -11121,7 +11156,7 @@
       "category": "generic-event-forwarder"
     },
     {
-      "file": "index-D8GJxFG7.js",
+      "file": "index-DsnG26DH.js",
       "charRange": [
         443342,
         443351

@@ -4,7 +4,7 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { assetsOrigin, compareUpstream, configUrl, discoverUpstream, officialAssetUrl, parseManifest, parseOptions, syncUpstream, validateLock, verifyInstaller } from '../scripts/sync-upstream.mjs';
+import { assetsOrigin, compareUpstream, configUrl, discoverUpstream, fetchOfficial, officialAssetUrl, parseManifest, parseOptions, syncUpstream, validateLock, verifyInstaller } from '../scripts/sync-upstream.mjs';
 import { getRegionProfile } from '../scripts/regions.mjs';
 
 const url = `${assetsOrigin}/app/release/WuwaTappo-cn_1.0.0_x64-setup.exe`;
@@ -80,6 +80,81 @@ test('discovery rejects failures and untrusted manifest redirects before fetchin
   let count = 0;
   await assert.rejects(discoverUpstream(async () => { count += 1; return { ok: true, json: async () => responses.shift() }; }), /官方/);
   assert.equal(count, 2);
+});
+
+test('official requests retry transient connection failures with bounded backoff and preserve secure options', async () => {
+  const sleeps = [];
+  let count = 0;
+  const result = await fetchOfficial(configUrl, {
+    stage: 'CN 活动配置', sleep: async milliseconds => sleeps.push(milliseconds),
+    fetcher: async (input, options) => {
+      assert.equal(input, configUrl);
+      assert.equal(options.redirect, 'error');
+      assert.ok(options.signal instanceof AbortSignal);
+      if (++count < 3) throw new TypeError('fetch failed', { cause: Object.assign(new Error('socket reset'), { code: 'ECONNRESET' }) });
+      return { ok: true, json: async () => ({ code: 0 }) };
+    },
+  });
+  assert.deepEqual(result, { code: 0 });
+  assert.equal(count, 3);
+  assert.deepEqual(sleeps, [250, 500]);
+});
+
+test('exhausted transient failures identify the request stage, URL, attempt and root cause', async () => {
+  const rootCause = Object.assign(new Error('connect timed out'), { code: 'UND_ERR_CONNECT_TIMEOUT' });
+  let count = 0;
+  await assert.rejects(fetchOfficial(manifestUrl, {
+    stage: 'CN 版本清单', sleep: async () => {},
+    fetcher: async () => { count += 1; throw new TypeError('fetch failed', { cause: rootCause }); },
+  }), error => {
+    assert.ok(error.message.includes('CN 版本清单'));
+    assert.ok(error.message.includes(manifestUrl));
+    assert.ok(error.message.includes('第 3 次请求'));
+    assert.ok(error.message.includes('UND_ERR_CONNECT_TIMEOUT'));
+    assert.equal(error.cause.cause, rootCause);
+    return true;
+  });
+  assert.equal(count, 3);
+});
+
+test('temporary HTTP failure retries but forbidden and redirect responses do not', async () => {
+  for (const status of [408, 429, 500, 502, 503, 504, 301, 403, 404]) {
+    let count = 0, cancelled = 0;
+    await assert.rejects(fetchOfficial(configUrl, {
+      sleep: async () => {},
+      fetcher: async () => { count += 1; return { ok: false, status, body: { cancel: async () => { cancelled += 1; } } }; },
+    }), new RegExp(`HTTP ${status}`));
+    assert.equal(count, [301, 403, 404].includes(status) ? 1 : 3);
+    assert.equal(cancelled, count);
+  }
+});
+
+test('certificate and redirect errors fail once without bypassing security or accepting invalid JSON', async () => {
+  for (const cause of [Object.assign(new Error('untrusted certificate'), { code: 'CERT_HAS_EXPIRED' }), new Error('unexpected redirect'), new SyntaxError('invalid JSON')]) {
+    let count = 0;
+    await assert.rejects(fetchOfficial(configUrl, {
+      fetcher: async () => { count += 1; throw new TypeError('fetch failed', { cause }); },
+      sleep: async () => assert.fail('permanent errors must not wait for a retry'),
+    }), error => error.cause.cause === cause);
+    assert.equal(count, 1);
+  }
+});
+
+test('an interrupted installer body is retried before handing bytes to integrity validation', async () => {
+  let count = 0;
+  const result = await fetchOfficial(url, {
+    timeout: 300_000, sleep: async () => {},
+    read: async response => Buffer.from(await response.arrayBuffer()),
+    fetcher: async () => {
+      const attempt = ++count;
+      return { ok: true, arrayBuffer: async () => {
+        if (attempt === 1) throw Object.assign(new Error('body interrupted'), { code: 'UND_ERR_SOCKET' });
+        return bytes;
+      } };
+    },
+  });
+  assert.equal(count, 2);
+  assert.deepEqual(verifyInstaller(result, lock()), { size: bytes.length, sha256: lock().installer.sha256 });
 });
 
 test('CLI keeps read-only check separate from downloads and extracts', () => {
