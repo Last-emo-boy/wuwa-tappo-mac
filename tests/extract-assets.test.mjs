@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 import { profile } from './frontend-context.mjs';
 import { brotliCompressSync } from 'node:zlib';
-import { extractAssets, findAssetEntries, findEmbeddedNsis, inspectStaticReferences, readPe, safeAssetPath } from '../scripts/extract-assets.mjs';
+import { extractAssets, findAssetEntries, findEmbeddedNsis, inspectStaticReferences, readPe, safeAssetPath, selectApplicationPayload } from '../scripts/extract-assets.mjs';
 
 function fixture(assets) {
   const bytes = Buffer.alloc(8192);
@@ -101,6 +102,60 @@ test('finds embedded NSIS by PE section end and bounded NSIS header', () => {
   assert.deepEqual(findEmbeddedNsis(bytes), { start: 0, header, end: bytes.length });
   bytes.writeUInt32LE(65, header + 24);
   assert.throws(() => findEmbeddedNsis(bytes), /No structurally valid/);
+});
+
+test('selects the legacy app name and the official variable-backed NSIS payload', () => {
+  assert.equal(selectApplicationPayload('Path = $PLUGINSDIR/System.dll\n\nPath = WuwaTappo.exe\n\nPath = uninstall.exe\n'), 'WuwaTappo.exe');
+  assert.equal(selectApplicationPayload('Path = $PLUGINSDIR/System.dll\r\n\r\nPath = $_21_\r\n\r\nPath = uninstall.exe\r\n'), '$_21_');
+});
+
+test('does not select unrelated executables, nested paths, or ambiguous payloads', () => {
+  for (const listing of [
+    'Path = uninstall.exe\nPath = other.exe\n',
+    'Path = nested/WuwaTappo.exe\nPath = ../$_21_\n',
+    'Path = WuwaTappo.exe\nPath = $_21_\n',
+    'Path = $_21_\nPath = $_22_\n',
+  ]) assert.throws(() => selectApplicationPayload(listing), /exactly one Wuwa Tappo/);
+});
+
+test('installer CLI extracts the selected NSIS variable and validates its Tauri assets', async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), 'wuwa-installer-cli-test-'));
+  try {
+    const stub = fixture([['/index.html', '<html/>']]);
+    const installer = Buffer.concat([stub, Buffer.alloc(64)]);
+    Buffer.from('\xef\xbe\xad\xdeNullsoftInst', 'latin1').copy(installer, stub.length + 4);
+    installer.writeUInt32LE(64, stub.length + 24);
+    const installerPath = path.join(directory, 'installer.exe');
+    const sevenzip = path.join(directory, '7zz');
+    const applicationPath = path.join(directory, 'application.exe');
+    const output = path.join(directory, 'frontend');
+    await writeFile(installerPath, installer);
+    await writeFile(applicationPath, stub);
+    await writeFile(sevenzip, `#!${process.execPath}
+const fs = require('node:fs');
+const path = require('node:path');
+const args = process.argv.slice(2);
+if (args[0] === 'l') console.log('Path = $_21_\\n\\nPath = uninstall.exe');
+else {
+  if (args.at(-1) !== '$_21_') process.exit(2);
+  const output = args.find(arg => arg.startsWith('-o')).slice(2);
+  fs.copyFileSync(path.join(__dirname, 'application.exe'), path.join(output, '$_21_'));
+}
+`, { mode: 0o755 });
+    const run = () => spawnSync(process.execPath, [path.resolve(import.meta.dirname, '../scripts/extract-assets.mjs'), '--installer', installerPath, '--sevenzip', sevenzip, '--output', output], { encoding: 'utf8' });
+    const result = run();
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(JSON.parse(result.stdout).count, 1);
+    assert.equal(await readFile(path.join(output, 'index.html'), 'utf8'), '<html/>');
+    await writeFile(applicationPath, 'not an application');
+    const malformed = run();
+    assert.notEqual(malformed.status, 0);
+    assert.match(malformed.stderr, /Expected a PE executable/);
+    await writeFile(applicationPath, fixture([['/other.html', '<html/>']]));
+    const missingFrontend = run();
+    assert.notEqual(missingFrontend.status, 0);
+    assert.match(missingFrontend.stderr, /No Tauri frontend/);
+  } finally { await rm(directory, { recursive: true, force: true }); }
 });
 
 test('all static references in the recovered production frontend exist', async () => {
