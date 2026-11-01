@@ -172,6 +172,9 @@ fn build_window(
     .on_page_load(|window, payload| {
         if matches!(payload.event(), tauri::webview::PageLoadEvent::Started) {
             crate::socket::close_window(window.app_handle(), window.label());
+            if let Err(error) = crate::shortcuts::release_capture(window.app_handle(), window.label()) {
+                eprintln!("Could not restore shortcuts after page reload: {error}");
+            }
         }
     })
     .inner_size(size.0, size.1)
@@ -197,6 +200,11 @@ fn build_window(
         let app = app.clone();
         let label = label.to_string();
         move |event| {
+            if matches!(event, tauri::WindowEvent::Focused(false) | tauri::WindowEvent::Destroyed | tauri::WindowEvent::CloseRequested { .. }) {
+                if let Err(error) = crate::shortcuts::release_capture(&app, &label) {
+                    eprintln!("Could not restore shortcuts after {label} lost focus: {error}");
+                }
+            }
             if matches!(event, tauri::WindowEvent::Destroyed) {
                 crate::socket::close_window(&app, &label);
             }
@@ -316,7 +324,8 @@ fn safe_area(app: &AppHandle) -> Result<Value, String> {
         m.scale_factor(),
     );
     Ok(
-        json!({"insets": insets, "autoHideEdge": null, "foregroundFullscreen": foreground_fullscreen(app)?}),
+        json!({"insets": insets, "autoHideEdge": null, "foregroundFullscreen": foreground_fullscreen(app)?,
+            "foregroundApplicationFullscreen": crate::fullscreen::foreground_application_fullscreen()?}),
     )
 }
 

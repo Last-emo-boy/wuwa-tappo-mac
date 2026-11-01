@@ -1,10 +1,12 @@
 mod auth;
+mod fullscreen;
 mod gamepad;
 mod geometry;
 mod input;
 mod menu;
 mod profile;
 mod session;
+mod shortcuts;
 mod socket;
 mod startup;
 mod storage;
@@ -106,6 +108,9 @@ fn begin_session(
                     return Err("已有登录会话，无法更换保存方式。请退出应用后重试。".into());
                 }
                 windows::setup(&handle)?;
+                if let Err(error) = shortcuts::start(&handle) {
+                    eprintln!("Global shortcuts unavailable: {error}");
+                }
                 if let Err(error) = input::start(handle.clone()) {
                     eprintln!("Global input unavailable: {error}");
                 }
@@ -183,7 +188,9 @@ fn handle(invoke: Invoke) -> bool {
             .respond(result.map_err(tauri::ipc::InvokeError::from));
         return true;
     }
-    if windows::COMMANDS.contains(&command.as_str()) || SYSTEM_COMMANDS.contains(&command.as_str())
+    if windows::COMMANDS.contains(&command.as_str())
+        || shortcuts::COMMANDS.contains(&command.as_str())
+        || SYSTEM_COMMANDS.contains(&command.as_str())
     {
         let args = match invoke.message.payload() {
             InvokeBody::Json(value) => value.clone(),
@@ -213,7 +220,11 @@ fn handle(invoke: Invoke) -> bool {
             let resolver = invoke.resolver;
             let fallback = resolver.clone();
             if let Err(error) = app.run_on_main_thread(move || {
-                let result = windows::dispatch(&handle, &label, &command, &args);
+                let result = if shortcuts::COMMANDS.contains(&command.as_str()) {
+                    shortcuts::dispatch(&handle, &label, &command, &args)
+                } else {
+                    windows::dispatch(&handle, &label, &command, &args)
+                };
                 #[cfg(debug_assertions)]
                 eprintln!(
                     "[native] end {label}:{command}: {}",
@@ -261,6 +272,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_process::init())
+        .plugin(shortcuts::plugin())
         .manage(windows::WindowState::default())
         .manage(StartupState::default())
         .manage(input::InputMonitor::new())
@@ -276,6 +288,9 @@ pub fn run() {
             app.manage(storage::CounterStore::new(
                 app.path().app_data_dir()?.join("counters.json"),
             ));
+            app.manage(shortcuts::ShortcutStore::open(
+                app.path().app_config_dir()?.join("shortcuts.json"),
+            )?);
             menu::setup(&handle)?;
             app.manage(system::start_network_monitor(handle.clone())?);
             tauri::WebviewWindowBuilder::new(

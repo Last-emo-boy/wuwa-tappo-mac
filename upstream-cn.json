@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "region": "CN",
-  "version": "1.0.2",
-  "manifestUrl": "https://mc-wuwatappo.kurogames-global.com/app/version-json/latest.json?t=1793158532",
+  "version": "1.0.3",
+  "manifestUrl": "https://mc-wuwatappo.kurogames-global.com/app/version-json/latest.json?t=1793328311",
   "installer": {
-    "url": "https://mc-wuwatappo.kurogames-global.com/app/3da1be53-0918-4d65-a606-d96eae7d5233/WuwaTappo-cn_1.0.2_x64-setup.exe",
-    "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSSnV4aU5ob1MxTFlwbHFadGh5UWlWWDVzdDMvbFNWRS93cU5zNXlGUTR5L2NLQ1hoQWFyTFhmbWh0c3FYSnk5NktMeUxkbWRDM3EzakgwczdlSGdtemhWR25HUnRnWFFrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMTA0OTQ2CWZpbGU6V3V3YVRhcHBvLWNuXzEuMC4yX3g2NC1zZXR1cC5leGUKM1JhMkMvdWU0cjhwMFpnR3RQbWFKa3o1OXZvUVV5U0Z2MXppLzBUY2ptVEl6bzBRamcwWnJRMWsrcVlVc0ZucnVnUXU1Wm0xRmNLMGZna1hMK2grQlE9PQo=",
-    "sha256": "152d8ac4847f1b4641a750c45b680091c5a7cf92cb6059cd6d97e803f6eb5487",
-    "size": 201655008
+    "url": "https://mc-wuwatappo.kurogames-global.com/app/0ad48bb0-55bf-49f0-b57d-2b9f3edc0c73/WuwaTappo-cn_1.0.3_x64-setup.exe",
+    "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSSnV4aU5ob1MxTGNsWHpMTVJnTkgxWjM3ZzZwS1BzRTFOc05lRXJmM3pTcDhVMFJ3ZlhPUTJMQVFvTHZ6VXRYQ0NXSTRQSG84U29MYmp0Q1pkclk1eEUvd0tQUFNzdXdBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjgwMDQ2CWZpbGU6V3V3YVRhcHBvLWNuXzEuMC4zX3g2NC1zZXR1cC5leGUKcnBDK3pzRUNvTm42MWQ4SU1wbUVmSHR0MGFjaHJoMCtublNXUmphUzZvcFRSYmM3SjZCbHQwUVJVd1N2TytkaUl3NVJXNjQ4YlVMaDNmUXpHTGJxQWc9PQo=",
+    "sha256": "29b6f4aaeb0ad4db5a8002e3686435692fa0ddb88ea9389e89b53fb93932136e",
+    "size": 201697504
   }
 }

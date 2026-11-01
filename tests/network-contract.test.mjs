@@ -3,6 +3,8 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import vm from 'node:vm';
+import { parse } from 'acorn';
 import { getRegionProfile } from '../scripts/regions.mjs';
 import { contract, verifyDomesticSdkAssetBinding, verifyGlobalCallbackBridge, verifySourceContract } from '../scripts/network-smoke.mjs';
 
@@ -73,6 +75,44 @@ test('regional login semantics remain domestic SDK or state-bound global browser
     assert.equal(contract.auth.sdk.environment, 'MAINLAND-PRODUCTION');
     assert.equal(contract.auth.sdk.mountElementId, 'KrSDK');
   }
+});
+
+test('official Socket.IO handshake uses the room or a valid current user ID and never connects without identity', async () => {
+  const source = await readFile(path.join(assets, contract.source.room), 'utf8');
+  const declarations = [];
+  const parents = new Map();
+  function visit(node, parent) {
+    if (!node || typeof node !== 'object') return;
+    parents.set(node, parent);
+    if (node.type === 'FunctionDeclaration') declarations.push(node);
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach(child => visit(child, node));
+      else if (value && typeof value === 'object') visit(value, node);
+    }
+  }
+  visit(parse(source, { sourceType: 'module', ecmaVersion: 'latest' }));
+  const builders = declarations.filter(node => source.slice(node.start, node.end).includes('socket handshake requires userInfo.id')
+    && !node.body.body.some(child => child.type === 'FunctionDeclaration'));
+  assert.equal(builders.length, 1, 'Expected one official handshake query builder');
+  const builder = builders[0];
+  const provider = builder.body.body.flatMap(node => node.type === 'IfStatement' ? node.alternate?.body ?? [] : [])
+    .find(node => node.type === 'VariableDeclaration')?.declarations[0].init;
+  assert.equal(provider?.type, 'CallExpression');
+  const owner = parents.get(builder);
+  const userIdProvider = owner.body.find(node => node.type === 'FunctionDeclaration' && node.id.name === provider.callee.name);
+  assert.ok(userIdProvider, 'User ID must come from the current room state scope');
+  const env = vm.createContext({ R: { userInfo: { id: 123 } } });
+  vm.runInContext(source.slice(userIdProvider.start, userIdProvider.end) + source.slice(builder.start, builder.end), env);
+  const query = (...args) => JSON.parse(JSON.stringify(env[builder.id.name](...args)));
+  assert.deepEqual(query('synthetic-token', ''), { token: 'synthetic-token', rm: '123' });
+  assert.deepEqual(query('synthetic-token', 'room-456'), { token: 'synthetic-token', rm: 'room-456' });
+  assert.deepEqual(query('', ''), { rm: '123' });
+  for (const id of [0, -1, undefined, '123', NaN, Infinity]) {
+    env.R.userInfo = { id };
+    assert.throws(() => query('synthetic-token', ''), /requires userInfo.id/);
+    assert.deepEqual(query('synthetic-token', 'room-456'), { token: 'synthetic-token', rm: 'room-456' });
+  }
+  assert.equal(contract.socket.querySemantics.missingUserId, 'reject before connection');
 });
 
 test('verification rejects mismatched regional frontend rather than accepting the other service', async () => {

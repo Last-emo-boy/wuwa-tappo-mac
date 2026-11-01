@@ -78,26 +78,50 @@
     let attemptedRecovery = false;
     let checking = false;
     let previousStatus;
-    const update = status => {
-      state.nativeInput = status?.running === true;
-      if (!isMainWindow) return;
-      if (status?.granted === false || status?.running) attemptedRecovery = false;
+    let inputMessage = null;
+    let shortcutMessage = null;
+    const renderStatus = () => {
       let warning = document.getElementById('wuwatappo-input-status');
-      if (status?.running) warning?.remove();
+      const messages = [inputMessage, shortcutMessage].filter(Boolean);
+      if (!messages.length) warning?.remove();
       else {
         if (!warning) {
           warning = document.createElement('div');
           warning.id = 'wuwatappo-input-status';
           warning.setAttribute('role', 'status');
-          warning.style.cssText = 'position:fixed;z-index:2147483647;left:16px;bottom:16px;max-width:420px;padding:12px 16px;border-radius:10px;background:#fff2df;color:#59321a;font:14px/1.5 system-ui;box-shadow:0 2px 16px #0002;pointer-events:none';
+          warning.style.cssText = 'position:fixed;z-index:2147483647;left:16px;bottom:16px;max-width:420px;padding:12px 16px;border-radius:10px;background:#fff2df;color:#59321a;font:14px/1.5 system-ui;white-space:pre-line;box-shadow:0 2px 16px #0002;pointer-events:none';
           (document.body || document.documentElement).append(warning);
         }
-        warning.textContent = status?.error === 'input_status_unavailable'
+        warning.textContent = messages.join('\n');
+      }
+    };
+    const updateShortcuts = status => {
+      shortcutMessage = status?.error === null ? null
+        : status?.error === 'occupied'
+          ? '全局快捷键被系统或其他应用占用。请在设置中重新指定；同时运行两服时请使用不同快捷键。'
+          : status?.error === 'unavailable'
+            ? '全局快捷键暂不可用。请在设置中重新指定，必要时重启应用。'
+            : '无法读取全局快捷键状态。请重启应用后重试。';
+      renderStatus();
+    };
+    if (isMainWindow) {
+      const initializeShortcuts = async () => {
+        await api.event.listen('mac-shortcut-status', event => updateShortcuts(event.payload));
+        updateShortcuts(await api.core.invoke('get_shortcut_status'));
+      };
+      initializeShortcuts().catch(() => updateShortcuts({ error: 'status_unavailable' }));
+    }
+    const update = status => {
+      state.nativeInput = status?.running === true;
+      if (!isMainWindow) return;
+      if (status?.granted === false || status?.running) attemptedRecovery = false;
+      inputMessage = status?.running ? null
+        : status?.error === 'input_status_unavailable'
           ? '无法读取键鼠监听状态。请从菜单“启用键鼠监听”重试。'
           : !status?.granted
             ? `键鼠计数已暂停：请在系统设置 → 输入监控中重新允许 ${productName}。`
             : '已获得输入监控权限，但监听尚未启动。请从菜单“启用键鼠监听”重试，必要时重启应用。';
-      }
+      renderStatus();
       const signature = JSON.stringify([status?.granted ?? null, status?.running ?? null, status?.error ?? null]);
       if (signature !== previousStatus) {
         previousStatus = signature;
