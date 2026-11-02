@@ -14,6 +14,8 @@ const object = properties => ({ type: 'object', properties });
 const insets = object({ left: number, top: number, right: number, bottom: number });
 const region = object({ left: number, top: number, width: number, height: number, memberId: optional(number) });
 const clickCount = { type: 'integer', minimum: 0, maximum: Number.MAX_SAFE_INTEGER };
+const shortcutBinding = object({ modifiers: { type: 'integer', minimum: 0, maximum: 15 }, key: { type: 'integer', minimum: 0, maximum: 255 } });
+const shortcutConfig = object({ gameMode: shortcutBinding, switchScreen: shortcutBinding, togglePet: shortcutBinding });
 function commandContractsFor(clickCacheEnvironment) {
   const environment = { type: 'string', value: clickCacheEnvironment };
   return {
@@ -23,10 +25,11 @@ function commandContractsFor(clickCacheEnvironment) {
       notes: 'A non-null result must be a real updater resource; the frontend constructs Update and uses rid with plugin:updater commands.',
     },
     get_app_update_detail: { response: { anyOf: [{ type: 'null' }, { type: 'object', required: ['newVersion'] }] } },
+    get_app_shortcuts: { response: shortcutConfig, notes: 'Complete action map. key uses the official Windows virtual-key values, not macOS hardware keycodes; modifier bits are Alt/Option=1, Control=2, Shift=4, Meta/Command=8. key=0 unsets an action.' },
     get_boot_diagnostics: { response: object({ system: optional({ type: 'object' }), runtime: optional({ type: 'object' }), cpu: optional({ type: 'object' }), memory: optional({ type: 'object' }), gpus: optional({ type: 'array' }), display_names: optional({ type: 'array' }) }) },
     get_installed_app_locale: { request: object({ domestic: boolean }), response: string },
     get_installer_launch_mode: { response: object({ otaUpdate: boolean }) },
-    get_main_desktop_safe_area: { response: object({ insets, autoHideEdge: { anyOf: [{ type: 'null' }, { type: 'string', enum: ['left', 'top', 'right', 'bottom'] }] }, foregroundFullscreen: boolean }) },
+    get_main_desktop_safe_area: { response: object({ insets, autoHideEdge: { anyOf: [{ type: 'null' }, { type: 'string', enum: ['left', 'top', 'right', 'bottom'] }] }, foregroundFullscreen: boolean, foregroundApplicationFullscreen: boolean }) },
     get_main_taskbar_insets: { response: insets },
     get_maintenance_notice_payload: { response: { anyOf: [{ type: 'null' }, { type: 'object' }] } },
     get_preferred_system_ui_languages: { response: { type: 'array', items: string } },
@@ -52,6 +55,8 @@ function commandContractsFor(clickCacheEnvironment) {
     save_cumulative_click_count: { request: object({ count: clickCount, cuid: string, environment }) },
     save_key_press_count: { request: object({ count: clickCount, environment }), notes: 'Zero is intentional: force persistence is used when clearing pending clicks after successful report or account reconciliation.' },
     set_elevated_autostart: { request: object({ enabled: boolean }) },
+    set_app_shortcuts: { request: object({ config: shortcutConfig }), notes: 'Atomically replace the complete action map and emit app-shortcuts-changed. Reject duplicate or occupied bindings with the exact string duplicate or occupied so the official settings view can explain the failure.' },
+    set_shortcut_capture: { request: object({ active: boolean }), notes: 'Suspend shortcut activation while the settings input records a binding; restore normal activation when capture ends or its owning window closes.' },
     set_main_force_cursor_ignore: { request: object({ enabled: boolean }) },
     set_main_hit_region: { request: object({ payload: object({ regions: { type: 'array', items: region }, inputRegions: { type: 'array', items: region }, updateNativeInput: boolean, windowPassthrough: boolean, nativeInput: boolean }) }), notes: 'Regions are webview CSS pixels. memberId is numeric and must retain its type for strict room-member comparisons.' },
     set_main_swallow_mouse: { request: object({ enabled: boolean }) },
@@ -68,6 +73,8 @@ function commandContractsFor(clickCacheEnvironment) {
 }
 
 const nativeEventContracts = {
+  'app-shortcut': { payload: { type: 'string', enum: ['gameMode', 'switchScreen', 'togglePet'] }, notes: 'One registered shortcut activation dispatches one action. The frontend owns the action effect; do not also trigger the same action from key-release.' },
+  'app-shortcuts-changed': { payload: shortcutConfig, notes: 'The complete accepted action map. The main view checks whether F5 is bound before enabling its devtools shortcut.' },
   'key-press': { payload: string, notes: 'Keyboard only. Preserve the same key string for release; literal space is " ". Repeated press is deduplicated by a Set.' },
   'key-release': { payload: string, notes: 'One matched keyboard release increments local click count. Do not emit mouse buttons on this stream.' },
   'mouse-move': { payload: object({ x: number, y: number, memberId: optional(number) }), notes: 'Global physical screen pixels. Frontend subtracts Tauri innerPosition and divides by scaleFactor.' },
@@ -93,7 +100,7 @@ nativeEventContracts['cat-settings-pet-scale-drag'] = { payload: object({ active
 nativeEventContracts['cat-settings-opacity'] = { payload: object({ opacityPercent: number }) };
 nativeEventContracts['cat-settings-pet-scale'] = { payload: object({ petScale: number }) };
 nativeEventContracts['cat-settings-locale'] = { payload: object({ locale: string }) };
-for (const name of ['about-open', 'oss-notice-open', 'tray-quit', 'tray-restart', 'tray-toggle-pet-visibility', 'tray-toggle-window-passthrough', 'update-modal-open', 'cat-auth-login-success', 'cat-auth-logout', 'cat-panel-window-closed', 'cat-panel-request-login', 'cat-persist-clicks-before-exit', 'cat-persist-clicks-done', 'cat-flush-clicks-before-logout', 'cat-flush-clicks-done', 'cat-disconnect-socket-before-exit', 'cat-disconnect-socket-done']) nativeEventContracts[name] = { payload: { type: 'undefined' } };
+for (const name of ['about-open', 'oss-notice-open', 'tray-quit', 'tray-restart', 'tray-toggle-pet-visibility', 'tray-toggle-window-passthrough', 'tray-toggle-game-mode', 'update-modal-open', 'cat-auth-login-success', 'cat-auth-logout', 'cat-panel-window-closed', 'cat-panel-request-login', 'cat-persist-clicks-before-exit', 'cat-persist-clicks-done', 'cat-flush-clicks-before-logout', 'cat-flush-clicks-done', 'cat-disconnect-socket-before-exit', 'cat-disconnect-socket-done']) nativeEventContracts[name] = { payload: { type: 'undefined' } };
 
 function children(node) {
   return Object.values(node).flatMap(value => Array.isArray(value) ? value : [value])
@@ -277,8 +284,20 @@ function readApplicationMetadata(modules) {
   });
   const settings = entry.root.bindings.get('DEFAULT_DESKTOP_CAT_SETTINGS')?.node;
   const defaultPosition = settings?.properties?.find(property => property.key?.name === 'position')?.value;
+  function objectValue(node) {
+    if (node?.type !== 'ObjectExpression') return staticValue(node, entry.root);
+    const properties = node.properties.map(property => {
+      if (property.type !== 'Property' || property.computed || property.kind !== 'init') throw new Error('Cannot statically resolve default app shortcuts');
+      const value = objectValue(property.value);
+      if (value === unknown) throw new Error('Cannot statically resolve default app shortcuts');
+      return [property.key.name ?? property.key.value, value];
+    });
+    return Object.fromEntries(properties);
+  }
+  const shortcuts = entry.root.bindings.get('DEFAULT_APP_SHORTCUTS');
   return {
     entry, appRegion, clickCacheEnvironment, routes,
+    appShortcuts: shortcuts ? objectValue(shortcuts.node) : null,
     displayName: typeof valueOf('APP_DISPLAY_NAME') === 'string' ? valueOf('APP_DISPLAY_NAME') : null,
     defaultPosition: defaultPosition ? staticValue(defaultPosition, entry.root) : null,
     installerFiles: new Set(routes.filter(route => route.name === 'installer' || route.name === 'uninstaller').flatMap(route => route.imports)),
@@ -414,12 +433,13 @@ export function inventoryAssets(assetDirectory, { version = '1.0.0' } = {}) {
       maxSafeClickCount: Number.MAX_SAFE_INTEGER,
       ...(typeof authCallbackScheme === 'string' ? { authCallbackScheme } : {}),
       defaultPosition: metadata.defaultPosition,
-      hotkeys: { switchDisplay: ['F8', 'f8'], toggleVisibility: ['F9', 'f9'], secondaryAction: ['F4', 'f4'], devtools: ['F5', 'f5'] },
+      ...(metadata.appShortcuts ? { appShortcuts: metadata.appShortcuts, shortcutModifiers: { alt: 1, control: 2, shift: 4, meta: 8 }, devtoolsHotkeys: ['F5', 'f5'] }
+        : { hotkeys: { switchDisplay: ['F8', 'f8'], toggleVisibility: ['F9', 'f9'], secondaryAction: ['F4', 'f4'], devtools: ['F5', 'f5'] } }),
     },
     bootContract: {
       entry: `index.html -> ${metadata.entry.file} router / -> ${mainModule} onMounted`,
       routes: Object.fromEntries(metadata.routes.map(route => [route.name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()), route.path])),
-      requiredResponses: ['is_internal_testing_build', 'is_devtools_hotkeys_build', 'get_main_desktop_safe_area', 'get_main_taskbar_insets', 'load_key_press_count', 'load_cumulative_click_count'],
+      requiredResponses: ['is_internal_testing_build', 'is_devtools_hotkeys_build', 'get_main_desktop_safe_area', 'get_main_taskbar_insets', 'load_key_press_count', 'load_cumulative_click_count', ...(commandMap.has('get_app_shortcuts') ? ['get_app_shortcuts'] : [])],
       requiredWindowMutations: ['set_main_force_cursor_ignore', 'set_main_window_fullscreen_shell', 'apply_main_window_position', 'set_main_window_content_bounds', 'set_main_hit_region'],
       inputRegistration: ['mouse-move', 'mouse-button', 'global-clap-mouse', 'key-press', 'key-release', ...(eventMap.has('gamepad-button-press') ? ['gamepad-button-press'] : [])],
       auth: 'Frontend preserves official HTTP/Socket.IO account, inventory, rewards, and room protocols. Native backend owns window/event transport, not account emulation.',

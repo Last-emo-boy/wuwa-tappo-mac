@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const script = await readFile(new URL('../scripts/mac-platform.js', import.meta.url), 'utf8');
 const drain = () => new Promise(resolve => setImmediate(resolve));
 
-function webview({ profile, readyState = 'loading', label = 'main', rejectLog = false, throwLog = false, inputStatus = false, pendingInput = false, resumeStatus, rejectStatus = false } = {}) {
+function webview({ profile, readyState = 'loading', label = 'main', rejectLog = false, throwLog = false, inputStatus = false, pendingInput = false, resumeStatus, rejectStatus = false, shortcutStatus = { error: null }, rejectShortcutStatus = false, pendingShortcut = false } = {}) {
   const events = new Map();
   const documentEvents = new Map();
   const calls = [];
@@ -15,6 +15,7 @@ function webview({ profile, readyState = 'loading', label = 'main', rejectLog = 
   let currentStatus = typeof inputStatus === 'boolean' ? { granted: inputStatus, running: inputStatus, error: null } : inputStatus;
   let interval;
   let inputListener;
+  let shortcutListener;
   function invoke(command, payload) {
     calls.push({ command, payload });
     if (command === 'write_app_log') {
@@ -22,6 +23,7 @@ function webview({ profile, readyState = 'loading', label = 'main', rejectLog = 
       return rejectLog ? Promise.reject(new Error('synthetic-log-secret')) : Promise.resolve();
     }
     if (command === 'resume_input_monitor') return Promise.resolve(resumeStatus ?? currentStatus);
+    if (command === 'get_shortcut_status') return rejectShortcutStatus ? Promise.reject(new Error('unavailable')) : Promise.resolve(shortcutStatus);
     assert.equal(command, 'get_input_status');
     return rejectStatus ? Promise.reject(new Error('unavailable')) : Promise.resolve(currentStatus);
   }
@@ -35,6 +37,10 @@ function webview({ profile, readyState = 'loading', label = 'main', rejectLog = 
       core: { invoke },
       event: {
         listen(type, callback) {
+          if (type === 'mac-shortcut-status') {
+            shortcutListener = callback;
+            return pendingShortcut ? new Promise(() => {}) : Promise.resolve();
+          }
           assert.equal(type, 'mac-input-status');
           inputListener = callback;
           return pendingInput ? new Promise(() => {}) : Promise.resolve();
@@ -54,6 +60,7 @@ function webview({ profile, readyState = 'loading', label = 'main', rejectLog = 
     calls, errors, events, documentEvents,
     emit(type, event) { events.get(type)(event); },
     updateInput(running) { inputListener({ payload: { running } }); },
+    updateShortcuts(value) { shortcutListener({ payload: value }); },
     setStatus(value) { currentStatus = value; },
     tick() { return interval?.(); },
     warning() { return nodes.get('wuwatappo-input-status')?.textContent; },
@@ -204,4 +211,32 @@ test('input permission guidance names the current GLOBAL application', async () 
   await drain();
   assert.match(view.warning(), /Wuwa Tappo Global Mac/);
   assert.doesNotMatch(view.warning(), /CN Mac/);
+});
+
+test('shortcut conflicts stay visible independently of input permission and clear after recovery', async () => {
+  const view = webview({ readyState: 'complete', shortcutStatus: { error: 'occupied' } });
+  await drain();
+  assert.match(view.warning(), /输入监控/);
+  assert.match(view.warning(), /全局快捷键被系统或其他应用占用/);
+  assert.match(view.warning(), /同时运行两服/);
+  view.updateInput(true);
+  assert.doesNotMatch(view.warning(), /输入监控/);
+  assert.match(view.warning(), /快捷键/);
+  view.updateShortcuts({ error: null });
+  assert.equal(view.warning(), undefined);
+});
+
+test('shortcut initialization cannot block input monitoring and unreadable status remains explicit', async () => {
+  const pending = webview({ readyState: 'complete', inputStatus: true, pendingShortcut: true });
+  await drain();
+  assert.equal(pending.calls.some(call => call.command === 'get_input_status'), true);
+  const unreadable = webview({ readyState: 'complete', inputStatus: true, rejectShortcutStatus: true });
+  await drain();
+  assert.match(unreadable.warning(), /无法读取全局快捷键状态/);
+  unreadable.updateShortcuts({ error: 'unavailable' });
+  assert.match(unreadable.warning(), /全局快捷键暂不可用/);
+  const panel = webview({ readyState: 'complete', label: 'panel' });
+  await drain();
+  assert.equal(panel.calls.some(call => call.command === 'get_shortcut_status'), false);
+  assert.equal(panel.warning(), undefined);
 });

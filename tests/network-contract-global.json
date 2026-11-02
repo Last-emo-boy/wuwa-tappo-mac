@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "application": "WuwaTappo-global 1.0.2",
+  "application": "WuwaTappo-global 1.0.3",
   "region": "GLOBAL",
   "source": {
-    "main": "index-CG0a5NfR.js",
-    "room": "index-BkT3Q3xR.js",
-    "login": "index-CG0a5NfR.js",
-    "loginView": "login-oyLMMpXd.js"
+    "main": "index-DnHotUmh.js",
+    "room": "index-CxsrU06E.js",
+    "login": "index-DnHotUmh.js",
+    "loginView": "login-BEc7g7o3.js"
   },
   "http": {
     "baseUrl": "https://api-wutheringwaves-wuwatappo.kurogames-global.com",
@@ -276,7 +276,12 @@
       "rc",
       "ru",
       "fd"
-    ]
+    ],
+    "querySemantics": {
+      "token": "current business token when present",
+      "rm": "room identifier when present; otherwise String(userInfo.id), requiring a finite positive numeric user ID",
+      "missingUserId": "reject before connection"
+    }
   },
   "assets": {
     "publicHost": "https://wutheringwaves-wuwatappo.kurogames-global.com",

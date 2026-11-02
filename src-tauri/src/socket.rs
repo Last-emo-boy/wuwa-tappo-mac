@@ -453,6 +453,23 @@ mod tests {
     }
 
     #[test]
+    fn official_handshake_room_and_user_id_queries_are_preserved() {
+        for region in [Region::Cn, Region::Global] {
+            for room in ["42", "ABCD1234"] {
+                let endpoint = format!(
+                    "wss://{}/socket.io/?EIO=3&transport=websocket&rm={room}",
+                    region.api_host()
+                );
+                let url = validate_destination(region, &endpoint).unwrap();
+                let request = request_for(&url, &[]).unwrap();
+                assert_eq!(request.uri().to_string(), endpoint);
+                assert!(!request.headers().contains_key(header::ORIGIN));
+                assert!(!request.headers().contains_key(header::COOKIE));
+            }
+        }
+    }
+
+    #[test]
     fn only_local_consumers_can_use_the_bridge() {
         for label in ["main", "panel", "login"] {
             assert!(

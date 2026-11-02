@@ -1,4 +1,4 @@
-export function patchSessionBarriers(source) {
+export function patchSessionBarriers(source, expectedWrappers = 2) {
   let changes = 0;
   const patched = source.replace(
     /async function (invoke(?:\$\d+)?)\(e,t=\{\},n\)\{return window\.__TAURI_INTERNALS__\.invoke\(e,t,n\)\}/g,
@@ -7,7 +7,7 @@ export function patchSessionBarriers(source) {
       return `async function ${name}(e,t={},n){if(e==="open_login_window"||e==="open_panel_window"||e==="plugin:event|emit"&&(t.event==="cat-auth-login-success"||t.event==="cat-auth-logout"))await window.__WUWATAPPO_SESSION__?.flush();return window.__TAURI_INTERNALS__.invoke(e,t,n)}`;
     },
   );
-  if (changes !== 2) throw new Error(`Expected 2 original Tauri invoke wrappers, found ${changes}. Reconcile the app version before building.`);
+  if (changes !== expectedWrappers) throw new Error(`Expected ${expectedWrappers} original Tauri invoke wrappers, found ${changes}. Reconcile the app version before building.`);
   return patched;
 }
 
@@ -52,10 +52,16 @@ export function patchDomesticLoginReload(source) {
 }
 
 export function patchMacUpdateFeedback(source) {
-  const pattern = /if\(([$\w]+)\.kind==="error"\)\{([^{}]*?)([$\w]+)\.value=n\("setting_version_check_failed"\);return\}/g;
+  const pattern = /if\(([$\w]+)\.kind==="error"\)\{([^{}]*?)([$\w]+)\.value=([$\w]+)\("setting_version_check_failed"\);return\}/g;
   const matches = [...source.matchAll(pattern)];
   if (matches.length !== 1) throw new Error('Original update feedback changed; reconcile the Mac update message before building.');
-  return source.replace(pattern, (_, error, before, target) => `if(${error}.kind==="error"){${before}${target}.value=${error}.message||n("setting_version_check_failed");return}`);
+  return source.replace(pattern, (_, error, before, target, translate) => `if(${error}.kind==="error"){${before}${target}.value=${error}.message||${translate}("setting_version_check_failed");return}`);
+}
+
+export function patchMacShortcutLabels(source) {
+  const original = 'function formatModifiers(e){return[[2,"Ctrl"],[1,"Alt"],[4,"Shift"],[8,"Win"]].filter(([t])=>e&Number(t)).map(([,t])=>String(t))}';
+  if (source.split(original).length !== 2) throw new Error('Original shortcut modifier labels changed; reconcile macOS shortcut display before building.');
+  return source.replace(original, original.replace('[1,"Alt"]', '[1,"Option"]').replace('[8,"Win"]', '[8,"Cmd"]'));
 }
 
 export function patchMacUpdater(source) {

@@ -116,6 +116,16 @@ export function findEmbeddedNsis(bytes) {
   throw new Error('No structurally valid embedded NSIS installer found.');
 }
 
+export function selectApplicationPayload(listing) {
+  const candidates = [...listing.matchAll(/^Path = ([^\r\n]+)\r?$/gm)]
+    .map(match => match[1])
+    .filter(name => name === 'WuwaTappo.exe' || /^\$_\d+_$/.test(name));
+  if (candidates.length !== 1) {
+    throw new Error(`Expected exactly one Wuwa Tappo NSIS application payload, found ${JSON.stringify(candidates)}.`);
+  }
+  return candidates[0];
+}
+
 export async function extractAssets(bytes, output) {
   const entries = findAssetEntries(bytes);
   for (const entry of entries) {
@@ -179,12 +189,20 @@ async function main() {
     try {
       const filename = path.join(temporary, 'setup.exe');
       await writeFile(filename, installer.subarray(bounds.start, bounds.end));
-      const result = spawnSync(options.sevenzip, ['e', '-y', '-bd', `-o${temporary}`, filename, 'WuwaTappo.exe'], {
+      const listing = spawnSync(options.sevenzip, ['l', '-slt', '-ba', filename], {
+        encoding: 'utf8', maxBuffer: 1024 * 1024,
+      });
+      if (listing.error) throw listing.error;
+      if (listing.status !== 0) throw new Error(`7-Zip listing failed: ${listing.stderr || listing.stdout}`);
+      // NSIS 1.0.3 uses a variable-backed filename, shown by 7-Zip as $_21_.
+      // The selected file must still pass the 64-bit PE and Tauri asset checks below.
+      const payload = selectApplicationPayload(listing.stdout);
+      const result = spawnSync(options.sevenzip, ['e', '-y', '-bd', `-o${temporary}`, filename, payload], {
         encoding: 'utf8', maxBuffer: 1024 * 1024,
       });
       if (result.error) throw result.error;
       if (result.status !== 0) throw new Error(`7-Zip extraction failed: ${result.stderr || result.stdout}`);
-      bytes = await readFile(path.join(temporary, 'WuwaTappo.exe'));
+      bytes = await readFile(path.join(temporary, payload));
     } finally { await rm(temporary, { recursive: true, force: true }); }
   }
   const entries = findAssetEntries(bytes);

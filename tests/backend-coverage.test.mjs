@@ -8,7 +8,7 @@ const root = new URL('../', import.meta.url);
 import { contract } from './frontend-context.mjs';
 
 test('every application runtime command has a macOS handler', async () => {
-  const modules = ['lib', 'windows', 'storage', 'input', 'system'];
+  const modules = ['lib', 'windows', 'storage', 'input', 'system', 'shortcuts'];
   const implementation = (await Promise.all(modules.map(name => readFile(new URL(`src-tauri/src/${name}.rs`, root), 'utf8')))).join('\n');
   const missing = contract.commands.filter(c => c.kind === 'application' && c.scopes.includes('application-runtime'))
     .filter(c => !implementation.includes(`"${c.name}"`) && !implementation.includes(`fn ${c.name}(`))
@@ -29,6 +29,10 @@ test('session flush barriers cover both SDK invoke wrappers without changing nat
 
 test('unknown upstream wrapper versions fail the build instead of dropping the barrier', () => {
   assert.throws(() => patchSessionBarriers('async function invoke(){}'), /Expected 2/);
+  const single = 'async function invoke(e,t={},n){return window.__TAURI_INTERNALS__.invoke(e,t,n)}';
+  assert.throws(() => patchSessionBarriers(single), /Expected 2/);
+  assert.equal((patchSessionBarriers(single, 1).match(/SESSION__\?\.flush\(\)/g) ?? []).length, 1);
+  assert.throws(() => patchSessionBarriers(single + single, 1), /Expected 1/);
 });
 
 test('first login waits for the Vue modal listener rather than a page-load timer', () => {
@@ -49,6 +53,7 @@ test('CN SDK script and stylesheet use HTTPS from the local Tauri origin', () =>
 
 test('Mac update feedback preserves the native platform explanation', () => {
   assert.equal(patchMacUpdateFeedback('if(h.kind==="error"){ht("check_failed"),ge.value=n("setting_version_check_failed");return}'), 'if(h.kind==="error"){ht("check_failed"),ge.value=h.message||n("setting_version_check_failed");return}');
+  assert.equal(patchMacUpdateFeedback('if(_.kind==="error"){wt("check_failed"),le.value=t("setting_version_check_failed");return}'), 'if(_.kind==="error"){wt("check_failed"),le.value=_.message||t("setting_version_check_failed");return}');
   assert.throws(() => patchMacUpdateFeedback(''), /update feedback changed/);
 });
 

@@ -29,7 +29,7 @@ function setup({ loaded = true, root = { childNodes: [], firstChild: null } } = 
   const context = vm.createContext({
     document, console,
     window: { setTimeout() { return 1; }, clearTimeout() {} },
-    E: null, S: null, b: null, P: null, x: 0, u: 'ready', te: null, W: 0, We: 8000,
+    E: null, S: null, b: null, R: null, x: 0, u: 'ready', te: null, W: 0, We: 8000,
     $: () => loaded, re: () => actions.push('existing-sdk-initialized'),
     tn: () => oldScript.src, l() {}, c() {},
   });

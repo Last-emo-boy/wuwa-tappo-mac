@@ -1,6 +1,6 @@
 {
   "productName": "Wuwa Tappo Global Mac",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "identifier": "dev.w33d.wuwatappo.global.mac",
   "build": {
     "frontendDist": "../build/frontend-global"

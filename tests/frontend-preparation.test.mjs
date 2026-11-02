@@ -61,7 +61,7 @@ test('prepared resources preserve the selected region and contain its macOS adap
   const preparedMain = await readFile(path.join(root, profile.preparedDir, 'assets', mainSource.name), 'utf8');
   parse(preparedMain, { sourceType: 'module', ecmaVersion: 'latest' });
   assert.ok(preparedMain.includes(`const APP_REGION="${profile.region}"`));
-  assert.equal((preparedMain.match(/SESSION__\?\.flush\(\)/g) ?? []).length, 2);
+  assert.equal((preparedMain.match(/SESSION__\?\.flush\(\)/g) ?? []).length, profile.region === 'CN' ? 1 : 2);
   const about = findSource(source => /t=[$\w]+\(\(\)=>k\("about_content"\)/.test(source));
   const preparedAbout = await readFile(path.join(root, profile.preparedDir, 'assets', about.name), 'utf8');
   parse(preparedAbout, { sourceType: 'module', ecmaVersion: 'latest' });
