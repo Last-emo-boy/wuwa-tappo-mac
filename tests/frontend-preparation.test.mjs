@@ -12,17 +12,31 @@ const current = 'try{const t=await getCurrent();t?.length&&handleRawUrls(t)}catc
 const listener = 'try{unlisten=await onOpenUrl(t=>{handleRawUrls(t)})}catch(t){throw console.warn("[overseas-auth] onOpenUrl failed:",t),bound=!1,t}';
 const fixture = `${originalBridge}async function bindOverseasAuthDeepLink(e){if(successHandler=e.onSuccess,errorHandler=e.onError??null,bound)return()=>{};bound=!0;${current}${listener}return()=>{unlisten?.(),unlisten=null,bound=!1,successHandler=null,errorHandler=null}}`;
 
+const domesticLoaderPattern = /async function [$\w]+\(e=!1\)\{if\(([$\w]+)\)return \1;if\(!e&&[$\w]+\(\)\)/;
+
+function domesticLoaderDeclaration(value) {
+  const node = parse(value, { sourceType: 'module', ecmaVersion: 'latest' }).body
+    .find(item => item.type === 'FunctionDeclaration' && domesticLoaderPattern.test(value.slice(item.start, item.end)));
+  assert.ok(node, 'Official CN SDK loader declaration must remain available');
+  return value.slice(node.start, node.end);
+}
+
 test('login regression fixtures preserve the selected official loader or state filter', async () => {
   const domestic = profile.region === 'CN';
-  const name = domestic ? 'we' : 'handleRawUrls';
-  const source = findSource(value => value.includes(`async function ${name}(`)).source;
+  const source = domestic
+    ? findSource(value => domesticLoaderPattern.test(value)).source
+    : findSource(value => value.includes('async function handleRawUrls(')).source;
   const fixture = await readFile(new URL(domestic ? './fixtures/domestic-sdk-loader.js' : './fixtures/global-oauth-handler.js', import.meta.url), 'utf8');
-  function declaration(value) {
-    const node = parse(value, { sourceType: 'module', ecmaVersion: 'latest' }).body
-      .find(item => item.type === 'FunctionDeclaration' && item.id.name === name);
-    assert.ok(node, `Official ${name} declaration must remain available`);
-    return value.slice(node.start, node.end);
+  if (domestic) {
+    assert.equal(domesticLoaderDeclaration(source), fixture.trimEnd().split('\n').slice(1).join('\n'));
+    return;
   }
+  const declaration = (value) => {
+    const node = parse(value, { sourceType: 'module', ecmaVersion: 'latest' }).body
+      .find(item => item.type === 'FunctionDeclaration' && item.id.name === 'handleRawUrls');
+    assert.ok(node, 'Official handleRawUrls declaration must remain available');
+    return value.slice(node.start, node.end);
+  };
   assert.equal(declaration(source), declaration(fixture));
 });
 
@@ -75,7 +89,7 @@ test('prepared resources preserve the selected region and contain its macOS adap
     assert.ok(preparedMain.indexOf(listener) < preparedMain.indexOf(current));
   } else {
     assert.ok(preparedMain.includes('isdkSrc="https://pro-cdn-sdk.kurogame.com/pro/web-sdk/1.x/kr-sdk.js"'));
-    const login = findSource(source => source.includes('async function we(e=!1)'));
+    const login = findSource(source => domesticLoaderPattern.test(source));
     const preparedLogin = await readFile(path.join(root, profile.preparedDir, 'assets', login.name), 'utf8');
     assert.ok(preparedLogin.includes('document.getElementById("KrSDK")?.remove()'));
     parse(preparedLogin, { sourceType: 'module', ecmaVersion: 'latest' });

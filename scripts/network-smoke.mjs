@@ -93,8 +93,8 @@ export async function verifySourceContract(assetDirectory = path.join(root, prof
       assert.ok(login.includes(value), `Missing domestic login marker: ${value}`);
     }
     assert.ok(!login.includes('plugin:deep-link|'), 'Domestic login unexpectedly requires a native OAuth callback');
-    assert.ok(/\b_e\(e,1\)/.test(login), 'Domestic player query must pass is_domestic=1');
-    assert.ok(/\bse\([^;]+,"sdk",i,a,1\)/.test(login), 'Domestic SDK login must pass source=sdk and is_domestic=1');
+    assert.ok(/await [$\w]+\([$\w]+,\s*1\s*,[^)]*\)/.test(login), 'Domestic player query must pass is_domestic=1');
+    assert.ok(/,\s*"sdk",[^)]*,\s*1\s*\)/.test(login), 'Domestic SDK login must pass source=sdk and is_domestic=1');
     assert.ok(loginView.includes('handleInlandSDKLogin'), 'Login view must bind the domestic SDK callback');
     verifyDomesticSdkAssetBinding(main, loginView);
     const scriptIsHttps = main.includes(`isdkSrc="${contract.auth.sdk.scriptUrl}"`);

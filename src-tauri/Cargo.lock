@@ -5559,7 +5559,7 @@ dependencies = [
 
 [[package]]
 name = "wuwatappo-mac"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "block2",
  "futures-util",

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "application": "WuwaTappo-cn 1.0.3",
+  "application": "WuwaTappo-cn 1.0.4",
   "region": "CN",
   "source": {
-    "main": "index-CuzHFfJW.js",
-    "room": "index-pp8VWaUF.js",
-    "login": "useLogin-pKgL9g9U.js",
-    "loginView": "login-B1hThJN-.js"
+    "main": "index-CM6qA69G.js",
+    "room": "index-BFg5ADH5.js",
+    "login": "useLogin-DsKO81zl.js",
+    "loginView": "login-6yi5hIzI.js"
   },
   "http": {
     "baseUrl": "https://api-mc-wuwatappo.kurogames-global.com",

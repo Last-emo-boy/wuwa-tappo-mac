@@ -101,14 +101,15 @@ test('official Socket.IO handshake uses the room or a valid current user ID and 
   const owner = parents.get(builder);
   const userIdProvider = owner.body.find(node => node.type === 'FunctionDeclaration' && node.id.name === provider.callee.name);
   assert.ok(userIdProvider, 'User ID must come from the current room state scope');
-  const env = vm.createContext({ R: { userInfo: { id: 123 } } });
+  const storeName = /([$\w]+)\.userInfo\?\.id/.exec(source.slice(userIdProvider.start, userIdProvider.end))[1];
+  const env = vm.createContext({ [storeName]: { userInfo: { id: 123 } } });
   vm.runInContext(source.slice(userIdProvider.start, userIdProvider.end) + source.slice(builder.start, builder.end), env);
   const query = (...args) => JSON.parse(JSON.stringify(env[builder.id.name](...args)));
   assert.deepEqual(query('synthetic-token', ''), { token: 'synthetic-token', rm: '123' });
   assert.deepEqual(query('synthetic-token', 'room-456'), { token: 'synthetic-token', rm: 'room-456' });
   assert.deepEqual(query('', ''), { rm: '123' });
   for (const id of [0, -1, undefined, '123', NaN, Infinity]) {
-    env.R.userInfo = { id };
+    env[storeName].userInfo = { id };
     assert.throws(() => query('synthetic-token', ''), /requires userInfo.id/);
     assert.deepEqual(query('synthetic-token', 'room-456'), { token: 'synthetic-token', rm: 'room-456' });
   }
