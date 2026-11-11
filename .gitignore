@@ -17,3 +17,4 @@
 *.p12
 *.p8
 .DS_Store
+/.tools/
