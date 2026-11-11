@@ -35,20 +35,21 @@ export function patchDomesticSdkUrls(source) {
 }
 
 export function patchDomesticLoginReload(source) {
-  const start = 'async function we(e=!1){if(E)return E;if(!e&&$())';
-  const end = 'async function me()';
+  // Minified names drift between official releases: anchor on the reload guard shape
+  // (single `e` argument, memoized promise, existing-SDK reuse) instead of identifiers.
+  const loaderHead = /async function [$\w]+\(e=!1\)\{if\(([$\w]+)\)return \1;if\(!e&&([$\w]+)\(\)\)/.exec(source);
   const insertion = ',document.head.appendChild(t),r=window.setTimeout(';
-  const offset = source.indexOf(start);
-  const limit = source.indexOf(end, offset);
-  if (offset < 0 || limit < 0 || source.split(start).length !== 2) {
+  if (!loaderHead) {
     throw new Error('Original CN SDK reload function changed; reconcile the login reload patch before building.');
   }
-  const loader = source.slice(offset, limit);
-  if (!loader.includes('t.dataset.kuroSdkRetry="true"') || loader.split(insertion).length !== 2) {
+  if (source.split('async function ').filter(item => item.includes('kuroSdkRetry')).length !== 1
+    || !source.slice(loaderHead.index, loaderHead.index + 4096).includes('t.dataset.kuroSdkRetry="true"')
+    || source.split(insertion).length !== 2) {
     throw new Error('Original CN SDK script insertion changed; reconcile the login reload patch before building.');
   }
+  const offset = source.indexOf(insertion, loaderHead.index);
   const replacement = ',e&&([...document.scripts].filter(s=>s.src===t.src).forEach(s=>s.remove()),document.getElementById("KrSDK")?.remove())' + insertion;
-  return source.slice(0, offset) + loader.replace(insertion, replacement) + source.slice(limit);
+  return source.slice(0, offset) + replacement + source.slice(offset + insertion.length);
 }
 
 export function patchMacUpdateFeedback(source) {

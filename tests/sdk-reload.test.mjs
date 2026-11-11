@@ -2,15 +2,70 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
+import { parse } from 'acorn';
 import { patchDomesticLoginReload } from '../scripts/patch-frontend.mjs';
-import { profile, findSource } from './frontend-context.mjs';
 
-const original = profile.region === 'CN'
-  ? findSource(source => source.includes('async function we(e=!1)')).source
-  : await readFile(new URL('./fixtures/domestic-sdk-loader.js', import.meta.url), 'utf8');
+// The official CN bundle is minified, so identifiers drift between releases. Anchor on the
+// reload guard shape and run the real loader against a stubbed DOM instead of hardcoding names.
+const loaderSource = (await readFile(new URL('./fixtures/domestic-sdk-loader.js', import.meta.url), 'utf8'))
+  .split('\n').slice(1).join('\n').trimEnd();
+const patched = patchDomesticLoginReload(loaderSource);
+
+const ast = parse(patched, { sourceType: 'module', ecmaVersion: 'latest' });
+const declaration = ast.body.find(node => node.type === 'FunctionDeclaration');
+const loader = patched.slice(declaration.start, declaration.end);
+
+const nameOf = pattern => pattern.exec(loaderSource)?.[1];
+const memoName = nameOf(/\{if\(([$\w]+)\)return \1;if\(!e&&/);
+const loadedName = nameOf(/;if\(!e&&([$\w]+)\(\)\)/);
+const initName = nameOf(/try\{return ([$\w]+)\(\),!0\}/);
+const srcName = nameOf(/t\.src=([$\w]+)\(\)/);
+
+const builtins = new Set(['undefined', 'NaN', 'Infinity', 'Object', 'Array', 'Promise', 'String', 'Number',
+  'Boolean', 'Math', 'JSON', 'Date', 'RegExp', 'Error', 'TypeError', 'Symbol', 'Map', 'Set', 'WeakMap',
+  'WeakSet', 'Reflect', 'Proxy', 'Function', 'globalThis', 'console', 'document', 'window', 'setTimeout',
+  'clearTimeout', 'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'encodeURIComponent', 'decodeURIComponent',
+  'BigInt', 'Intl', 'URL', 'structuredClone', 'queueMicrotask', 'crypto', 'performance', 'fetch']);
+
+function freeIdentifiers(source) {
+  const declared = new Set();
+  const referenced = new Set();
+  const addPattern = node => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'Identifier') { declared.add(node.name); return; }
+    for (const key of ['left', 'right', 'argument', 'properties', 'params', 'elements', 'value', 'id', 'init']) {
+      const value = node[key];
+      if (Array.isArray(value)) value.forEach(addPattern);
+      else if (value && typeof value === 'object' && value.type) addPattern(value);
+    }
+  };
+  (function collect(node) {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) { node.forEach(collect); return; }
+    switch (node.type) {
+      case 'FunctionDeclaration': case 'FunctionExpression': case 'ArrowFunctionExpression':
+        if (node.id) declared.add(node.id.name);
+        node.params.forEach(addPattern);
+        break;
+      case 'VariableDeclarator': addPattern(node.id); break;
+      case 'CatchClause': if (node.param) addPattern(node.param); break;
+      case 'MemberExpression': collect(node.object); if (node.computed) collect(node.property); return;
+      case 'Property': if (node.computed) collect(node.key); collect(node.value); return;
+      case 'MethodDefinition': collect(node.value); return;
+      case 'Identifier': referenced.add(node.name); return;
+      default: break;
+    }
+    for (const [key, value] of Object.entries(node)) {
+      if (['type', 'start', 'end', 'loc', 'range'].includes(key)) continue;
+      if (Array.isArray(value)) value.forEach(collect);
+      else if (value && typeof value === 'object') collect(value);
+    }
+  })(parse(source, { sourceType: 'module', ecmaVersion: 'latest' }));
+  return [...referenced].filter(name => !declared.has(name) && !builtins.has(name));
+}
+
+const freeNames = freeIdentifiers(loaderSource);
 const renderer = await readFile(new URL('./fixtures/kuro-sdk-preact.js', import.meta.url), 'utf8');
-const patched = patchDomesticLoginReload(original);
-const loader = patched.slice(patched.indexOf('async function we(e=!1)'), patched.indexOf('async function me()'));
 
 function setup({ loaded = true, root = { childNodes: [], firstChild: null } } = {}) {
   const actions = [];
@@ -26,15 +81,15 @@ function setup({ loaded = true, root = { childNodes: [], firstChild: null } } = 
     getElementById(id) { return id === 'KrSDK' ? currentRoot : id === 'app' ? outer : null; },
     head: { appendChild(element) { actions.push('new-script-appended'); appended.push(element); } },
   };
-  const context = vm.createContext({
-    document, console,
-    window: { setTimeout() { return 1; }, clearTimeout() {} },
-    E: null, S: null, b: null, R: null, x: 0, u: 'ready', te: null, W: 0, We: 8000,
-    $: () => loaded, re: () => actions.push('existing-sdk-initialized'),
-    tn: () => oldScript.src, l() {}, c() {},
-  });
-  vm.runInContext(loader, context);
-  return { actions, outer, appended, document, context, reload: force => context.we(force) };
+  const sandbox = { document, console, window: { setTimeout() { return 1; }, clearTimeout() {} } };
+  for (const name of freeNames) sandbox[name] = () => undefined;
+  sandbox[memoName] = null;
+  sandbox[loadedName] = () => loaded;
+  sandbox[initName] = () => { actions.push('existing-sdk-initialized'); };
+  sandbox[srcName] = () => oldScript.src;
+  const context = vm.createContext(sandbox);
+  const reload = vm.runInContext(`(${loader})`, context);
+  return { actions, outer, appended, document, context, reload };
 }
 
 test('only forced reload removes the exact old SDK script and SDK root before insertion', async () => {
@@ -70,10 +125,11 @@ test('the existing in-flight guard avoids a second cleanup or script insertion',
 });
 
 test('unknown upstream loader shapes fail instead of applying a broad DOM patch', () => {
+  const insertion = ',e&&([...document.scripts].filter(s=>s.src===t.src).forEach(s=>s.remove()),document.getElementById("KrSDK")?.remove())';
   assert.throws(() => patchDomesticLoginReload(''), /reload function changed/);
-  assert.throws(() => patchDomesticLoginReload(original.replace('t.dataset.kuroSdkRetry="true"', 't.dataset.changed="true"')), /script insertion changed/);
-  assert.throws(() => patchDomesticLoginReload(original.replace(',document.head.appendChild(t),r=window.setTimeout(', ',document.head.append(t),r=window.setTimeout(')), /script insertion changed/);
-  assert.equal(patched.replace(',e&&([...document.scripts].filter(s=>s.src===t.src).forEach(s=>s.remove()),document.getElementById("KrSDK")?.remove())', ''), original);
+  assert.throws(() => patchDomesticLoginReload(loaderSource.replace('t.dataset.kuroSdkRetry="true"', 't.dataset.changed="true"')), /script insertion changed/);
+  assert.throws(() => patchDomesticLoginReload(loaderSource.replace(',document.head.appendChild(t),r=window.setTimeout(', ',document.head.append(t),r=window.setTimeout(')), /script insertion changed/);
+  assert.equal(patched.replace(insertion, ''), loaderSource);
 });
 
 test('the actual bundled Preact skips a new SDK App on a stale root but renders after forced-root cleanup', async () => {
