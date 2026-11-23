@@ -598,6 +598,59 @@ fn check_app_update(region: Region, endpoint: &str) -> Result<Value, String> {
     mac_update_status(&manifest, target, region)
 }
 
+fn run_network_diagnostics(app: &AppHandle, args: &Value) -> Result<Value, String> {
+    let run_id = args
+        .get("runId")
+        .and_then(Value::as_str)
+        .filter(|id| {
+            id.len() == 36
+                && id
+                    .bytes()
+                    .all(|byte| byte.is_ascii_hexdigit() || byte == b'-')
+        })
+        .ok_or("Invalid network diagnostic run ID")?;
+    let region = Region::from_app(app);
+    let pointer = match region {
+        Region::Cn => "latest_host.json",
+        Region::Global => "latest-global_host.json",
+    };
+    let resource_url = format!("https://{}/app/json-host/{pointer}", region.asset_host());
+    let client = reqwest::blocking::Client::builder()
+        .timeout(Duration::from_secs(5))
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .map_err(|error| error.to_string())?;
+    for (probe, url) in [
+        (
+            "api",
+            format!("https://{}/api/common/activity-config", region.api_host()),
+        ),
+        ("resources", resource_url.clone()),
+    ] {
+        let result = match client.get(url).send() {
+            Ok(response) => format!("http_status={}", response.status().as_u16()),
+            Err(error) => format!(
+                "reason_code={}",
+                if error.is_timeout() {
+                    "timeout"
+                } else {
+                    "network_error"
+                }
+            ),
+        };
+        write_message(
+            app,
+            "info",
+            &format!(
+                "[NETWORK] event=diagnostic_native_probe run_id={run_id} probe={probe} {result}"
+            ),
+        )?;
+    }
+    Ok(
+        json!({"status":"complete","resource_url":resource_url,"resource_source":"fixed_regional_host"}),
+    )
+}
+
 pub fn dispatch(app: &AppHandle, command: &str, args: &Value) -> Option<Result<Value, String>> {
     let result = match command {
         "get_track_os_info" => {
@@ -614,6 +667,7 @@ pub fn dispatch(app: &AppHandle, command: &str, args: &Value) -> Option<Result<V
                 _ => Err("write_app_log requires string level and message".into()),
             }
         }
+        "run_network_diagnostics" => run_network_diagnostics(app, args),
         "check_app_update" => match args.get("endpoint").and_then(Value::as_str) {
             Some(endpoint) => check_app_update(Region::from_app(app), endpoint),
             None => Err("check_app_update requires a manifest endpoint".into()),

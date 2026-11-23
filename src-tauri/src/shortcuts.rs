@@ -19,7 +19,7 @@ pub const COMMANDS: &[&str] = &[
     "get_shortcut_status",
 ];
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 pub struct Binding {
     modifiers: u8,
@@ -96,6 +96,12 @@ pub struct Config {
     game_mode: Binding,
     switch_screen: Binding,
     toggle_pet: Binding,
+    #[serde(default)]
+    always_on_top: Binding,
+    #[serde(default)]
+    auto_game_mode_on_fullscreen: Binding,
+    #[serde(default)]
+    disable_pointer_monitoring: Binding,
 }
 
 impl Default for Config {
@@ -113,6 +119,9 @@ impl Default for Config {
                 modifiers: 0,
                 key: 120,
             },
+            always_on_top: Binding::default(),
+            auto_game_mode_on_fullscreen: Binding::default(),
+            disable_pointer_monitoring: Binding::default(),
         }
     }
 }
@@ -124,6 +133,9 @@ impl Config {
             ("gameMode", self.game_mode),
             ("switchScreen", self.switch_screen),
             ("togglePet", self.toggle_pet),
+            ("alwaysOnTop", self.always_on_top),
+            ("autoGameModeOnFullscreen", self.auto_game_mode_on_fullscreen),
+            ("disablePointerMonitoring", self.disable_pointer_monitoring),
         ] {
             if let Some(shortcut) = binding.shortcut()? {
                 if shortcuts
@@ -361,6 +373,11 @@ pub struct ShortcutStore {
 }
 
 impl ShortcutStore {
+    pub fn reset_for_restart(&self) -> Result<(), String> {
+        save_config(&self.path, &Config::default())
+    }
+
+
     pub fn open(path: PathBuf) -> Result<Self, String> {
         Ok(Self {
             runtime: Mutex::new(Runtime {
@@ -581,7 +598,10 @@ mod tests {
             serde_json::json!({
                 "gameMode":{"modifiers":0,"key":118},
                 "switchScreen":{"modifiers":0,"key":119},
-                "togglePet":{"modifiers":0,"key":120}
+                "togglePet":{"modifiers":0,"key":120},
+                "alwaysOnTop":{"modifiers":0,"key":0},
+                "autoGameModeOnFullscreen":{"modifiers":0,"key":0},
+                "disablePointerMonitoring":{"modifiers":0,"key":0}
             })
         );
         for (bit, modifier) in [
@@ -679,6 +699,31 @@ mod tests {
         .shortcut()
         .unwrap()
         .is_some());
+    }
+
+    #[test]
+    fn legacy_shortcuts_migrate_and_new_actions_can_be_bound() {
+        let mut config: Config = serde_json::from_value(serde_json::json!({
+            "gameMode": {"modifiers": 8, "key": 71},
+            "switchScreen": {"modifiers": 0, "key": 119},
+            "togglePet": {"modifiers": 0, "key": 120}
+        }))
+        .unwrap();
+        assert_eq!(config.game_mode.key, 71);
+        assert_eq!(config.always_on_top, Binding::default());
+        assert_eq!(config.auto_game_mode_on_fullscreen, Binding::default());
+        assert_eq!(config.disable_pointer_monitoring, Binding::default());
+        config.disable_pointer_monitoring = Binding {
+            modifiers: 8,
+            key: 80,
+        };
+        assert!(config
+            .shortcuts()
+            .unwrap()
+            .values()
+            .any(|(action, _)| *action == "disablePointerMonitoring"));
+        config.always_on_top = config.disable_pointer_monitoring;
+        assert_eq!(config.shortcuts().unwrap_err(), "duplicate");
     }
 
     #[test]

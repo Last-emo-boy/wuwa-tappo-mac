@@ -4,7 +4,7 @@ export function patchSessionBarriers(source, expectedWrappers = 2) {
     /async function (invoke(?:\$\d+)?)\(e,t=\{\},n\)\{return window\.__TAURI_INTERNALS__\.invoke\(e,t,n\)\}/g,
     (_, name) => {
       changes += 1;
-      return `async function ${name}(e,t={},n){if(e==="open_login_window"||e==="open_panel_window"||e==="plugin:event|emit"&&(t.event==="cat-auth-login-success"||t.event==="cat-auth-logout"))await window.__WUWATAPPO_SESSION__?.flush();return window.__TAURI_INTERNALS__.invoke(e,t,n)}`;
+      return `async function ${name}(e,t={},n){if(e==="open_login_window"||e==="open_panel_window"||e==="reset_local_data"||e==="plugin:event|emit"&&(t.event==="cat-auth-login-success"||t.event==="cat-auth-logout"))await window.__WUWATAPPO_SESSION__?.flush();return window.__TAURI_INTERNALS__.invoke(e,t,n)}`;
     },
   );
   if (changes !== expectedWrappers) throw new Error(`Expected ${expectedWrappers} original Tauri invoke wrappers, found ${changes}. Reconcile the app version before building.`);
@@ -34,21 +34,30 @@ export function patchDomesticSdkUrls(source) {
   return patched;
 }
 
-export function patchDomesticLoginReload(source) {
-  const start = 'async function we(e=!1){if(E)return E;if(!e&&$())';
-  const end = 'async function me()';
-  const insertion = ',document.head.appendChild(t),r=window.setTimeout(';
-  const offset = source.indexOf(start);
-  const limit = source.indexOf(end, offset);
-  if (offset < 0 || limit < 0 || source.split(start).length !== 2) {
+export function domesticLoginLoader(source) {
+  const tree = parse(source, { sourceType: 'module', ecmaVersion: 'latest' });
+  const loaders = tree.body.filter(node => node.type === 'FunctionDeclaration' &&
+    /\.dataset\.kuroSdkRetry="true"/.test(source.slice(node.start, node.end)));
+  const loader = loaders[0];
+  const force = loader?.params[0];
+  if (loaders.length !== 1 || !loader.async || loader.params.length !== 1 ||
+      force?.type !== 'AssignmentPattern' || force.left.type !== 'Identifier' ||
+      source.slice(force.right.start, force.right.end) !== '!1') {
     throw new Error('Original CN SDK reload function changed; reconcile the login reload patch before building.');
   }
-  const loader = source.slice(offset, limit);
-  if (!loader.includes('t.dataset.kuroSdkRetry="true"') || loader.split(insertion).length !== 2) {
+  return loader;
+}
+
+export function patchDomesticLoginReload(source) {
+  const loader = domesticLoginLoader(source);
+  const body = source.slice(loader.start, loader.end);
+  const insertions = [...body.matchAll(/([$\w]+)\.dataset\.kuroSdkRetry="true"|,document\.head\.appendChild\(([$\w]+)\),[$\w]+=window\.setTimeout\(/g)];
+  if (insertions.length !== 2 || !insertions[0][1] || insertions[0][1] !== insertions[1][2]) {
     throw new Error('Original CN SDK script insertion changed; reconcile the login reload patch before building.');
   }
-  const replacement = ',e&&([...document.scripts].filter(s=>s.src===t.src).forEach(s=>s.remove()),document.getElementById("KrSDK")?.remove())' + insertion;
-  return source.slice(0, offset) + loader.replace(insertion, replacement) + source.slice(limit);
+  const script = insertions[1][2], offset = loader.start + insertions[1].index;
+  const cleanup = `,${loader.params[0].left.name}&&([...document.scripts].filter(__macScript=>__macScript.src===${script}.src).forEach(__macScript=>__macScript.remove()),document.getElementById("KrSDK")?.remove())`;
+  return source.slice(0, offset) + cleanup + source.slice(offset);
 }
 
 export function patchMacUpdateFeedback(source) {
@@ -67,12 +76,11 @@ export function patchMacShortcutLabels(source) {
 export function patchMacUpdater(source) {
   const resolver = 'async function resolveUpdaterLatestJsonUrl(){const e=resolveUpdaterLatestHostJsonUrl();if(!e)return null;';
   const recovery = 'async function resolveUpdaterLatestJsonUrl(){let e=resolveUpdaterLatestHostJsonUrl();if(!e){const config=unwrapApiData(await activityInfo());const host=typeof config?.assets_host==="string"?config.assets_host.trim():"";if(!host||host===LOCAL_ROLE_ASSETS_HOST)throw new Error("官方配置缺少更新资源地址");setUpdaterAssetsHost(host,{triggerSilentCheck:!1});e=resolveUpdaterLatestHostJsonUrl()}';
-  const failure = 'if(logDiagnostic("UPDATE","check_failed",{stage:"check",reason_code:diagnosticErrorCode(t),fallback:e?.interactive?"report_error":"treat_as_latest"},"warn"),e?.interactive)return{kind:"error",message:n};try{const s=await getVersion();return console.warn("[updater] check skipped (treat as latest)",t),{kind:"none",currentVersion:s}}catch{return{kind:"error",message:n}}';
-  const report = 'return logDiagnostic("UPDATE","check_failed",{stage:"check",reason_code:diagnosticErrorCode(t),fallback:"report_error"},"warn"),{kind:"error",message:n}';
-  for (const original of [resolver, failure]) {
-    if (source.split(original).length !== 2) throw new Error('Original updater flow changed; reconcile the Mac update path before building.');
+  const failure = /if\((logDiagnostic\("UPDATE","check_failed",\{[^{}]*?fallback:)([$\w]+)\?\.interactive\?"report_error":"treat_as_latest"(\},"warn"\)),\2\?\.interactive\)return(\{kind:"error",message:[$\w]+\});try\{const ([$\w]+)=await getVersion\(\);return console\.warn\("\[updater\] check skipped \(treat as latest\)",[$\w]+\),\{kind:"none",currentVersion:\5\}\}catch\{return\4\}/g;
+  if (source.split(resolver).length !== 2 || [...source.matchAll(failure)].length !== 1) {
+    throw new Error('Original updater flow changed; reconcile the Mac update path before building.');
   }
-  return source.replace(resolver, recovery).replace(failure, report);
+  return source.replace(resolver, recovery).replace(failure, 'return $1"report_error"$3,$4');
 }
 
 export function patchMacAbout(source, region = 'CN') {

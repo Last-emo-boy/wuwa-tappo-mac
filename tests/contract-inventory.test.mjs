@@ -11,10 +11,10 @@ import { contract, profile, root, assetDirectory } from './frontend-context.mjs'
 const runtimeCommands = contract.commands.filter(item => item.kind === 'application' && item.scopes.includes('application-runtime'));
 
 test('selected region runtime and Windows installer have separate exhaustive inventories', () => {
-  assert.equal(runtimeCommands.length, 53);
+  assert.equal(runtimeCommands.length, 57);
   assert.equal(contract.commands.filter(item => item.kind === 'application' && item.scopes.includes('windows-installer')).length, profile.id === 'cn' ? 9 : 11);
   assert.equal(contract.commands.filter(item => item.kind === 'plugin').length, profile.id === 'cn' ? 116 : 120);
-  assert.equal(contract.events.length, profile.id === 'cn' ? 63 : 64);
+  assert.equal(contract.events.length, profile.id === 'cn' ? 68 : 69);
   assert.equal(contract.sourceApplication.region, profile.region);
   assert.equal(contract.sourceApplication.version, JSON.parse(fs.readFileSync(path.join(root, profile.upstreamLock), 'utf8')).version);
   assert.equal(Object.hasOwn(contract.runtimeConstants, 'authCallbackScheme'), profile.id === 'global');

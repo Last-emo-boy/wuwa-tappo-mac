@@ -574,6 +574,7 @@ enum MouseTarget {
 
 #[derive(Default)]
 struct MouseRouting {
+    main_hover: bool,
     pressed: BTreeMap<&'static str, MouseTarget>,
 }
 
@@ -610,6 +611,7 @@ enum RoutedInput {
         pressed: bool,
     },
     Move(MousePosition),
+    Leave,
     Button {
         position: MousePosition,
         button: MouseButton,
@@ -627,8 +629,9 @@ fn route_event(
             let point = physical_mouse_point(point, state);
             let over_auxiliary = over_auxiliary_window(point, state)?;
             if !routing.movement(over_auxiliary) {
-                return Ok(None);
+                return Ok(std::mem::take(&mut routing.main_hover).then_some(RoutedInput::Leave));
             }
+            routing.main_hover = true;
             Ok(Some(RoutedInput::Move(resolve_mouse_position(
                 point, state,
             )?)))
@@ -651,6 +654,7 @@ fn route_event(
                 return Ok(None);
             }
             let position = resolve_mouse_position(point, state)?;
+            routing.main_hover = true;
             Ok(Some(RoutedInput::Button {
                 position,
                 button: MouseButton {
@@ -684,6 +688,7 @@ fn dispatch_events(
                 app.emit(if pressed { "key-press" } else { "key-release" }, key)
             }
             RoutedInput::Move(position) => app.emit("mouse-move", position),
+            RoutedInput::Leave => app.emit("mouse-leave", ()),
             RoutedInput::Button { position, button } => {
                 // Keep global cursor state current before the main-owned button event.
                 app.emit("mouse-move", position)
@@ -1133,13 +1138,13 @@ mod tests {
             })
         ));
         assert!(routing.pressed.is_empty());
-        assert!(route_event(
+        let mut over_panel = || route_event(
             NativeInput::Move(Point { x: 150.0, y: 50.0 }),
             &mut routing,
-            &state
-        )
-        .unwrap()
-        .is_none());
+            &state,
+        ).unwrap();
+        assert!(matches!(over_panel(), Some(RoutedInput::Leave)));
+        assert!(over_panel().is_none());
     }
 
     #[test]

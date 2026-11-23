@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "application": "WuwaTappo-cn 1.0.3",
+  "application": "WuwaTappo-cn 1.0.5",
   "region": "CN",
   "source": {
-    "main": "index-CuzHFfJW.js",
-    "room": "index-pp8VWaUF.js",
-    "login": "useLogin-pKgL9g9U.js",
-    "loginView": "login-B1hThJN-.js"
+    "main": "index-BelNnexT.js",
+    "room": "index-BGIVWra7.js",
+    "login": "useLogin-Czal3z48.js",
+    "loginView": "login-D7Mrat3T.js"
   },
   "http": {
     "baseUrl": "https://api-mc-wuwatappo.kurogames-global.com",
@@ -27,7 +27,7 @@
       {"method": "GET", "path": "/api/frontend/user/me", "parameters": []},
       {"method": "POST", "path": "/api/auth/uid-send-code", "parameters": ["playerId"]},
       {"method": "POST", "path": "/api/auth/uid-login", "parameters": ["playerId", "code"]},
-      {"method": "POST", "path": "/api/auth/player/query", "parameters": ["cuid", "is_domestic"]},
+      {"method": "POST", "path": "/api/auth/player/query", "parameters": ["cuid", "is_domestic", "accessToken", "cname"]},
       {"method": "GET", "path": "/api/frontend/user/renew-token", "parameters": []},
       {"method": "GET", "path": "/api/common/activity-config", "parameters": []},
       {"method": "GET", "path": "/api/common/atlas", "parameters": []},
@@ -41,6 +41,8 @@
       {"method": "POST", "path": "/api/frontend/redeems/use", "parameters": ["code"]},
       {"method": "POST", "path": "/api/frontend/rooms", "parameters": []},
       {"method": "POST", "path": "/api/frontend/rooms/join", "parameters": ["room_no"]},
+      {"method": "POST", "path": "/api/frontend/rooms/random-join", "parameters": []},
+      {"method": "POST", "path": "/api/frontend/rooms/public", "parameters": ["room_no", "is_public"]},
       {"method": "POST", "path": "/api/frontend/assets/favorites", "parameters": ["asset_id"]},
       {"method": "POST", "path": "/api/frontend/assets/favorites/cancel", "parameters": ["asset_id"]},
       {"method": "POST", "path": "/api/frontend/chests/open", "parameters": ["place", "click_num"]}
