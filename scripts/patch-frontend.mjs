@@ -1,3 +1,16 @@
+import { parse } from 'acorn';
+
+const macReleasesUrl = 'https://github.com/Last-emo-boy/wuwa-tappo-mac/releases';
+
+function visitNodes(node, callback) {
+  if (!node || typeof node !== 'object') return;
+  callback(node);
+  for (const value of Object.values(node)) {
+    if (Array.isArray(value)) value.forEach(child => visitNodes(child, callback));
+    else if (value && typeof value === 'object') visitNodes(value, callback);
+  }
+}
+
 export function patchSessionBarriers(source, expectedWrappers = 2) {
   let changes = 0;
   const patched = source.replace(
@@ -60,11 +73,35 @@ export function patchDomesticLoginReload(source) {
   return source.slice(0, offset) + cleanup + source.slice(offset);
 }
 
-export function patchMacUpdateFeedback(source) {
-  const pattern = /if\(([$\w]+)\.kind==="error"\)\{([^{}]*?)([$\w]+)\.value=([$\w]+)\("setting_version_check_failed"\);return\}/g;
-  const matches = [...source.matchAll(pattern)];
-  if (matches.length !== 1) throw new Error('Original update feedback changed; reconcile the Mac update message before building.');
-  return source.replace(pattern, (_, error, before, target, translate) => `if(${error}.kind==="error"){${before}${target}.value=${error}.message||${translate}("setting_version_check_failed");return}`);
+export function patchMacReleasesButton(source) {
+  const nodes = [];
+  visitNodes(parse(source, { sourceType: 'module', ecmaVersion: 'latest' }), node => nodes.push(node));
+  const property = (node, name) => node?.type === 'ObjectExpression'
+    ? node.properties.find(prop => prop.key?.name === name)?.value : undefined;
+  const buttons = nodes.filter(node => node.type === 'CallExpression' && node.arguments[0]?.value === 'button'
+    && property(node.arguments[1], 'class')?.value === 'setting-btn btn-check-update');
+  const changed = () => new Error('Original update button changed; reconcile the Mac Releases action before building.');
+  if (buttons.length !== 1) throw changed();
+  const [, props, label] = buttons[0].arguments;
+  const disabled = property(props, 'disabled'), click = property(props, 'onClick');
+  const busy = disabled?.right;
+  const handler = click?.arguments?.[0];
+  if (disabled?.operator !== '||' || disabled.left.operator !== '!' || busy?.type !== 'MemberExpression'
+    || busy.object.type !== 'Identifier' || busy.property.name !== 'value' || handler?.type !== 'Identifier'
+    || !label || !source.slice(label.start, label.end).includes('"setting_version_check_btn"')) throw changed();
+  const handlers = nodes.filter(node => node.type === 'FunctionDeclaration' && node.id.name === handler.name
+    && source.slice(node.start, node.end).includes('"setting_version_checking"'));
+  if (handlers.length !== 1 || !handlers[0].async) throw changed();
+  const body = handlers[0].body;
+  const status = source.slice(body.start, body.end).match(/([$\w]+)\.value=[$\w]+\("setting_version_checking"\)/)?.[1];
+  if (!status) throw changed();
+  const flag = `${busy.object.name}.value`, url = JSON.stringify(macReleasesUrl);
+  const open = `{if(${flag})return;${flag}=!0;${status}.value="";try{await window.__TAURI_INTERNALS__.invoke("plugin:opener|open_url",{url:${url}})}catch(error){console.warn("[macOS] Could not open GitHub Releases",error);${status}.value=${url}}finally{${flag}=!1}}`;
+  const edits = [[disabled, flag], [label, '"GitHub Releases"'], [body, open]];
+  for (const [node, replacement] of edits.sort(([a], [b]) => b.start - a.start)) {
+    source = source.slice(0, node.start) + replacement + source.slice(node.end);
+  }
+  return source;
 }
 
 export function patchMacShortcutLabels(source) {
@@ -74,13 +111,15 @@ export function patchMacShortcutLabels(source) {
 }
 
 export function patchMacUpdater(source) {
-  const resolver = 'async function resolveUpdaterLatestJsonUrl(){const e=resolveUpdaterLatestHostJsonUrl();if(!e)return null;';
-  const recovery = 'async function resolveUpdaterLatestJsonUrl(){let e=resolveUpdaterLatestHostJsonUrl();if(!e){const config=unwrapApiData(await activityInfo());const host=typeof config?.assets_host==="string"?config.assets_host.trim():"";if(!host||host===LOCAL_ROLE_ASSETS_HOST)throw new Error("官方配置缺少更新资源地址");setUpdaterAssetsHost(host,{triggerSilentCheck:!1});e=resolveUpdaterLatestHostJsonUrl()}';
-  const failure = /if\((logDiagnostic\("UPDATE","check_failed",\{[^{}]*?fallback:)([$\w]+)\?\.interactive\?"report_error":"treat_as_latest"(\},"warn"\)),\2\?\.interactive\)return(\{kind:"error",message:[$\w]+\});try\{const ([$\w]+)=await getVersion\(\);return console\.warn\("\[updater\] check skipped \(treat as latest\)",[$\w]+\),\{kind:"none",currentVersion:\5\}\}catch\{return\4\}/g;
-  if (source.split(resolver).length !== 2 || [...source.matchAll(failure)].length !== 1) {
-    throw new Error('Original updater flow changed; reconcile the Mac update path before building.');
-  }
-  return source.replace(resolver, recovery).replace(failure, 'return $1"report_error"$3,$4');
+  const guard = /function isAppUpdaterEnabled\(\)\{if\(!isTauriRuntime\(\)\)return!1;const ([$\w]+)="true"\.toLowerCase\(\);return \1!=="false"&&\1!=="0"\}/g;
+  if ([...source.matchAll(guard)].length !== 1) throw new Error('Original updater guard changed; reconcile the Mac update path before building.');
+  return source.replace(guard, 'function isAppUpdaterEnabled(){return!1}');
+}
+
+export function patchActivityConfigConcurrency(source) {
+  const endpoint = /function activityInfo\(\)\{const ([$\w]+)=\{loading:!1,reload:!0\};return jsonpClient\.get\("api\/common\/activity-config",\{\},\1\)\}/g;
+  if ([...source.matchAll(endpoint)].length !== 1) throw new Error('Original activity-config request changed; reconcile Mac startup before building.');
+  return source.replace(endpoint, 'let __wuwatappoActivityConfigPending;function activityInfo(){return __wuwatappoActivityConfigPending??=jsonpClient.get("api/common/activity-config",{},{loading:!1,reload:!0}).finally(()=>{__wuwatappoActivityConfigPending=void 0})}');
 }
 
 export function patchMacAbout(source, region = 'CN') {
@@ -111,15 +150,7 @@ export function patchGlobalAuthListener(source) {
 export function patchMacLayoutBarriers(source) {
   const tree = parse(source, { sourceType: 'module', ecmaVersion: 'latest' });
   const targets = [];
-  function visit(node, callback) {
-    if (!node || typeof node !== 'object') return;
-    callback(node);
-    for (const value of Object.values(node)) {
-      if (Array.isArray(value)) value.forEach(child => visit(child, callback));
-      else if (value && typeof value === 'object') visit(value, callback);
-    }
-  }
-  visit(tree, node => {
+  visitNodes(tree, node => {
     if (node.type !== 'FunctionDeclaration') return;
     const content = source.slice(node.start, node.end);
     if (content.includes('[taskbar-insets] desktop state refresh failed')
@@ -129,7 +160,7 @@ export function patchMacLayoutBarriers(source) {
   const frames = [];
   for (const target of targets) {
     const matches = [];
-    visit(target.body, node => {
+    visitNodes(target.body, node => {
       if (node.type === 'AwaitExpression' && node.argument.type === 'NewExpression'
         && node.argument.callee.type === 'Identifier' && node.argument.callee.name === 'Promise'
         && source.slice(node.argument.start, node.argument.end).includes('requestAnimationFrame')) matches.push(node);
@@ -152,4 +183,3 @@ export function patchMacLayoutBarriers(source) {
 }`;
   return helper + source;
 }
-import { parse } from 'acorn';
