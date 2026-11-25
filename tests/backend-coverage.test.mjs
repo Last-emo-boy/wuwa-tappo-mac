@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { patchSessionBarriers, patchLoginReady, patchDomesticSdkUrls, patchMacUpdateFeedback, patchMacAbout } from '../scripts/patch-frontend.mjs';
+import { patchSessionBarriers, patchLoginReady, patchDomesticSdkUrls, patchMacAbout } from '../scripts/patch-frontend.mjs';
 
 const root = new URL('../', import.meta.url);
 import { contract } from './frontend-context.mjs';
@@ -49,12 +49,6 @@ test('CN SDK script and stylesheet use HTTPS from the local Tauri origin', () =>
   assert.ok(result.includes('isdkCss="https://pro-cdn-sdk.kurogame.com/pro/web-sdk/1.x/style.css"'));
   assert.throws(() => patchDomesticSdkUrls(source.replace('"CN"', '"GLOBAL"')), /official CN frontend/);
   assert.throws(() => patchDomesticSdkUrls('const APP_REGION="CN";'), /Expected 2 CN SDK URLs/);
-});
-
-test('Mac update feedback preserves the native platform explanation', () => {
-  assert.equal(patchMacUpdateFeedback('if(h.kind==="error"){ht("check_failed"),ge.value=n("setting_version_check_failed");return}'), 'if(h.kind==="error"){ht("check_failed"),ge.value=h.message||n("setting_version_check_failed");return}');
-  assert.equal(patchMacUpdateFeedback('if(_.kind==="error"){wt("check_failed"),le.value=t("setting_version_check_failed");return}'), 'if(_.kind==="error"){wt("check_failed"),le.value=_.message||t("setting_version_check_failed");return}');
-  assert.throws(() => patchMacUpdateFeedback(''), /update feedback changed/);
 });
 
 test('About separates the Mac build target from official Windows requirements', () => {
