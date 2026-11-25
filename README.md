@@ -1,5 +1,7 @@
 # Wuwa Tappo · macOS
 
+**简体中文** · [English](README.en.md)
+
 [![构建](https://github.com/Last-emo-boy/wuwa-tappo-mac/actions/workflows/ci.yml/badge.svg)](https://github.com/Last-emo-boy/wuwa-tappo-mac/actions/workflows/ci.yml)
 [![下载](https://img.shields.io/github/v/release/Last-emo-boy/wuwa-tappo-mac?label=下载)](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/latest)
 
