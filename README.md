@@ -7,11 +7,14 @@
 
 **把 Wuwa Tappo 国服和国际服带到 Mac。** 保留各服界面、角色资源和官方服务，使用 Rust + Tauri 重建 macOS 原生后端，不需要 Wine、Windows 或虚拟机。
 
-这是社区维护的**非官方 macOS 适配版**。国服和国际服分别打包，目前均对齐官方 **1.0.3**，各自检查和跟进官方更新。
+这是社区维护的**非官方 macOS 适配版**。国服和国际服分别打包，各自检查官方更新。主分支源码已对齐两服官方 **1.0.5**。
 
 ## 下载与使用
 
-前往 **[最新版本](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/latest)**，按账号所属地区选择 `.dmg`，将应用拖入「应用程序」后打开。也可下载对应的 `.zip` 解压安装。
+- **[1.0.5 预发布](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/tag/preview-1.0.5-mac.1)**：包含新版登录适配。如果 1.0.3 无法登录，请试用这个版本。
+- **[正式版 1.0.3](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/latest)**：仍是目前的 Latest。
+
+按账号所属地区下载 `.dmg`，把应用拖入「应用程序」后打开。也可下载对应的 `.zip` 解压安装。
 
 | 服务区域 | 应用 | 安装包前缀 |
 | --- | --- | --- |
@@ -40,7 +43,7 @@
 - 原生 WebSocket 联机连接、房间创建与退出。
 - 菜单栏控制、开机启动、日志脱敏和登录会话管理。
 
-国服此前已进行实机启动、官方登录、房间创建及退出验证。国际服已验证启动、About 与设置面板；官方浏览器登录跳转、真实账号回调和双人联机仍需实机验收。两服的全局键鼠计数均需要系统授权；手柄功能使用系统 GameController 接口，仍需真实手柄验证。宝箱领取、合成、兑换码和多显示器组合尚未完成全面实机验证。相关功能沿用官方界面和服务，不在本地模拟发奖。
+国服早期版本已实机验证官方登录、房间创建及退出；1.0.5 预发布已确认可打开库洛通行证窗口，真实账号登录仍待复测。国际服 1.0.5 预发布已有[真实账号登录及重启后会话保留的实机反馈](https://github.com/Last-emo-boy/wuwa-tappo-mac/issues/6#issuecomment-7158270681)；双人联机仍待验证。两服的全局键鼠计数均需要系统授权；手柄功能使用系统 GameController 接口，仍需真实手柄验证。宝箱领取、合成、兑换码和多显示器组合尚未完成全面实机验证。相关功能沿用官方界面和服务，不在本地模拟发奖。
 
 应用内的官方更新接口目前仅提供 Windows 包，Mac 版本请从本仓库 Releases 更新，不能安装官方 EXE。
 
@@ -79,7 +82,7 @@ npm run package
 
 ```bash
 export WUWA_REGION=cn
-npm run assets:sync -- --installer "$HOME/Downloads/WuwaTappo-cn_1.0.3_x64-setup.exe"
+npm run assets:sync -- --installer "$HOME/Downloads/WuwaTappo-cn_1.0.5_x64-setup.exe"
 npm run icons
 npm run prepare:frontend
 ```

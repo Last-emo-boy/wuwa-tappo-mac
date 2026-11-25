@@ -7,11 +7,14 @@
 
 **Wuwa Tappo for Mac, for both the CN and Global servers.** It keeps each server's interface, character assets and official services, and replaces the Windows backend with a native macOS backend rebuilt in Rust and Tauri. No Wine, Windows or virtual machine is needed.
 
-This is an **unofficial, community-maintained macOS port**. The CN and Global versions are packaged separately. Both currently match official **1.0.3**, and each one checks for and follows its own official updates.
+This is an **unofficial, community-maintained macOS port**. The CN and Global versions are packaged separately and follow their own official updates. Both builds on the main branch align with official **1.0.5**.
 
 ## Download and use
 
-Go to the **[latest release](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/latest)**, pick the `.dmg` for the region your account belongs to, drag the app into Applications and open it. You can also download the matching `.zip` and unzip it.
+- **[1.0.5 preview](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/tag/preview-1.0.5-mac.1)**: includes the login update. If sign-in fails on 1.0.3, try this build.
+- **[1.0.3 stable](https://github.com/Last-emo-boy/wuwa-tappo-mac/releases/latest)**: still the release marked Latest.
+
+Download the `.dmg` for your account region, drag the app into Applications and open it. You can also use the matching `.zip`.
 
 | Server region | App | Installer prefix |
 | --- | --- | --- |
@@ -40,7 +43,7 @@ To update, quit the old version first, then replace the app of the same name in 
 - Native WebSocket online connection, room creation and leaving.
 - Menu bar controls, launch at login, log redaction and login session management.
 
-CN has been tested on a real Mac for launch, official login, and creating and leaving rooms. Global has been tested for launch and the About and Settings panels; the official browser login redirect, the callback with a real account, and two-player online play still need testing on a real Mac. On both servers, counting system-wide keyboard and mouse input needs system permission. Gamepad support uses the system GameController framework and still needs testing with a real controller. Chest claiming, crafting, redeem codes and multi-display setups have not been fully tested on a real Mac. These features use the official interface and services; rewards are never simulated locally.
+Earlier CN builds were tested on a Mac for official sign-in and creating and leaving rooms. The 1.0.5 CN preview opens the Kuro Passport window; sign-in with a real account is still pending. A Global preview tester [confirmed browser sign-in and staying signed in after a relaunch](https://github.com/Last-emo-boy/wuwa-tappo-mac/issues/6#issuecomment-7158270681); two-player online play still needs testing. On both servers, counting system-wide keyboard and mouse input needs system permission. Gamepad support uses the system GameController framework and still needs testing with a real controller. Chest claiming, crafting, redeem codes and multi-display setups have not been fully tested on a real Mac. These features use the official interface and services; rewards are never simulated locally.
 
 The official update service in the app currently offers only Windows packages. Update the Mac version from this repository's Releases; the official EXE cannot be installed.
 
@@ -79,7 +82,7 @@ To switch back to CN, run `export WUWA_REGION=cn`. Shortcut commands such as `np
 
 ```bash
 export WUWA_REGION=cn
-npm run assets:sync -- --installer "$HOME/Downloads/WuwaTappo-cn_1.0.3_x64-setup.exe"
+npm run assets:sync -- --installer "$HOME/Downloads/WuwaTappo-cn_1.0.5_x64-setup.exe"
 npm run icons
 npm run prepare:frontend
 ```

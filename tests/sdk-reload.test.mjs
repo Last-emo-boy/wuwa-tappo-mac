@@ -2,15 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { patchDomesticLoginReload } from '../scripts/patch-frontend.mjs';
+import { domesticLoginLoader, patchDomesticLoginReload } from '../scripts/patch-frontend.mjs';
 import { profile, findSource } from './frontend-context.mjs';
 
 const original = profile.region === 'CN'
-  ? findSource(source => source.includes('async function we(e=!1)')).source
+  ? findSource(source => source.includes('kuroSdkRetry="true"')).source
   : await readFile(new URL('./fixtures/domestic-sdk-loader.js', import.meta.url), 'utf8');
 const renderer = await readFile(new URL('./fixtures/kuro-sdk-preact.js', import.meta.url), 'utf8');
 const patched = patchDomesticLoginReload(original);
-const loader = patched.slice(patched.indexOf('async function we(e=!1)'), patched.indexOf('async function me()'));
+const declaration = domesticLoginLoader(patched);
+const loader = patched.slice(declaration.start, declaration.end);
 
 function setup({ loaded = true, root = { childNodes: [], firstChild: null } } = {}) {
   const actions = [];
@@ -27,14 +28,14 @@ function setup({ loaded = true, root = { childNodes: [], firstChild: null } } = 
     head: { appendChild(element) { actions.push('new-script-appended'); appended.push(element); } },
   };
   const context = vm.createContext({
-    document, console,
+    document, console, performance,
     window: { setTimeout() { return 1; }, clearTimeout() {} },
-    E: null, S: null, b: null, R: null, x: 0, u: 'ready', te: null, W: 0, We: 8000,
-    $: () => loaded, re: () => actions.push('existing-sdk-initialized'),
-    tn: () => oldScript.src, l() {}, c() {},
+    y: null, _: null, D: null, K: 0, s: 'ready', W: null, q: -1, oe: 8000,
+    E: () => loaded, Q: () => actions.push('existing-sdk-initialized'),
+    Ze: () => oldScript.src, l() {}, o() {},
   });
   vm.runInContext(loader, context);
-  return { actions, outer, appended, document, context, reload: force => context.we(force) };
+  return { actions, outer, appended, document, context, reload: force => context[declaration.id.name](force) };
 }
 
 test('only forced reload removes the exact old SDK script and SDK root before insertion', async () => {
@@ -71,9 +72,9 @@ test('the existing in-flight guard avoids a second cleanup or script insertion',
 
 test('unknown upstream loader shapes fail instead of applying a broad DOM patch', () => {
   assert.throws(() => patchDomesticLoginReload(''), /reload function changed/);
-  assert.throws(() => patchDomesticLoginReload(original.replace('t.dataset.kuroSdkRetry="true"', 't.dataset.changed="true"')), /script insertion changed/);
-  assert.throws(() => patchDomesticLoginReload(original.replace(',document.head.appendChild(t),r=window.setTimeout(', ',document.head.append(t),r=window.setTimeout(')), /script insertion changed/);
-  assert.equal(patched.replace(',e&&([...document.scripts].filter(s=>s.src===t.src).forEach(s=>s.remove()),document.getElementById("KrSDK")?.remove())', ''), original);
+  assert.throws(() => patchDomesticLoginReload(original.replace('t.dataset.kuroSdkRetry="true"', 't.dataset.changed="true"')), /reload function changed/);
+  assert.throws(() => patchDomesticLoginReload(original.replace(',document.head.appendChild(t),i=window.setTimeout(', ',document.head.append(t),i=window.setTimeout(')), /script insertion changed/);
+  assert.equal(patched.replace(',e&&([...document.scripts].filter(__macScript=>__macScript.src===t.src).forEach(__macScript=>__macScript.remove()),document.getElementById("KrSDK")?.remove())', ''), original);
 });
 
 test('the actual bundled Preact skips a new SDK App on a stale root but renders after forced-root cleanup', async () => {

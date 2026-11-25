@@ -5559,7 +5559,7 @@ dependencies = [
 
 [[package]]
 name = "wuwatappo-mac"
-version = "1.0.3"
+version = "1.0.5"
 dependencies = [
  "block2",
  "futures-util",
@@ -5569,6 +5569,7 @@ dependencies = [
  "objc2-core-graphics",
  "objc2-foundation",
  "objc2-game-controller",
+ "objc2-web-kit",
  "reqwest 0.12.28",
  "security-framework",
  "serde",

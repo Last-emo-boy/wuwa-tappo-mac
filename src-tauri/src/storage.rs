@@ -25,6 +25,8 @@ struct EnvironmentCounters {
     key_press: u64,
     active_cuid: Option<String>,
     cumulative: BTreeMap<String, u64>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    reset_archive: BTreeMap<String, u64>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -122,6 +124,61 @@ impl CounterStore {
         self.write(&data)
     }
 
+    pub fn load_reset_archive(&self, environment: &str, cuid: &str) -> Result<u64, String> {
+        validate_environment(environment)?;
+        let _transaction = self
+            .transaction
+            .lock()
+            .map_err(|_| "counter_store_lock_poisoned")?;
+        Ok(self
+            .read()?
+            .environments
+            .get(environment)
+            .and_then(|entry| entry.reset_archive.get(cuid))
+            .copied()
+            .unwrap_or(0))
+    }
+
+    fn archive_for_reset(
+        &self,
+        environment: &str,
+        cuid: &str,
+        local: u64,
+        cumulative: Option<u64>,
+    ) -> Result<(), String> {
+        validate_environment(environment)?;
+        validate_count(local)?;
+        if let Some(count) = cumulative {
+            validate_count(count)?;
+        }
+        let _transaction = self
+            .transaction
+            .lock()
+            .map_err(|_| "counter_store_lock_poisoned")?;
+        let mut data = self.read()?;
+        let entry = data.environments.entry(environment.to_owned()).or_default();
+        if !cuid.is_empty() {
+            if cuid.trim().is_empty() {
+                return Err("counter_account_required".into());
+            }
+            let count = cumulative
+                .unwrap_or(0)
+                .max(entry.cumulative.get(cuid).copied().unwrap_or(0));
+            let archive = entry.reset_archive.entry(cuid.to_owned()).or_default();
+            *archive = (*archive).max(count);
+            if cumulative.is_some_and(|count| count > 0 && count >= local) {
+                // The archived cumulative count already includes pending local clicks.
+                entry.key_press = 0;
+            } else {
+                entry.key_press = entry.key_press.max(local);
+            }
+        } else {
+            // Guest clicks have no account archive; keep them pending for the next sign-in.
+            entry.key_press = entry.key_press.max(local);
+        }
+        self.write(&data)
+    }
+
     fn read(&self) -> Result<CounterData, String> {
         let file = match File::open(&self.path) {
             Ok(file) => file,
@@ -141,7 +198,7 @@ impl CounterStore {
         for (environment, entry) in &data.environments {
             validate_environment(environment)?;
             validate_count(entry.key_press)?;
-            for (cuid, count) in &entry.cumulative {
+            for (cuid, count) in entry.cumulative.iter().chain(&entry.reset_archive) {
                 if cuid.trim().is_empty() {
                     return Err("counter_store_invalid_account".into());
                 }
@@ -263,6 +320,95 @@ pub fn save_cumulative_click_count(
     store.save_cumulative(&environment, &cuid, count)
 }
 
+#[tauri::command]
+pub fn load_reset_click_archive(
+    store: tauri::State<'_, CounterStore>,
+    environment: String,
+    cuid: String,
+) -> Result<u64, String> {
+    store.load_reset_archive(&environment, &cuid)
+}
+
+async fn clear_webview_data(window: &tauri::WebviewWindow) -> Result<(), String> {
+    use objc2::MainThreadMarker;
+    use objc2_foundation::NSDate;
+    use objc2_web_kit::{WKWebView, WKWebsiteDataStore};
+    let (sender, receiver) = tokio::sync::oneshot::channel();
+    window
+        .with_webview(move |platform| {
+            let sender = std::cell::RefCell::new(Some(sender));
+            let completion = block2::RcBlock::new(move || {
+                if let Some(sender) = sender.borrow_mut().take() {
+                    let _ = sender.send(());
+                }
+            });
+            // Tauri runs this closure on the main thread and supplies the live WKWebView.
+            unsafe {
+                let view: &WKWebView = &*platform.inner().cast();
+                let store = view.configuration().websiteDataStore();
+                store.removeDataOfTypes_modifiedSince_completionHandler(
+                    &WKWebsiteDataStore::allWebsiteDataTypes(
+                        MainThreadMarker::new().expect("WebView main thread"),
+                    ),
+                    &NSDate::dateWithTimeIntervalSince1970(0.0),
+                    &completion,
+                );
+            }
+        })
+        .map_err(|error| error.to_string())?;
+    receiver
+        .await
+        .map_err(|_| "WebView data removal was interrupted".into())
+}
+
+#[tauri::command]
+pub async fn reset_local_data(
+    app: tauri::AppHandle,
+    window: tauri::WebviewWindow,
+    environment: String,
+    local_count: u64,
+    cumulative_count: Option<u64>,
+    cuid: String,
+) -> Result<(), String> {
+    use tauri::Manager;
+    crate::session::require_app_window(&window)?;
+    if window.label() != "main" {
+        return Err("Reset requires the main app window".into());
+    }
+    let expected = match crate::profile::Region::from_app(&app) {
+        crate::profile::Region::Cn => "cn-cn-prod",
+        crate::profile::Region::Global => "global-global-prod",
+    };
+    if environment != expected {
+        return Err("Reset environment does not match the current app".into());
+    }
+    let handle = app.clone();
+    tauri::async_runtime::spawn_blocking(move || {
+        handle.state::<CounterStore>().archive_for_reset(
+            &environment,
+            &cuid,
+            local_count,
+            cumulative_count,
+        )
+    })
+    .await
+    .map_err(|error| error.to_string())??;
+    clear_webview_data(&window).await?;
+    let handle = app.clone();
+    tauri::async_runtime::spawn_blocking(move || {
+        handle
+            .state::<crate::session::SessionStore>()
+            .clear_for_restart()?;
+        handle
+            .state::<crate::shortcuts::ShortcutStore>()
+            .reset_for_restart()
+    })
+    .await
+    .map_err(|error| error.to_string())??;
+    app.request_restart();
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -362,6 +508,46 @@ mod tests {
             100
         );
         assert_eq!(store.load_cumulative("cn-prod").unwrap().count, 0);
+    }
+
+    #[test]
+    fn resets_preserve_archived_counts_by_account_and_region_without_double_counting() {
+        let directory = TestDirectory::new();
+        let store = directory.store();
+        store.save_cumulative("cn-cn-prod", "other", 200).unwrap();
+        store.save_key_press("cn-cn-prod", 30).unwrap();
+        store
+            .archive_for_reset("cn-cn-prod", "owner", 30, Some(130))
+            .unwrap();
+        let reopened = directory.store();
+        assert_eq!(
+            reopened.load_reset_archive("cn-cn-prod", "owner").unwrap(),
+            130
+        );
+        assert_eq!(
+            reopened
+                .load_reset_archive("global-global-prod", "owner")
+                .unwrap(),
+            0
+        );
+        assert_eq!(
+            reopened.load_reset_archive("cn-cn-prod", "other").unwrap(),
+            0
+        );
+        assert_eq!(reopened.load_cumulative("cn-cn-prod").unwrap().count, 200);
+        assert_eq!(reopened.load_key_press("cn-cn-prod").unwrap(), 0);
+        reopened
+            .archive_for_reset("cn-cn-prod", "owner", 7, None)
+            .unwrap();
+        assert_eq!(reopened.load_key_press("cn-cn-prod").unwrap(), 7);
+        assert_eq!(
+            reopened.load_reset_archive("cn-cn-prod", "owner").unwrap(),
+            130
+        );
+        reopened
+            .archive_for_reset("global-global-prod", "", 15, None)
+            .unwrap();
+        assert_eq!(reopened.load_key_press("global-global-prod").unwrap(), 15);
     }
 
     #[test]

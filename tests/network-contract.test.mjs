@@ -44,6 +44,32 @@ test('OAuth callback transport rejects URL-bearing wake payloads, wrong events a
   assert.throws(() => verifyGlobalCallbackBridge(privateCallback, { prepared: true }), /native get_current command/);
 });
 
+test('the prepared login uses the 1.0.5 player query request and displays server error codes', async () => {
+  const directory = path.join(root, profile.preparedDir, 'assets');
+  const main = await readFile(path.join(directory, contract.source.main), 'utf8');
+  await verifySourceContract(directory, { prepared: true });
+  const nodes = parse(main, { sourceType: 'module', ecmaVersion: 'latest' }).body;
+  const definitions = ['queryPlayer', 'resolveApiErrorMessage', 'codeError', 'withCodeSuffix', 'shouldAppendCodeSuffix'].map(name => {
+    const node = nodes.find(node => node.type === 'FunctionDeclaration' && node.id.name === name);
+    assert.ok(node, name);
+    return main.slice(node.start, node.end);
+  }).join('\n');
+  const calls = [];
+  const api = vm.runInNewContext(`${definitions}\n({queryPlayer, resolveApiErrorMessage})`, {
+    jsonpClient: { post: (url, body) => calls.push({ url, body: JSON.parse(JSON.stringify(body)) }) },
+    parseApiErrorCode: error => error.code,
+    parseApiErrorRequestId: error => error.requestId,
+    i18n: { global: { t: key => key === 'code.1' ? 'Official API error' : key } },
+  });
+  const is_domestic = contract.auth.playerQuery.is_domestic;
+  api.queryPlayer('test-cuid', is_domestic, 'test-access-token', 'Test Account');
+  assert.deepEqual(calls, [{
+    url: 'api/auth/player/query',
+    body: { cuid: 'test-cuid', is_domestic, accessToken: 'test-access-token', cname: 'Test Account' },
+  }]);
+  assert.match(api.resolveApiErrorMessage({ code: 10024, requestId: 'test-request' }), /10024.*test-request/);
+});
+
 test('selected regional network contract matches the locked official frontend', async () => {
   const lock = JSON.parse(await readFile(path.join(root, profile.upstreamLock), 'utf8'));
   assert.equal(contract.region, profile.region);
@@ -53,7 +79,7 @@ test('selected regional network contract matches the locked official frontend', 
   assert.equal(contract.updater.indexPath, `/app/json-host/${profile.updaterHostFile}`);
   const result = await verifySourceContract();
   assert.equal(result.region, profile.region);
-  assert.equal(result.businessEndpoints, 22);
+  assert.equal(result.businessEndpoints, 24);
   assert.equal(result.browserOAuthRequired, profile.region === 'GLOBAL');
   assert.equal(result.tauriHttpPluginUsed, false);
 });
@@ -101,14 +127,15 @@ test('official Socket.IO handshake uses the room or a valid current user ID and 
   const owner = parents.get(builder);
   const userIdProvider = owner.body.find(node => node.type === 'FunctionDeclaration' && node.id.name === provider.callee.name);
   assert.ok(userIdProvider, 'User ID must come from the current room state scope');
-  const env = vm.createContext({ R: { userInfo: { id: 123 } } });
+  const store = { userInfo: { id: 123 } };
+  const env = vm.createContext({ A: store });
   vm.runInContext(source.slice(userIdProvider.start, userIdProvider.end) + source.slice(builder.start, builder.end), env);
   const query = (...args) => JSON.parse(JSON.stringify(env[builder.id.name](...args)));
   assert.deepEqual(query('synthetic-token', ''), { token: 'synthetic-token', rm: '123' });
   assert.deepEqual(query('synthetic-token', 'room-456'), { token: 'synthetic-token', rm: 'room-456' });
   assert.deepEqual(query('', ''), { rm: '123' });
   for (const id of [0, -1, undefined, '123', NaN, Infinity]) {
-    env.R.userInfo = { id };
+    store.userInfo = { id };
     assert.throws(() => query('synthetic-token', ''), /requires userInfo.id/);
     assert.deepEqual(query('synthetic-token', 'room-456'), { token: 'synthetic-token', rm: 'room-456' });
   }

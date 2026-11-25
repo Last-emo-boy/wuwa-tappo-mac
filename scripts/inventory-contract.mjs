@@ -15,8 +15,10 @@ const insets = object({ left: number, top: number, right: number, bottom: number
 const region = object({ left: number, top: number, width: number, height: number, memberId: optional(number) });
 const clickCount = { type: 'integer', minimum: 0, maximum: Number.MAX_SAFE_INTEGER };
 const shortcutBinding = object({ modifiers: { type: 'integer', minimum: 0, maximum: 15 }, key: { type: 'integer', minimum: 0, maximum: 255 } });
-const shortcutConfig = object({ gameMode: shortcutBinding, switchScreen: shortcutBinding, togglePet: shortcutBinding });
-function commandContractsFor(clickCacheEnvironment) {
+const defaultShortcutActions = ['gameMode', 'switchScreen', 'togglePet'];
+const shortcutSchema = actions => object(Object.fromEntries(actions.map(name => [name, shortcutBinding])));
+function commandContractsFor(clickCacheEnvironment, actions) {
+  const shortcutConfig = shortcutSchema(actions);
   const environment = { type: 'string', value: clickCacheEnvironment };
   return {
     apply_main_window_position: { request: object({ payload: object({ alwaysOnTop: boolean, position: { type: 'string', enum: ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'] }, applyPosition: boolean }) }) },
@@ -45,6 +47,9 @@ function commandContractsFor(clickCacheEnvironment) {
     is_internal_testing_build: { response: boolean },
     launch_installed_app: { request: object({ locale: string }) },
     load_cumulative_click_count: { request: object({ environment }), response: object({ count: clickCount, cuid: string, environment }), notes: 'Frontend discards records whose environment differs. It compares cuid before reconciling a different account.' },
+    load_reset_click_archive: { request: object({ environment, cuid: string }), response: clickCount },
+    reset_local_data: { request: object({ environment, cuid: string, localCount: clickCount, cumulativeCount: { anyOf: [clickCount, { type: 'null' }] }, failureMessage: string }) },
+    run_network_diagnostics: { request: object({ region: string, apiBase: string, assetsHost: { anyOf: [string, { type: 'null' }] }, preRelease: boolean, runId: string }), response: object({ status: string, resource_url: optional(string), resource_source: optional(string) }) },
     load_key_press_count: { request: object({ environment }), response: clickCount },
     open_login_window: { request: object({ intent: { type: 'string', default: 'login' }, compact: boolean }) },
     open_maintenance_notice: { request: object({ payload: { anyOf: [{ type: 'null' }, { type: 'object' }] } }) },
@@ -73,12 +78,14 @@ function commandContractsFor(clickCacheEnvironment) {
 }
 
 const nativeEventContracts = {
-  'app-shortcut': { payload: { type: 'string', enum: ['gameMode', 'switchScreen', 'togglePet'] }, notes: 'One registered shortcut activation dispatches one action. The frontend owns the action effect; do not also trigger the same action from key-release.' },
-  'app-shortcuts-changed': { payload: shortcutConfig, notes: 'The complete accepted action map. The main view checks whether F5 is bound before enabling its devtools shortcut.' },
+  'app-shortcut': { notes: 'One registered shortcut activation dispatches one action. The frontend owns the action effect; do not also trigger the same action from key-release.' },
+  'app-shortcuts-changed': { notes: 'The complete accepted action map. The main view checks whether F5 is bound before enabling its devtools shortcut.' },
   'key-press': { payload: string, notes: 'Keyboard only. Preserve the same key string for release; literal space is " ". Repeated press is deduplicated by a Set.' },
   'key-release': { payload: string, notes: 'One matched keyboard release increments local click count. Do not emit mouse buttons on this stream.' },
   'mouse-move': { payload: object({ x: number, y: number, memberId: optional(number) }), notes: 'Global physical screen pixels. Frontend subtracts Tauri innerPosition and divides by scaleFactor.' },
-  'mouse-button': { payload: object({ button: { type: 'string', enum: ['left', 'right', 'middle'] }, action: { type: 'string', enum: ['press', 'release'] }, memberId: optional(number) }), notes: 'Press increments local click count. Do not also emit key-press/release or global-clap-mouse for the same click.' },
+  'mouse-button': { payload: object({ button: { type: 'string', enum: ['left', 'right', 'middle'] }, action: { type: 'string', enum: ['press', 'release'] }, memberId: optional(number), countedGlobally: optional(boolean) }), notes: 'Press increments local click count. Do not also emit key-press/release or global-clap-mouse for the same click.' },
+  'mouse-leave': { payload: { type: 'undefined' } },
+  'native-input-sync-failed': { payload: { type: 'undefined' } },
   'global-clap-mouse': { payload: { type: 'undefined' }, notes: 'Alternative clap-only mouse path. Emitting this alongside mouse-button duplicates click counts.' },
   'gamepad-button-press': { payload: { type: 'undefined' }, notes: 'One controller button rising edge increments local click count and triggers clap feedback. Do not also emit keyboard or mouse events for this input.' },
   'deep-link://new-url': { payload: { type: 'array', items: string }, notes: 'Global OAuth expects wuwa-buddy:// callback URLs; preserve URL query parameters for frontend state validation.' },
@@ -95,7 +102,7 @@ const nativeEventContracts = {
   'cat-main-monitor-switch-prepare-request': { payload: object({ requestId: string, sourceFingerprint: { anyOf: [{ type: 'null' }, string] }, targetFingerprint: string }) },
   'cat-main-monitor-switch-prepare-done': { payload: object({ requestId: string }) },
 };
-for (const name of ['cat-settings-always-show-chest', 'cat-settings-game-mode', 'cat-settings-hover-auto-hide', 'cat-settings-passthrough']) nativeEventContracts[name] = { payload: object({ enabled: boolean }) };
+for (const name of ['cat-settings-always-show-chest', 'cat-settings-game-mode', 'cat-settings-hover-auto-hide', 'cat-settings-passthrough', 'cat-settings-always-on-top', 'cat-settings-auto-game-mode', 'cat-settings-pointer-monitoring']) nativeEventContracts[name] = { payload: object({ enabled: boolean }) };
 nativeEventContracts['cat-settings-pet-scale-drag'] = { payload: object({ active: boolean }) };
 nativeEventContracts['cat-settings-opacity'] = { payload: object({ opacityPercent: number }) };
 nativeEventContracts['cat-settings-pet-scale'] = { payload: object({ petScale: number }) };
@@ -376,7 +383,13 @@ export function inventoryAssets(assetDirectory, { version = '1.0.0' } = {}) {
   for (const module of modules.values()) module.root.modules = modules;
   const metadata = readApplicationMetadata(modules);
   const { installerFiles } = metadata;
-  const commandContracts = commandContractsFor(metadata.clickCacheEnvironment);
+  const actions = metadata.appShortcuts ? Object.keys(metadata.appShortcuts) : defaultShortcutActions;
+  const commandContracts = commandContractsFor(metadata.clickCacheEnvironment, actions);
+  const eventContracts = {
+    ...nativeEventContracts,
+    'app-shortcut': { ...nativeEventContracts['app-shortcut'], payload: { type: 'string', enum: actions } },
+    'app-shortcuts-changed': { ...nativeEventContracts['app-shortcuts-changed'], payload: shortcutSchema(actions) },
+  };
   const commandMap = new Map(), eventMap = new Map(), dynamic = [], aliases = [];
   for (const module of modules.values()) {
     for (const [name, binding] of module.root.bindings) {
@@ -418,7 +431,7 @@ export function inventoryAssets(assetDirectory, { version = '1.0.0' } = {}) {
     if (entry.kind === 'application') Object.assign(entry, { response: { type: 'null', consumption: 'await-only' } }, commandContracts[entry.name] || {});
     else entry.implementation = 'Tauri core or official plugin';
   }
-  for (const entry of eventMap.values()) Object.assign(entry, nativeEventContracts[entry.name] || {
+  for (const entry of eventMap.values()) Object.assign(entry, eventContracts[entry.name] || {
     payload: { type: 'opaque', evidence: 'Forwarded between frontend windows; callSites retain producer expression and consumer field reads.' },
   });
   const authCallbackScheme = commandMap.has('plugin:deep-link|get_current') && eventMap.has('deep-link://new-url')
@@ -441,7 +454,7 @@ export function inventoryAssets(assetDirectory, { version = '1.0.0' } = {}) {
       routes: Object.fromEntries(metadata.routes.map(route => [route.name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()), route.path])),
       requiredResponses: ['is_internal_testing_build', 'is_devtools_hotkeys_build', 'get_main_desktop_safe_area', 'get_main_taskbar_insets', 'load_key_press_count', 'load_cumulative_click_count', ...(commandMap.has('get_app_shortcuts') ? ['get_app_shortcuts'] : [])],
       requiredWindowMutations: ['set_main_force_cursor_ignore', 'set_main_window_fullscreen_shell', 'apply_main_window_position', 'set_main_window_content_bounds', 'set_main_hit_region'],
-      inputRegistration: ['mouse-move', 'mouse-button', 'global-clap-mouse', 'key-press', 'key-release', ...(eventMap.has('gamepad-button-press') ? ['gamepad-button-press'] : [])],
+      inputRegistration: ['mouse-move', 'mouse-button', 'global-clap-mouse', 'key-press', 'key-release', ...['gamepad-button-press', 'mouse-leave', 'native-input-sync-failed'].filter(name => eventMap.has(name))],
       auth: 'Frontend preserves official HTTP/Socket.IO account, inventory, rewards, and room protocols. Native backend owns window/event transport, not account emulation.',
     },
     nativeAliases: aliases,
