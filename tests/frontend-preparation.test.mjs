@@ -5,7 +5,7 @@ import test from 'node:test';
 import vm from 'node:vm';
 import { parse } from 'acorn';
 import { profile, root, findSource } from './frontend-context.mjs';
-import { patchGlobalAuthListener, patchMacLayoutBarriers } from '../scripts/patch-frontend.mjs';
+import { domesticLoginLoader, patchGlobalAuthListener, patchMacLayoutBarriers } from '../scripts/patch-frontend.mjs';
 
 const originalBridge = 'async function onOpenUrl(e){return await listen("deep-link://new-url",t=>{e(t.payload)})}';
 const current = 'try{const t=await getCurrent();t?.length&&handleRawUrls(t)}catch(t){console.warn("[overseas-auth] getCurrent failed:",t)}';
@@ -14,13 +14,16 @@ const fixture = `${originalBridge}async function bindOverseasAuthDeepLink(e){if(
 
 test('login regression fixtures preserve the selected official loader or state filter', async () => {
   const domestic = profile.region === 'CN';
-  const name = domestic ? 'we' : 'handleRawUrls';
-  const source = findSource(value => value.includes(`async function ${name}(`)).source;
+  const source = findSource(value => domestic ? value.includes('kuroSdkRetry="true"') : value.includes('async function handleRawUrls(')).source;
   const fixture = await readFile(new URL(domestic ? './fixtures/domestic-sdk-loader.js' : './fixtures/global-oauth-handler.js', import.meta.url), 'utf8');
   function declaration(value) {
+    if (domestic) {
+      const node = domesticLoginLoader(value);
+      return value.slice(node.start, node.end);
+    }
     const node = parse(value, { sourceType: 'module', ecmaVersion: 'latest' }).body
-      .find(item => item.type === 'FunctionDeclaration' && item.id.name === name);
-    assert.ok(node, `Official ${name} declaration must remain available`);
+      .find(item => item.type === 'FunctionDeclaration' && item.id.name === 'handleRawUrls');
+    assert.ok(node, 'Official OAuth handler must remain available');
     return value.slice(node.start, node.end);
   }
   assert.equal(declaration(source), declaration(fixture));
@@ -75,7 +78,7 @@ test('prepared resources preserve the selected region and contain its macOS adap
     assert.ok(preparedMain.indexOf(listener) < preparedMain.indexOf(current));
   } else {
     assert.ok(preparedMain.includes('isdkSrc="https://pro-cdn-sdk.kurogame.com/pro/web-sdk/1.x/kr-sdk.js"'));
-    const login = findSource(source => source.includes('async function we(e=!1)'));
+    const login = findSource(source => source.includes('kuroSdkRetry="true"'));
     const preparedLogin = await readFile(path.join(root, profile.preparedDir, 'assets', login.name), 'utf8');
     assert.ok(preparedLogin.includes('document.getElementById("KrSDK")?.remove()'));
     parse(preparedLogin, { sourceType: 'module', ecmaVersion: 'latest' });

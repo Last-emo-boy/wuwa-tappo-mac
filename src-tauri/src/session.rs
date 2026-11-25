@@ -213,6 +213,19 @@ impl SessionStore {
         })
     }
 
+    pub fn clear_for_restart(&self) -> Result<(), String> {
+        let mut snapshot = self
+            .inner
+            .lock()
+            .map_err(|_| "App sign-in session lock failed")?;
+        if let SessionBackend::Keychain { service } = &self.backend {
+            deletion_result(delete_generic_password(service, ACCOUNT))?;
+        }
+        snapshot.cookies.clear();
+        snapshot.storage.clear();
+        Ok(())
+    }
+
     pub fn snapshot(&self) -> Result<SessionSnapshot, String> {
         let mut snapshot = self
             .inner
@@ -269,7 +282,7 @@ fn trusted_window(window: &WebviewWindow) -> bool {
     })
 }
 
-fn require_app_window(window: &WebviewWindow) -> Result<(), String> {
+pub(crate) fn require_app_window(window: &WebviewWindow) -> Result<(), String> {
     if trusted_window(window) {
         Ok(())
     } else {

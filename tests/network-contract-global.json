@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "application": "WuwaTappo-global 1.0.3",
+  "application": "WuwaTappo-global 1.0.5",
   "region": "GLOBAL",
   "source": {
-    "main": "index-DnHotUmh.js",
-    "room": "index-CxsrU06E.js",
-    "login": "index-DnHotUmh.js",
-    "loginView": "login-BEc7g7o3.js"
+    "main": "index-IKZpdJJc.js",
+    "room": "index-CUwooNpS.js",
+    "login": "index-IKZpdJJc.js",
+    "loginView": "login-Dm44yW-R.js"
   },
   "http": {
     "baseUrl": "https://api-wutheringwaves-wuwatappo.kurogames-global.com",
@@ -91,7 +91,9 @@
         "path": "/api/auth/player/query",
         "parameters": [
           "cuid",
-          "is_domestic"
+          "is_domestic",
+          "accessToken",
+          "cname"
         ]
       },
       {
@@ -175,6 +177,19 @@
         "path": "/api/frontend/rooms/join",
         "parameters": [
           "room_no"
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/api/frontend/rooms/random-join",
+        "parameters": []
+      },
+      {
+        "method": "POST",
+        "path": "/api/frontend/rooms/public",
+        "parameters": [
+          "room_no",
+          "is_public"
         ]
       },
       {

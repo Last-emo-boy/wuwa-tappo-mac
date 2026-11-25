@@ -5,7 +5,7 @@
 
 **把 Wuwa Tappo 国服和国际服带到 Mac。** 保留各服界面、角色资源和官方服务，使用 Rust + Tauri 重建 macOS 原生后端，不需要 Wine、Windows 或虚拟机。
 
-这是社区维护的**非官方 macOS 适配版**。国服和国际服分别打包，目前均对齐官方 **1.0.3**，各自检查和跟进官方更新。
+这是社区维护的**非官方 macOS 适配版**。国服和国际服分别打包，目前均对齐官方 **1.0.5**，各自检查和跟进官方更新。
 
 ## 下载与使用
 
@@ -77,7 +77,7 @@ npm run package
 
 ```bash
 export WUWA_REGION=cn
-npm run assets:sync -- --installer "$HOME/Downloads/WuwaTappo-cn_1.0.3_x64-setup.exe"
+npm run assets:sync -- --installer "$HOME/Downloads/WuwaTappo-cn_1.0.5_x64-setup.exe"
 npm run icons
 npm run prepare:frontend
 ```

@@ -66,6 +66,36 @@ export function verifyGlobalCallbackBridge(source, { prepared = false } = {}) {
   return 'official-url-event';
 }
 
+function verifyPlayerQuery(main, login, domestic) {
+  const program = source => parse(source, { sourceType: 'module', ecmaVersion: 'latest' }).body;
+  const mainNodes = program(main);
+  const query = mainNodes.find(node => node.type === 'FunctionDeclaration' && node.id.name === 'queryPlayer');
+  const request = query?.body.body[0]?.argument;
+  assert.equal(request?.arguments?.[0]?.value, 'api/auth/player/query');
+  const parameters = contract.http.endpoints.find(({ path }) => path === '/api/auth/player/query').parameters;
+  assert.deepEqual(request.arguments[1]?.properties.map(item => item.key.name), parameters);
+  assert.deepEqual(request.arguments[1].properties.map(item => item.value.name), query.params.map(param => param.name));
+
+  let queryBinding = 'queryPlayer';
+  if (domestic) {
+    const exported = mainNodes.flatMap(node => node.specifiers ?? [])
+      .find(item => item.local?.name === queryBinding && item.exported)?.exported.name;
+    const imported = program(login).filter(node => node.type === 'ImportDeclaration' && node.source.value === `./${contract.source.main}`)
+      .flatMap(node => node.specifiers).find(item => item.imported?.name === exported);
+    assert.ok(imported, 'Domestic login must import the official player query');
+    queryBinding = imported.local.name;
+  }
+  const escaped = queryBinding.replace(/[$]/g, '\\$&');
+  const helperPattern = new RegExp(String.raw`async function ([$\w]+)\(([$\w]+),([$\w]+),([$\w]+)\)\{const [$\w]+=await ${escaped}\(\2,${contract.auth.playerQuery.is_domestic},\3,\4\)`);
+  const helper = login.match(helperPattern)?.[1];
+  assert.ok(helper, 'Regional player query must forward CUID, region, access token and account name');
+  const binding = helper.replace(/[$]/g, '\\$&');
+  const callback = domestic
+    ? new RegExp(String.raw`await ${binding}\([$\w]+,String\(([$\w]+)\.token\?\?""\),String\(\1\.username\?\?""\)\)`)
+    : new RegExp(String.raw`await ${binding}\([$\w]+,String\(([$\w]+)\.accessToken\?\?""\),String\(\1\.userName\?\?""\)\)`);
+  assert.match(login, callback, 'Login callback must forward the official credential fields to the player query');
+}
+
 export async function verifySourceContract(assetDirectory = path.join(root, profile.frontendDir, 'assets'), { prepared = false } = {}) {
   const [main, room, login, loginView] = await Promise.all(
     ['main', 'room', 'login', 'loginView'].map((name) => readFile(path.join(assetDirectory, contract.source[name]), 'utf8')),
@@ -86,6 +116,7 @@ export async function verifySourceContract(assetDirectory = path.join(root, prof
     path.posix.basename(contract.updater.indexPath),
   ]) assert.ok(main.includes(value), `Missing frontend network marker: ${value}`);
   for (const value of contract.auth.secureLocalStorageKeys) assert.ok(login.includes(value), `Missing secure login storage marker: ${value}`);
+  verifyPlayerQuery(main, login, contract.auth.mode === 'embedded_dom_sdk');
   let sdkUrlsAreExplicitHttps = null;
   let globalOAuthDelivery = null;
   if (contract.auth.mode === 'embedded_dom_sdk') {
@@ -93,8 +124,7 @@ export async function verifySourceContract(assetDirectory = path.join(root, prof
       assert.ok(login.includes(value), `Missing domestic login marker: ${value}`);
     }
     assert.ok(!login.includes('plugin:deep-link|'), 'Domestic login unexpectedly requires a native OAuth callback');
-    assert.ok(/\b_e\(e,1\)/.test(login), 'Domestic player query must pass is_domestic=1');
-    assert.ok(/\bse\([^;]+,"sdk",i,a,1\)/.test(login), 'Domestic SDK login must pass source=sdk and is_domestic=1');
+    assert.ok(/\b[$\w]+\([^;]+,"sdk",[$\w]+,[$\w]+,1\)/.test(login), 'Domestic SDK login must pass source=sdk and is_domestic=1');
     assert.ok(loginView.includes('handleInlandSDKLogin'), 'Login view must bind the domestic SDK callback');
     verifyDomesticSdkAssetBinding(main, loginView);
     const scriptIsHttps = main.includes(`isdkSrc="${contract.auth.sdk.scriptUrl}"`);
@@ -113,10 +143,9 @@ export async function verifySourceContract(assetDirectory = path.join(root, prof
       'plugin:deep-link|get_current',
       'if(!assertPendingStateMatches(n.state))',
       'function assertPendingStateMatches(e){const t=readPendingState();return t?t===e:!1}',
-      'await queryPlayer(e,0)',
       'Login(e.cuid,e.puid,e.channelId,e.userId,e.userName,e.accessToken,"sdk",t,n,0)',
-      'await startOverseasBrowserLogin({lang:t})',
     ]) assert.ok(login.includes(value), `Missing global OAuth contract marker: ${value}`);
+    assert.match(login, /await startOverseasBrowserLogin\(\{lang:[$\w]+\}\)/);
     globalOAuthDelivery = verifyGlobalCallbackBridge(login, { prepared });
     assert.ok(loginView.includes('handleForeignSDKLogin'), 'Global login view must bind the browser OAuth entry point');
   }

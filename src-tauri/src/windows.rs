@@ -54,6 +54,7 @@ pub const COMMANDS: &[&str] = &[
     "set_overlay_cursor",
     "set_panel_window_collapsed",
     "show_toast_overlay",
+    "hide_toast_overlay",
     "sync_aux_windows_to_main_monitor",
     "sync_main_window_to_current_monitor",
     "sync_native_menu",
@@ -649,6 +650,11 @@ pub fn dispatch(
             let skip = args.get("skip").and_then(Value::as_bool).ok_or("Missing skip state")?;
             app.set_dock_visibility(!skip).map_err(err)?;
             main_window(app)?.set_skip_taskbar(skip).map_err(err)?;
+        }
+        "hide_toast_overlay" => {
+            if let Some(window) = app.get_webview_window("toast") {
+                window.hide().map_err(err)?;
+            }
         }
         "show_toast_overlay" => {
             let w = if let Some(w) = app.get_webview_window("toast") {
